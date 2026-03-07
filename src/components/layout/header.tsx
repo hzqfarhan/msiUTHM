@@ -120,8 +120,19 @@ export function Header() {
                         </Link>
                     </div>
 
-                    {/* Right: theme + profile */}
-                    <div className="flex items-center gap-1">
+                    {/* Right: role badge + theme + profile */}
+                    <div className="flex items-center gap-1.5">
+                        {/* Role badge */}
+                        {profile && (
+                            <span className={cn(
+                                'text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full leading-none',
+                                profile.role === 'admin'
+                                    ? 'bg-amber-500/20 text-amber-500 dark:bg-amber-400/20 dark:text-amber-400'
+                                    : 'bg-primary/15 text-primary',
+                            )}>
+                                {profile.role === 'admin' ? 'Admin' : 'Member'}
+                            </span>
+                        )}
                         <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8 rounded-xl">
                             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
                         </Button>

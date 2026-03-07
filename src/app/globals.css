@@ -471,13 +471,14 @@ body {
 .mesh-orb {
   position: fixed;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.5;
+  filter: blur(60px);
+  opacity: 0.4;
   pointer-events: none;
   z-index: -1;
-  animation: float 20s ease-in-out infinite;
+  animation: float 25s ease-in-out infinite;
   will-change: transform;
-  contain: layout style;
+  contain: layout style paint;
+  transform: translateZ(0);
 }
 
 .mesh-orb-1 {
@@ -544,25 +545,26 @@ body {
   }
 }
 
-/* Mobile performance: reduce orb sizes, hide extra orbs */
 @media (max-width: 768px) {
   .mesh-orb {
-    opacity: 0.3;
+    opacity: 0.2;
+    animation: none;
+    filter: blur(40px);
   }
 
   .mesh-orb-1 {
-    width: 280px;
-    height: 280px;
+    width: 200px;
+    height: 200px;
   }
 
   .mesh-orb-2 {
-    width: 250px;
-    height: 250px;
+    width: 180px;
+    height: 180px;
   }
 
   .mesh-orb-3 {
-    width: 220px;
-    height: 220px;
+    width: 160px;
+    height: 160px;
   }
 
   .mesh-orb-4,
@@ -574,8 +576,8 @@ body {
   .glass-heavy,
   .glass-nav,
   .glass-button {
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
   }
 }
 

@@ -214,15 +214,18 @@ export function Sidebar() {
                 </div>
             </nav>
 
-            {/* Bottom section */}
-            <div className="shrink-0 border-t border-border/40 py-2 space-y-0.5">
+            {/* Bottom section — same px-2/px-0 pattern as nav for alignment */}
+            <div className={cn(
+                'shrink-0 border-t border-[var(--glass-border-subtle)] py-2 space-y-0.5',
+                collapsed ? 'px-0' : 'px-2',
+            )}>
                 {/* Theme toggle */}
                 <button
                     onClick={toggleTheme}
                     title={collapsed ? (dark ? 'Mod Cerah' : 'Mod Gelap') : undefined}
                     className={cn(
-                        'flex items-center gap-3 w-full rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 transition-all mx-2',
-                        collapsed && 'justify-center w-auto mx-2 px-0',
+                        'flex items-center gap-3 w-full rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 transition-all',
+                        collapsed && 'justify-center px-0 mx-2',
                     )}
                 >
                     {dark ? <Sun className="h-[18px] w-[18px] shrink-0" /> : <Moon className="h-[18px] w-[18px] shrink-0" />}
@@ -235,8 +238,8 @@ export function Sidebar() {
                         href="/admin"
                         title={collapsed ? 'Panel Admin' : undefined}
                         className={cn(
-                            'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 transition-all mx-2',
-                            collapsed && 'justify-center w-auto mx-2 px-0',
+                            'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 transition-all',
+                            collapsed && 'justify-center px-0 mx-2',
                         )}
                     >
                         <Shield className="h-[18px] w-[18px] shrink-0" />
@@ -246,8 +249,8 @@ export function Sidebar() {
 
                 {/* User profile row */}
                 <div className={cn(
-                    'flex items-center gap-3 px-3 py-2 mx-2',
-                    collapsed && 'justify-center mx-2 px-0',
+                    'flex items-center gap-3 px-3 py-2 rounded-xl',
+                    collapsed && 'justify-center px-0 mx-2',
                 )}>
                     {profile ? (
                         <>
@@ -259,7 +262,17 @@ export function Sidebar() {
                             </Avatar>
                             {!collapsed && (
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-xs font-semibold truncate">{profile.full_name || 'Pengguna'}</p>
+                                    <div className="flex items-center gap-1.5">
+                                        <p className="text-xs font-semibold truncate">{profile.full_name || 'Pengguna'}</p>
+                                        <span className={cn(
+                                            'text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full leading-none shrink-0',
+                                            profile.role === 'admin'
+                                                ? 'bg-amber-500/20 text-amber-500 dark:bg-amber-400/20 dark:text-amber-400'
+                                                : 'bg-primary/15 text-primary',
+                                        )}>
+                                            {profile.role === 'admin' ? 'Admin' : 'Member'}
+                                        </span>
+                                    </div>
                                     <form action={signOut}>
                                         <button type="submit" className="text-[10px] text-muted-foreground hover:text-destructive flex items-center gap-1 transition-colors">
                                             <LogOut className="h-3 w-3" /> Log Keluar
@@ -285,8 +298,8 @@ export function Sidebar() {
                     onClick={toggleCollapse}
                     title={collapsed ? 'Buka Sidebar' : 'Tutup Sidebar'}
                     className={cn(
-                        'flex items-center gap-3 w-full rounded-xl px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 transition-all mx-2',
-                        collapsed && 'justify-center w-auto mx-2 px-0',
+                        'flex items-center gap-3 w-full rounded-xl px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-white/8 transition-all',
+                        collapsed && 'justify-center px-0 mx-2',
                     )}
                 >
                     {collapsed
