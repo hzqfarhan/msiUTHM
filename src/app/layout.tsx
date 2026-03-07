@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Header } from '@/components/layout/header';
+import { Sidebar } from '@/components/layout/sidebar';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { InstallPrompt } from '@/components/pwa/install-prompt';
 import { OfflineBanner } from '@/components/pwa/offline-banner';
@@ -68,21 +69,33 @@ export default function RootLayout({
         <div className="mesh-orb mesh-orb-4" aria-hidden="true" />
         <div className="mesh-orb mesh-orb-5" aria-hidden="true" />
 
-        {/* Floating header */}
-        <Header />
+        {/* Desktop sidebar — collapsible, hidden on mobile */}
+        <Sidebar />
 
-        <div className="flex min-h-dvh flex-col" id="main-container">
+        {/* Mobile floating header — hidden on desktop (sidebar handles desktop nav) */}
+        <div className="lg:hidden">
+          <Header />
+        </div>
+
+        {/* Main content — dynamically shifts based on sidebar state */}
+        <div
+          className="flex min-h-dvh flex-col sidebar-content-offset transition-[padding] duration-300"
+          id="main-container"
+        >
           <OfflineBanner />
 
-          <main className="flex-1 page-content pt-20 pb-24">
-            <div className="mx-auto max-w-screen-lg px-4 py-4 lg:px-8 lg:py-6">
+          {/* Mobile: pt-20 for floating header; Desktop: pt-6 */}
+          <main className="flex-1 page-content pt-20 pb-24 lg:pt-6 lg:pb-8">
+            <div className="mx-auto max-w-screen-lg px-4 py-2 lg:px-6 lg:py-4">
               {children}
               <Footer />
             </div>
           </main>
 
-          {/* Floating bottom nav */}
-          <BottomNav />
+          {/* Mobile floating bottom nav — hidden on desktop */}
+          <div className="lg:hidden">
+            <BottomNav />
+          </div>
         </div>
 
         <InstallPrompt />

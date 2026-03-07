@@ -201,6 +201,18 @@ body {
   background-attachment: fixed;
 }
 
+/* Sidebar content offset — desktop only */
+@media (min-width: 1024px) {
+  .sidebar-content-offset {
+    padding-left: 240px;
+  }
+
+  body[data-sidebar-collapsed="true"] .sidebar-content-offset {
+    padding-left: 64px;
+  }
+}
+
+
 /* ============================================================
    GLASS UTILITY CLASSES
    ============================================================ */
