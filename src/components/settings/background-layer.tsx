@@ -37,6 +37,7 @@ export function BackgroundLayer() {
             alt=""
             aria-hidden="true"
             className="custom-bg-layer"
+            style={{ backgroundColor: isDark ? '#0A0F1C' : '#f0f2f5' }}
             onError={(e) => {
                 // Hide if image doesn't exist yet
                 (e.target as HTMLImageElement).style.display = 'none';
