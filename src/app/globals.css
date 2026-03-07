@@ -204,11 +204,11 @@ body {
 /* Sidebar content offset — desktop only */
 @media (min-width: 1024px) {
   .sidebar-content-offset {
-    padding-left: 240px;
+    padding-left: 14rem;
   }
 
   body[data-sidebar-collapsed="true"] .sidebar-content-offset {
-    padding-left: 64px;
+    padding-left: 4rem;
   }
 }
 

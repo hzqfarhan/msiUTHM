@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Sidebar } from '@/components/layout/sidebar';
-import { BottomNav } from '@/components/layout/bottom-nav';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { InstallPrompt } from '@/components/pwa/install-prompt';
@@ -62,40 +61,32 @@ export default function RootLayout({
         {/* Custom background image */}
         <BackgroundLayer />
 
-        {/* Animated mesh background orbs */}
+        {/* Animated mesh background orbs — only 3 for performance */}
         <div className="mesh-orb mesh-orb-1" aria-hidden="true" />
         <div className="mesh-orb mesh-orb-2" aria-hidden="true" />
         <div className="mesh-orb mesh-orb-3" aria-hidden="true" />
-        <div className="mesh-orb mesh-orb-4" aria-hidden="true" />
-        <div className="mesh-orb mesh-orb-5" aria-hidden="true" />
 
         {/* Desktop sidebar — collapsible, hidden on mobile */}
         <Sidebar />
 
-        {/* Mobile floating header — hidden on desktop (sidebar handles desktop nav) */}
+        {/* Mobile header with hamburger drawer — hidden on desktop */}
         <div className="lg:hidden">
           <Header />
         </div>
 
-        {/* Main content — dynamically shifts based on sidebar state */}
+        {/* Main content */}
         <div
           className="flex min-h-dvh flex-col sidebar-content-offset transition-[padding] duration-300"
           id="main-container"
         >
           <OfflineBanner />
 
-          {/* Mobile: pt-20 for floating header; Desktop: pt-6 */}
-          <main className="flex-1 page-content pt-20 pb-24 lg:pt-6 lg:pb-8">
-            <div className="mx-auto max-w-screen-lg px-4 py-2 lg:px-6 lg:py-4">
+          <main className="flex-1 page-content pt-16 pb-6 lg:pt-4 lg:pb-6">
+            <div className="mx-auto max-w-screen-lg px-3 py-2 lg:px-4 lg:py-3">
               {children}
               <Footer />
             </div>
           </main>
-
-          {/* Mobile floating bottom nav — hidden on desktop */}
-          <div className="lg:hidden">
-            <BottomNav />
-          </div>
         </div>
 
         <InstallPrompt />

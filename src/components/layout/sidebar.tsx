@@ -150,17 +150,16 @@ export function Sidebar() {
         <aside
             className={cn(
                 'hidden lg:flex flex-col fixed left-0 top-0 bottom-0 z-40',
-                'bg-background/80 dark:bg-background/90',
-                'backdrop-filter backdrop-blur-xl',
-                'border-r border-border/40',
+                'glass-heavy',
+                'border-r border-[var(--glass-border-subtle)]',
                 'transition-all duration-300 ease-in-out',
-                collapsed ? 'w-[64px]' : 'w-[240px]',
+                collapsed ? 'w-16' : 'w-56',
             )}
         >
             {/* Logo */}
             <div className={cn(
-                'flex items-center gap-3 h-16 border-b border-border/40 px-4 shrink-0',
-                collapsed && 'justify-center px-0',
+                'flex items-center h-14 border-b border-[var(--glass-border-subtle)] shrink-0',
+                collapsed ? 'justify-center px-0' : 'gap-3 px-4',
             )}>
                 <img
                     src="/bg/app-logo.png"

@@ -1,154 +1,274 @@
 /**
- * App Header — floating glass bar with auto-hide on scroll.
- * Visible on all screen sizes.
+ * Mobile header with hamburger menu drawer.
+ * Slides out from left, same nav items as desktop sidebar.
  */
 'use client';
 
 import Link from 'next/link';
-import { Moon, Sun, User, LogOut, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { usePathname } from 'next/navigation';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+    Home, Clock, Calendar, Megaphone, Building2,
+    Heart, MessageSquare, Users, Compass, Info,
+    Shield, LogOut, Moon, Sun, User, Menu, X,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { signOut } from '@/actions/auth';
 import { getHijriDate } from '@/lib/hijri';
 import type { Profile } from '@/lib/types/database';
 import { cn } from '@/lib/utils';
 
+const mainNav = [
+    { href: '/', label: 'Utama', icon: Home },
+    { href: '/prayer', label: 'Waktu Solat', icon: Clock },
+    { href: '/events', label: 'Program', icon: Calendar },
+    { href: '/announcements', label: 'Berita', icon: Megaphone },
+    { href: '/facilities', label: 'Kemudahan', icon: Building2 },
+    { href: '/qibla', label: 'Kiblat', icon: Compass },
+];
+
+const infoNav = [
+    { href: '/about', label: 'Info Masjid', icon: Info },
+    { href: '/donate', label: 'Infaq', icon: Heart },
+    { href: '/feedback', label: 'Lapor Isu', icon: MessageSquare },
+    { href: '/volunteer', label: 'Sukarelawan', icon: Users },
+];
+
 export function Header() {
+    const pathname = usePathname();
     const [profile, setProfile] = useState<Profile | null>(null);
     const [dark, setDark] = useState(false);
     const [hijriDate, setHijriDate] = useState('');
-    const [visible, setVisible] = useState(true);
-    const lastScrollRef = useRef(0);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(() => {
-        // Theme
         const stored = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const isDark = stored === 'dark' || (!stored && prefersDark);
         setDark(isDark);
         document.documentElement.classList.toggle('dark', isDark);
 
-        // Hijri
         setHijriDate(getHijriDate());
 
-        // User
         const supabase = createClient();
-        supabase.auth.getUser().then(({ data: { user } }) => {
-            if (user) {
-                supabase
-                    .from('profiles')
-                    .select('*')
-                    .eq('id', user.id)
-                    .single()
-                    .then(({ data }) => {
-                        if (data) setProfile(data as Profile);
-                    });
+        supabase.auth.getUser().then(async ({ data: { user } }) => {
+            if (!user) return;
+            const { data } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+            if (data) {
+                const p = data as Profile;
+                // Sync Google avatar if missing
+                if (!p.avatar_url) {
+                    const googleAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture;
+                    if (googleAvatar) {
+                        await supabase.from('profiles').update({ avatar_url: googleAvatar }).eq('id', user.id);
+                        p.avatar_url = googleAvatar;
+                    }
+                }
+                setProfile(p);
             }
         });
-
-        // Auto-hide on scroll
-        const handleScroll = () => {
-            const currentScroll = window.scrollY;
-            if (currentScroll > lastScrollRef.current && currentScroll > 80) {
-                setVisible(false);
-            } else {
-                setVisible(true);
-            }
-            lastScrollRef.current = currentScroll;
-        };
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const toggleTheme = () => {
-        const newDark = !dark;
-        setDark(newDark);
-        document.documentElement.classList.toggle('dark', newDark);
-        localStorage.setItem('theme', newDark ? 'dark' : 'light');
-    };
+    // Close drawer on route change
+    useEffect(() => { setDrawerOpen(false); }, [pathname]);
+
+    // Lock body scroll when drawer open
+    useEffect(() => {
+        document.body.style.overflow = drawerOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [drawerOpen]);
+
+    const toggleTheme = useCallback(() => {
+        setDark(prev => {
+            const newDark = !prev;
+            document.documentElement.classList.toggle('dark', newDark);
+            localStorage.setItem('theme', newDark ? 'dark' : 'light');
+            return newDark;
+        });
+    }, []);
+
+    if (pathname.startsWith('/admin')) return null;
 
     return (
-        <header
-            className={cn(
-                'fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-screen-lg',
-                'glass-heavy rounded-2xl',
-                'shadow-lg shadow-black/10',
-                'border border-[var(--glass-border)]',
-                'transition-all duration-300 ease-out',
-                visible ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0 pointer-events-none',
-            )}
-        >
-            <div className="flex h-12 items-center justify-between px-4">
-                <Link href="/" className="flex items-center gap-2.5">
-                    <img
-                        src="/bg/app-logo.png"
-                        alt="MSI UTHM Logo"
-                        className="h-7 w-7 object-contain"
-                    />
-                    <div className="flex flex-col">
-                        <span className="font-semibold text-foreground text-sm leading-tight">MSI UTHM</span>
-                        {hijriDate && (
-                            <span className="text-[9px] text-muted-foreground leading-tight hidden sm:block">{hijriDate}</span>
+        <>
+            {/* Top bar */}
+            <header className="fixed top-0 left-0 right-0 z-50 h-14 glass-nav">
+                <div className="flex h-full items-center justify-between px-4">
+                    {/* Left: hamburger + logo */}
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => setDrawerOpen(true)}
+                            className="flex items-center justify-center h-9 w-9 rounded-xl glass-button border-0"
+                            aria-label="Buka menu"
+                        >
+                            <Menu className="h-5 w-5" />
+                        </button>
+                        <Link href="/" className="flex items-center gap-2">
+                            <img src="/bg/app-logo.png" alt="MSI UTHM" className="h-7 w-7 object-contain" />
+                            <div className="flex flex-col">
+                                <span className="font-bold text-foreground text-sm leading-tight">MSI UTHM</span>
+                                {hijriDate && (
+                                    <span className="text-[9px] text-muted-foreground leading-tight">{hijriDate}</span>
+                                )}
+                            </div>
+                        </Link>
+                    </div>
+
+                    {/* Right: theme + profile */}
+                    <div className="flex items-center gap-1">
+                        <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8 rounded-xl">
+                            {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                        </Button>
+                        {profile ? (
+                            <Avatar className="h-8 w-8 ring-2 ring-primary/20">
+                                <AvatarImage src={profile.avatar_url || ''} />
+                                <AvatarFallback className="text-xs bg-primary/20 text-primary font-semibold">
+                                    {(profile.full_name || 'U')[0].toUpperCase()}
+                                </AvatarFallback>
+                            </Avatar>
+                        ) : (
+                            <Button variant="ghost" size="sm" asChild className="h-8 rounded-xl text-xs">
+                                <Link href="/auth/login">
+                                    <User className="mr-1 h-3.5 w-3.5" /> Log Masuk
+                                </Link>
+                            </Button>
                         )}
                     </div>
-                </Link>
+                </div>
+            </header>
 
-                <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8 glass-button rounded-xl border-0">
-                        {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                    </Button>
+            {/* Backdrop overlay */}
+            <div
+                className={cn(
+                    'fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm transition-opacity duration-300',
+                    drawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
+                )}
+                onClick={() => setDrawerOpen(false)}
+            />
 
-                    {profile ? (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                                    <Avatar className="h-7 w-7">
-                                        <AvatarImage src={profile.avatar_url || ''} />
-                                        <AvatarFallback className="text-xs bg-primary/20 text-primary">
-                                            {(profile.full_name || 'U')[0].toUpperCase()}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-48 glass-heavy rounded-xl">
-                                <div className="px-2 py-1.5 text-sm font-medium truncate">
-                                    {profile.full_name || 'Pengguna'}
-                                </div>
-                                <DropdownMenuSeparator />
-                                {profile.role === 'admin' && (
-                                    <DropdownMenuItem asChild>
-                                        <Link href="/admin" className="flex items-center gap-2">
-                                            <Shield className="h-4 w-4" /> Panel Admin
-                                        </Link>
-                                    </DropdownMenuItem>
+            {/* Side drawer */}
+            <nav
+                className={cn(
+                    'fixed top-0 left-0 bottom-0 z-[70] w-[280px]',
+                    'glass-heavy border-r border-[var(--glass-border)]',
+                    'flex flex-col',
+                    'transition-transform duration-300 ease-out',
+                    drawerOpen ? 'translate-x-0' : '-translate-x-full',
+                )}
+            >
+                {/* Drawer header */}
+                <div className="flex items-center justify-between h-14 px-4 border-b border-border/30 shrink-0">
+                    <div className="flex items-center gap-2.5">
+                        <img src="/bg/app-logo.png" alt="MSI UTHM" className="h-8 w-8 object-contain" />
+                        <div>
+                            <p className="text-sm font-bold text-foreground">MSI UTHM</p>
+                            <p className="text-[10px] text-muted-foreground">Companion App</p>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => setDrawerOpen(false)}
+                        className="h-8 w-8 flex items-center justify-center rounded-xl glass-button border-0"
+                        aria-label="Tutup menu"
+                    >
+                        <X className="h-4 w-4" />
+                    </button>
+                </div>
+
+                {/* User info — glass card */}
+                {profile && (
+                    <div className="mx-3 mt-3 p-3 rounded-xl glass-card">
+                        <div className="flex items-center gap-3">
+                            <Avatar className="h-10 w-10 ring-2 ring-primary/30">
+                                <AvatarImage src={profile.avatar_url || ''} />
+                                <AvatarFallback className="text-sm bg-primary/20 text-primary font-bold">
+                                    {(profile.full_name || 'U')[0].toUpperCase()}
+                                </AvatarFallback>
+                            </Avatar>
+                            <div className="min-w-0 flex-1">
+                                <p className="text-sm font-semibold truncate">{profile.full_name || 'Pengguna'}</p>
+                                <p className="text-[10px] text-muted-foreground">Selamat datang 👋</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Nav items */}
+                <div className="flex-1 overflow-y-auto py-3 space-y-1 px-2 scrollbar-hide">
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60 px-3 pb-1">
+                        Menu
+                    </p>
+                    {mainNav.map(item => {
+                        const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={cn(
+                                    'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all relative',
+                                    isActive
+                                        ? 'glass-button glow-emerald text-primary'
+                                        : 'text-muted-foreground hover:text-foreground hover:bg-white/8',
                                 )}
-                                <DropdownMenuItem asChild>
-                                    <form action={signOut} className="w-full">
-                                        <button type="submit" className="flex w-full items-center gap-2">
-                                            <LogOut className="h-4 w-4" /> Log Keluar
-                                        </button>
-                                    </form>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    ) : (
-                        <Button variant="ghost" size="sm" asChild className="h-8 glass-button rounded-xl border-0 text-xs">
-                            <Link href="/auth/login">
-                                <User className="mr-1 h-3.5 w-3.5" /> Log Masuk
+                            >
+                                <item.icon className={cn('h-[18px] w-[18px]', isActive && 'stroke-[2.5]')} />
+                                <span>{item.label}</span>
                             </Link>
-                        </Button>
+                        );
+                    })}
+
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60 px-3 pt-3 pb-1">
+                        Info & Komuniti
+                    </p>
+                    {infoNav.map(item => {
+                        const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={cn(
+                                    'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all relative',
+                                    isActive
+                                        ? 'glass-button glow-emerald text-primary'
+                                        : 'text-muted-foreground hover:text-foreground hover:bg-white/8',
+                                )}
+                            >
+                                <item.icon className={cn('h-[18px] w-[18px]', isActive && 'stroke-[2.5]')} />
+                                <span>{item.label}</span>
+                            </Link>
+                        );
+                    })}
+                </div>
+
+                {/* Bottom */}
+                <div className="shrink-0 border-t border-border/30 p-2 space-y-0.5">
+                    {profile?.role === 'admin' && (
+                        <Link
+                            href="/admin"
+                            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/8"
+                        >
+                            <Shield className="h-[18px] w-[18px]" />
+                            <span>Panel Admin</span>
+                        </Link>
+                    )}
+                    {profile && (
+                        <form action={signOut}>
+                            <button
+                                type="submit"
+                                className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-destructive/80 hover:text-destructive hover:bg-destructive/10 transition-all"
+                            >
+                                <LogOut className="h-[18px] w-[18px]" />
+                                <span>Log Keluar</span>
+                            </button>
+                        </form>
                     )}
                 </div>
-            </div>
-        </header>
+            </nav>
+        </>
     );
 }
