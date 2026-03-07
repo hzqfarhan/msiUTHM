@@ -1,0 +1,2 @@
+﻿src/app/events/[id]/page.tsx(77,42): error TS7006: Parameter 'tag' implicitly has an 'any' type.
+src/app/events/page.tsx(82,70): error TS7006: Parameter 'tag' implicitly has an 'any' type.

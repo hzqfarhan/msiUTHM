@@ -1,0 +1,163 @@
+﻿src/actions/announcements.ts(39,55): error TS2339: Property 'errors' does not exist on type 'ZodError<{ title: string; category: "general" | "urgent" | "event" | "facilities"; is_published: boolean; pinned: boolean; body?: string | undefined; }>'.
+src/actions/announcements.ts(41,60): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "announcements", never, "POST">', gave the following error.
+    Argument of type '{ mosque_id: string; created_by: string; title: string; category: "general" | "urgent" | "event" | "facilities"; is_published: boolean; pinned: boolean; body?: string | undefined; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "announcements", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'mosque_id' does not exist in type 'never[]'.
+src/actions/announcements.ts(66,55): error TS2339: Property 'errors' does not exist on type 'ZodError<{ title: string; category: "general" | "urgent" | "event" | "facilities"; is_published: boolean; pinned: boolean; body?: string | undefined; }>'.
+src/actions/announcements.ts(68,67): error TS2345: Argument of type '{ title: string; category: "general" | "urgent" | "event" | "facilities"; is_published: boolean; pinned: boolean; body?: string | undefined; }' is not assignable to parameter of type 'never'.
+src/actions/events.ts(54,38): error TS2339: Property 'errors' does not exist on type 'ZodError<{ title: string; start_at: string; tags: string[]; is_published: boolean; description?: string | undefined; end_at?: string | undefined; location?: string | undefined; max_participants?: number | ... 1 more ... | undefined; }>'.
+src/actions/events.ts(57,53): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "events", never, "POST">', gave the following error.
+    Argument of type '{ mosque_id: string; created_by: string; title: string; start_at: string; tags: string[]; is_published: boolean; description?: string | undefined; end_at?: string | undefined; location?: string | undefined; max_participants?: number | ... 1 more ... | undefined; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "events", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'mosque_id' does not exist in type 'never[]'.
+src/actions/events.ts(84,55): error TS2339: Property 'errors' does not exist on type 'ZodError<{ title: string; start_at: string; tags: string[]; is_published: boolean; description?: string | undefined; end_at?: string | undefined; location?: string | undefined; max_participants?: number | ... 1 more ... | undefined; }>'.
+src/actions/events.ts(86,60): error TS2345: Argument of type '{ title: string; start_at: string; tags: string[]; is_published: boolean; description?: string | undefined; end_at?: string | undefined; location?: string | undefined; max_participants?: number | null | undefined; }' is not assignable to parameter of type 'never'.
+src/actions/events.ts(110,58): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ ...; }, ... 5 more ..., "POST">', gave the following error.
+    Argument of type '{ event_id: string; user_id: string; status: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<...>', gave the following error.
+    Object literal may only specify known properties, and 'event_id' does not exist in type 'never[]'.
+src/actions/facilities.ts(37,57): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "facilities", never, "POST">', gave the following error.
+    Argument of type '{ mosque_id: string; name: string; description: string; category: string; location_hint: string; has_wheelchair_access: boolean; opening_hours: string | null; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "facilities", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'mosque_id' does not exist in type 'never[]'.
+src/actions/facilities.ts(57,64): error TS2345: Argument of type '{ name: string; description: string; category: string; location_hint: string; has_wheelchair_access: boolean; opening_hours: string | null; }' is not assignable to parameter of type 'never'.
+src/actions/feedback.ts(22,55): error TS2339: Property 'errors' does not exist on type 'ZodError<{ category: string; description: string; facility_id?: string | null | undefined; }>'.
+src/actions/feedback.ts(40,63): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "feedback_reports", never, "POST">', gave the following error.
+    Argument of type '{ mosque_id: string; user_id: string | null; photo_url: string | null; category: string; description: string; facility_id?: string | null | undefined; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "feedback_reports", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'mosque_id' does not exist in type 'never[]'.
+src/actions/feedback.ts(61,17): error TS2345: Argument of type 'Record<string, string>' is not assignable to parameter of type 'never'.
+src/actions/prayer.ts(29,30): error TS2339: Property 'date' does not exist on type 'never'.
+src/actions/prayer.ts(30,31): error TS2339: Property 'subuh' does not exist on type 'never'.
+src/actions/prayer.ts(31,32): error TS2339: Property 'syuruk' does not exist on type 'never'.
+src/actions/prayer.ts(32,31): error TS2339: Property 'zohor' does not exist on type 'never'.
+src/actions/prayer.ts(33,30): error TS2339: Property 'asar' does not exist on type 'never'.
+src/actions/prayer.ts(34,33): error TS2339: Property 'maghrib' does not exist on type 'never'.
+src/actions/prayer.ts(35,31): error TS2339: Property 'isyak' does not exist on type 'never'.
+src/actions/prayer.ts(48,47): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ ...; }, ... 5 more ..., "POST">', gave the following error.
+    Argument of type '{ mosque_id: string; date: string; subuh: string; syuruk: string; zohor: string; asar: string; maghrib: string; isyak: string; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<...>', gave the following error.
+    Object literal may only specify known properties, and 'mosque_id' does not exist in type 'never[]'.
+src/actions/prayer.ts(83,10): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ ...; }, ... 5 more ..., "POST">', gave the following error.
+    Argument of type '{ mosque_id: string; prayer_name: string; offset_minutes: number; fixed_time: string | null; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<...>', gave the following error.
+    Object literal may only specify known properties, and 'mosque_id' does not exist in type 'never[]'.
+src/actions/volunteer.ts(27,64): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "volunteer_signups", never, "POST">', gave the following error.
+    Argument of type '{ opportunity_id: string; user_id: string; message: string | null; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "volunteer_signups", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'opportunity_id' does not exist in type 'never[]'.
+src/actions/volunteer.ts(45,70): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "volunteer_opportunities", never, "POST">', gave the following error.
+    Argument of type '{ mosque_id: string; title: string; description: string; slots_needed: number | null; deadline: string | null; event_id: string | null; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "volunteer_opportunities", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'mosque_id' does not exist in type 'never[]'.
+src/app/admin/analytics/page.tsx(33,74): error TS2339: Property 'session_id' does not exist on type 'never'.
+src/app/admin/analytics/page.tsx(38,24): error TS2339: Property 'page_path' does not exist on type 'never'.
+src/app/admin/events/[id]/edit/page.tsx(35,42): error TS2339: Property 'tags' does not exist on type 'never'.
+src/app/admin/events/[id]/edit/page.tsx(36,41): error TS2339: Property 'is_published' does not exist on type 'never'.
+src/app/admin/events/[id]/edit/page.tsx(40,89): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/admin/events/[id]/edit/page.tsx(41,98): error TS2339: Property 'description' does not exist on type 'never'.
+src/app/admin/events/[id]/edit/page.tsx(42,92): error TS2339: Property 'start_at' does not exist on type 'never'.
+src/app/admin/events/[id]/edit/page.tsx(43,90): error TS2339: Property 'end_at' does not exist on type 'never'.
+src/app/admin/events/[id]/edit/page.tsx(44,92): error TS2339: Property 'location' does not exist on type 'never'.
+src/app/admin/events/[id]/edit/page.tsx(45,100): error TS2339: Property 'max_participants' does not exist on type 'never'.
+src/app/admin/events/page.tsx(43,38): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/admin/events/page.tsx(47,89): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/admin/events/page.tsx(48,59): error TS2339: Property 'is_published' does not exist on type 'never'.
+src/app/admin/events/page.tsx(49,48): error TS2339: Property 'is_published' does not exist on type 'never'.
+src/app/admin/events/page.tsx(53,53): error TS2339: Property 'start_at' does not exist on type 'never'.
+src/app/admin/events/page.tsx(58,72): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/admin/events/page.tsx(62,99): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/announcements/page.tsx(54,34): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/announcements/page.tsx(57,114): error TS2339: Property 'category' does not exist on type 'never'.
+src/app/announcements/page.tsx(58,55): error TS2339: Property 'category' does not exist on type 'never'.
+src/app/announcements/page.tsx(58,70): error TS2339: Property 'category' does not exist on type 'never'.
+src/app/announcements/page.tsx(60,36): error TS2339: Property 'pinned' does not exist on type 'never'.
+src/app/announcements/page.tsx(62,49): error TS2339: Property 'created_at' does not exist on type 'never'.
+src/app/announcements/page.tsx(65,70): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/announcements/page.tsx(66,32): error TS2339: Property 'body' does not exist on type 'never'.
+src/app/announcements/page.tsx(67,101): error TS2339: Property 'body' does not exist on type 'never'.
+src/app/donate/page.tsx(44,78): error TS2339: Property 'bank_name' does not exist on type 'never'.
+src/app/donate/page.tsx(48,78): error TS2339: Property 'account_name' does not exist on type 'never'.
+src/app/donate/page.tsx(53,109): error TS2339: Property 'account_number' does not exist on type 'never'.
+src/app/donate/page.tsx(59,35): error TS2339: Property 'qr_image_url' does not exist on type 'never'.
+src/app/donate/page.tsx(62,51): error TS2339: Property 'qr_image_url' does not exist on type 'never'.
+src/app/donate/page.tsx(71,35): error TS2339: Property 'notes' does not exist on type 'never'.
+src/app/donate/page.tsx(73,43): error TS2339: Property 'notes' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(24,23): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(25,29): error TS2339: Property 'description' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(38,38): error TS2339: Property 'start_at' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(61,20): error TS2339: Property 'poster_url' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(64,36): error TS2339: Property 'poster_url' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(65,36): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(74,72): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(75,24): error TS2339: Property 'tags' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(77,32): error TS2339: Property 'tags' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(77,42): error TS7006: Parameter 'tag' implicitly has an 'any' type.
+src/app/events/[id]/page.tsx(97,24): error TS2339: Property 'location' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(101,71): error TS2339: Property 'location' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(108,20): error TS2339: Property 'description' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(110,93): error TS2339: Property 'description' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(121,36): error TS2339: Property 'max_participants' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(122,90): error TS2339: Property 'max_participants' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(126,60): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(126,82): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/events/[id]/page.tsx(127,56): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/events/page.tsx(44,54): error TS2339: Property 'start_at' does not exist on type 'never'.
+src/app/events/page.tsx(58,42): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/events/page.tsx(58,69): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/events/page.tsx(69,117): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/events/page.tsx(74,56): error TS2339: Property 'location' does not exist on type 'never'.
+src/app/events/page.tsx(76,95): error TS2339: Property 'location' does not exist on type 'never'.
+src/app/events/page.tsx(80,52): error TS2339: Property 'tags' does not exist on type 'never'.
+src/app/events/page.tsx(82,60): error TS2339: Property 'tags' does not exist on type 'never'.
+src/app/events/page.tsx(82,70): error TS7006: Parameter 'tag' implicitly has an 'any' type.
+src/app/facilities/page.tsx(23,23): error TS2339: Property 'category' does not exist on type 'never'.
+src/app/facilities/page.tsx(56,49): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/facilities/page.tsx(64,97): error TS2339: Property 'name' does not exist on type 'never'.
+src/app/facilities/page.tsx(65,59): error TS2339: Property 'has_wheelchair_access' does not exist on type 'never'.
+src/app/facilities/page.tsx(69,55): error TS2339: Property 'description' does not exist on type 'never'.
+src/app/facilities/page.tsx(70,117): error TS2339: Property 'description' does not exist on type 'never'.
+src/app/facilities/page.tsx(72,55): error TS2339: Property 'location_hint' does not exist on type 'never'.
+src/app/facilities/page.tsx(74,94): error TS2339: Property 'location_hint' does not exist on type 'never'.
+src/app/sw.ts(15,21): error TS2552: Cannot find name 'ServiceWorkerGlobalScope'. Did you mean 'WorkerGlobalScope'?
+src/app/volunteer/page.tsx(42,36): error TS2339: Property 'id' does not exist on type 'never'.
+src/app/volunteer/page.tsx(46,80): error TS2339: Property 'title' does not exist on type 'never'.
+src/app/volunteer/page.tsx(47,42): error TS2339: Property 'description' does not exist on type 'never'.
+src/app/volunteer/page.tsx(48,104): error TS2339: Property 'description' does not exist on type 'never'.
+src/app/volunteer/page.tsx(51,46): error TS2339: Property 'slots_needed' does not exist on type 'never'.
+src/app/volunteer/page.tsx(53,54): error TS2339: Property 'slots_needed' does not exist on type 'never'.
+src/app/volunteer/page.tsx(56,46): error TS2339: Property 'deadline' does not exist on type 'never'.
+src/app/volunteer/page.tsx(59,77): error TS2339: Property 'deadline' does not exist on type 'never'.
+src/app/volunteer/page.tsx(64,75): error TS2339: Property 'id' does not exist on type 'never'.
+src/lib/validators/feedback.ts(10,17): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: [string, ...string[]], params?: string | { error?: string | $ZodErrorMap<$ZodIssueInvalidValue<unknown>> | undefined; message?: string | undefined; } | undefined): ZodEnum<...>', gave the following error.
+    Object literal may only specify known properties, and 'errorMap' does not exist in type '{ error?: string | $ZodErrorMap<$ZodIssueInvalidValue<unknown>> | undefined; message?: string | undefined; }'.
+  Overload 2 of 2, '(entries: Readonly<Record<string, EnumValue>>, params?: string | { error?: string | $ZodErrorMap<$ZodIssueInvalidValue<unknown>> | undefined; message?: string | undefined; } | undefined): ZodEnum<...>', gave the following error.
+    Argument of type '[string, ...string[]]' is not assignable to parameter of type 'Readonly<Record<string, EnumValue>>'.
+      Index signature for type 'string' is missing in type '[string, ...string[]]'.
+src/lib/validators/feedback.ts(22,13): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: [string, ...string[]], params?: string | { error?: string | $ZodErrorMap<$ZodIssueInvalidValue<unknown>> | undefined; message?: string | undefined; } | undefined): ZodEnum<...>', gave the following error.
+    Object literal may only specify known properties, and 'errorMap' does not exist in type '{ error?: string | $ZodErrorMap<$ZodIssueInvalidValue<unknown>> | undefined; message?: string | undefined; }'.
+  Overload 2 of 2, '(entries: Readonly<Record<string, EnumValue>>, params?: string | { error?: string | $ZodErrorMap<$ZodIssueInvalidValue<unknown>> | undefined; message?: string | undefined; } | undefined): ZodEnum<...>', gave the following error.
+    Argument of type '[string, ...string[]]' is not assignable to parameter of type 'Readonly<Record<string, EnumValue>>'.
+      Index signature for type 'string' is missing in type '[string, ...string[]]'.
+src/services/analytics.ts(28,10): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "analytics_events", never, "POST">', gave the following error.
+    Argument of type '{ event_name: string; session_id: string; page_path: string; metadata: Record<string, unknown> | null; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "analytics_events", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'event_name' does not exist in type 'never[]'.
+src/services/notifications.ts(35,65): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; } | undefined): PostgrestFilterBuilder<{ ...; }, ... 5 more ..., "POST">', gave the following error.
+    Argument of type '{ user_id: string; endpoint: string; keys: Record<string, string>; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { onConflict?: string | undefined; ignoreDuplicates?: boolean | undefined; count?: "exact" | "planned" | "estimated" | undefined; defaultToNull?: boolean | undefined; } | undefined): PostgrestFilterBuilder<...>', gave the following error.
+    Type 'Record<string, string>' is not assignable to type '() => ArrayIterator<number>'.
+      Type 'Record<string, string>' provides no match for the signature '(): ArrayIterator<number>'.
