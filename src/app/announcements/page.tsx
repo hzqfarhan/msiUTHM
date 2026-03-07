@@ -23,8 +23,8 @@ const categoryLabels: Record<string, string> = {
 
 const categoryColors: Record<string, string> = {
     urgent: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
-    general: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-    event: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
+    general: 'bg-secondary/10 text-secondary dark:text-secondary-foreground',
+    event: 'bg-primary/10 text-primary dark:text-primary-foreground',
     facilities: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
 };
 

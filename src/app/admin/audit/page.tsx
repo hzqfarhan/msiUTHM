@@ -42,7 +42,7 @@ export default async function AuditLogPage() {
 
             <div>
                 <h1 className="text-xl font-bold flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-emerald-500" /> Log Audit
+                    <Shield className="h-5 w-5 text-primary" /> Log Audit
                 </h1>
                 <p className="text-sm text-muted-foreground">Jejak semua perubahan oleh admin.</p>
             </div>
@@ -59,7 +59,7 @@ export default async function AuditLogPage() {
                             timeZone: 'Asia/Kuala_Lumpur',
                         });
                         const actionColor =
-                            log.action === 'INSERT' ? 'text-emerald-500' :
+                            log.action === 'INSERT' ? 'text-primary' :
                                 log.action === 'DELETE' ? 'text-red-500' :
                                     'text-amber-500';
 

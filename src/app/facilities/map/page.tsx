@@ -22,14 +22,14 @@ interface Facility {
 // Default pin positions (percentage-based on a map image)
 // In production, these would come from the database
 const defaultPins: { facilityName: string; x: number; y: number; color: string }[] = [
-    { facilityName: 'Dewan Solat Utama (Muslimin)', x: 50, y: 35, color: '#10b981' },
-    { facilityName: 'Dewan Solat Muslimat', x: 50, y: 55, color: '#10b981' },
-    { facilityName: 'Tandas Lelaki', x: 25, y: 70, color: '#3b82f6' },
-    { facilityName: 'Tandas Wanita', x: 75, y: 70, color: '#3b82f6' },
-    { facilityName: 'Tempat Wuduk Lelaki', x: 20, y: 60, color: '#06b6d4' },
-    { facilityName: 'Tempat Wuduk Wanita', x: 80, y: 60, color: '#06b6d4' },
-    { facilityName: 'Tempat Letak Kereta', x: 50, y: 90, color: '#8b5cf6' },
-    { facilityName: 'Ruang Rehat Musafir', x: 85, y: 40, color: '#f59e0b' },
+    { facilityName: 'Dewan Solat Utama (Muslimin)', x: 50, y: 35, color: '#00C6C8' },
+    { facilityName: 'Dewan Solat Muslimat', x: 50, y: 55, color: '#00C6C8' },
+    { facilityName: 'Tandas Lelaki', x: 25, y: 70, color: '#4F8FB5' },
+    { facilityName: 'Tandas Wanita', x: 75, y: 70, color: '#4F8FB5' },
+    { facilityName: 'Tempat Wuduk Lelaki', x: 20, y: 60, color: '#4FE0E3' },
+    { facilityName: 'Tempat Wuduk Wanita', x: 80, y: 60, color: '#4FE0E3' },
+    { facilityName: 'Tempat Letak Kereta', x: 50, y: 90, color: '#0B1E4A' },
+    { facilityName: 'Ruang Rehat Musafir', x: 85, y: 40, color: '#0FA3A6' },
 ];
 
 export default function FacilityMapPage() {
@@ -70,7 +70,7 @@ export default function FacilityMapPage() {
             {/* Map container */}
             <div className="glass-card glass-shimmer rounded-2xl p-4 relative">
                 {/* Map placeholder — a stylized mosque layout */}
-                <div className="relative aspect-[4/3] bg-gradient-to-b from-emerald-950/20 to-teal-950/20 rounded-xl overflow-hidden border border-[var(--glass-border-subtle)]">
+                <div className="relative aspect-[4/3] bg-gradient-to-b from-primary/10 to-accent/10 rounded-xl overflow-hidden border border-[var(--glass-border-subtle)]">
                     {/* Grid pattern overlay */}
                     <div className="absolute inset-0 opacity-10"
                         style={{
@@ -80,8 +80,8 @@ export default function FacilityMapPage() {
                     />
 
                     {/* Mosque outline */}
-                    <div className="absolute top-[15%] left-[20%] right-[20%] bottom-[20%] border-2 border-emerald-500/30 rounded-xl">
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] text-emerald-500 glass-badge">
+                    <div className="absolute top-[15%] left-[20%] right-[20%] bottom-[20%] border-2 border-primary/30 rounded-xl">
+                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] text-primary glass-badge">
                             Bangunan Utama
                         </div>
                     </div>
@@ -116,11 +116,11 @@ export default function FacilityMapPage() {
 
                     {/* Legend */}
                     <div className="absolute bottom-2 left-2 glass-heavy rounded-lg p-2 text-[8px] space-y-0.5">
-                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-emerald-500" /> Solat</div>
-                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500" /> Tandas</div>
-                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-cyan-500" /> Wuduk</div>
-                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-purple-500" /> Tempat Letak Kereta</div>
-                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-amber-500" /> Rehat</div>
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-primary" /> Solat</div>
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-secondary" /> Tandas</div>
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-accent" /> Wuduk</div>
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-navy" /> Tempat Letak Kereta</div>
+                        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-primary-dark" /> Rehat</div>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@ export default function FacilityMapPage() {
                         </p>
                     )}
                     {selectedFacility.has_wheelchair_access && (
-                        <p className="text-xs flex items-center gap-1 text-emerald-500">
+                        <p className="text-xs flex items-center gap-1 text-primary">
                             <Accessibility className="h-3 w-3" /> Mesra OKU
                         </p>
                     )}

@@ -92,7 +92,7 @@ export function PushOptIn() {
         <div className="glass-card glass-shimmer rounded-2xl p-4">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className={`rounded-xl p-2 ${subscribed ? 'text-emerald-500 bg-emerald-500/10' : 'text-muted-foreground bg-muted'}`}>
+                    <div className={`rounded-xl p-2 ${subscribed ? 'text-primary bg-primary/10' : 'text-muted-foreground bg-muted'}`}>
                         {subscribed ? <Bell className="h-4 w-4" /> : <BellOff className="h-4 w-4" />}
                     </div>
                     <div>

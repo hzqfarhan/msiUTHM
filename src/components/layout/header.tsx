@@ -1,6 +1,6 @@
 /**
- * App Header — mobile/tablet only (hidden on desktop where sidebar takes over).
- * Liquid glass styling with Hijri date.
+ * App Header — floating glass bar with auto-hide on scroll.
+ * Visible on all screen sizes.
  */
 'use client';
 
@@ -15,16 +15,19 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { signOut } from '@/actions/auth';
 import { getHijriDate } from '@/lib/hijri';
 import type { Profile } from '@/lib/types/database';
+import { cn } from '@/lib/utils';
 
 export function Header() {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [dark, setDark] = useState(false);
     const [hijriDate, setHijriDate] = useState('');
+    const [visible, setVisible] = useState(true);
+    const lastScrollRef = useRef(0);
 
     useEffect(() => {
         // Theme
@@ -51,6 +54,19 @@ export function Header() {
                     });
             }
         });
+
+        // Auto-hide on scroll
+        const handleScroll = () => {
+            const currentScroll = window.scrollY;
+            if (currentScroll > lastScrollRef.current && currentScroll > 80) {
+                setVisible(false);
+            } else {
+                setVisible(true);
+            }
+            lastScrollRef.current = currentScroll;
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const toggleTheme = () => {
@@ -61,34 +77,43 @@ export function Header() {
     };
 
     return (
-        <header className="sticky top-0 z-50 glass-nav glass-shimmer lg:hidden">
-            <div className="mx-auto flex h-14 items-center justify-between px-4">
+        <header
+            className={cn(
+                'fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-screen-lg',
+                'glass-heavy rounded-2xl',
+                'shadow-lg shadow-black/10',
+                'border border-[var(--glass-border)]',
+                'transition-all duration-300 ease-out',
+                visible ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0 pointer-events-none',
+            )}
+        >
+            <div className="flex h-12 items-center justify-between px-4">
                 <Link href="/" className="flex items-center gap-2.5">
                     <img
                         src="/bg/app-logo.png"
                         alt="MSI UTHM Logo"
-                        className="h-8 w-8 object-contain"
+                        className="h-7 w-7 object-contain"
                     />
                     <div className="flex flex-col">
                         <span className="font-semibold text-foreground text-sm leading-tight">MSI UTHM</span>
                         {hijriDate && (
-                            <span className="text-[9px] text-muted-foreground leading-tight">{hijriDate}</span>
+                            <span className="text-[9px] text-muted-foreground leading-tight hidden sm:block">{hijriDate}</span>
                         )}
                     </div>
                 </Link>
 
                 <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 glass-button rounded-xl border-0">
+                    <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8 glass-button rounded-xl border-0">
                         {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
                     </Button>
 
                     {profile ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
+                                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
                                     <Avatar className="h-7 w-7">
                                         <AvatarImage src={profile.avatar_url || ''} />
-                                        <AvatarFallback className="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+                                        <AvatarFallback className="text-xs bg-primary/20 text-primary">
                                             {(profile.full_name || 'U')[0].toUpperCase()}
                                         </AvatarFallback>
                                     </Avatar>
@@ -116,9 +141,9 @@ export function Header() {
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
-                        <Button variant="ghost" size="sm" asChild className="h-9 glass-button rounded-xl border-0">
+                        <Button variant="ghost" size="sm" asChild className="h-8 glass-button rounded-xl border-0 text-xs">
                             <Link href="/auth/login">
-                                <User className="mr-1 h-4 w-4" /> Log Masuk
+                                <User className="mr-1 h-3.5 w-3.5" /> Log Masuk
                             </Link>
                         </Button>
                     )}

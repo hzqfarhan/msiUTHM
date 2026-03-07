@@ -74,7 +74,7 @@ export default function AdminAnnouncementsPage() {
                 <h2 className="font-semibold text-sm">Urus Pengumuman</h2>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <Button size="sm" className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700">
+                        <Button size="sm" className="h-8 text-xs bg-primary hover:bg-primary-dark">
                             <Plus className="mr-1 h-3 w-3" /> Tambah
                         </Button>
                     </DialogTrigger>
@@ -103,10 +103,10 @@ export default function AdminAnnouncementsPage() {
                                 </Select>
                             </div>
                             <div className="flex items-center gap-2">
-                                <input type="checkbox" name="pinned" value="true" id="pinned" className="accent-emerald-600" />
+                                <input type="checkbox" name="pinned" value="true" id="pinned" className="accent-primary" />
                                 <Label htmlFor="pinned" className="text-xs cursor-pointer">Pin di atas</Label>
                             </div>
-                            <Button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700">
+                            <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary-dark">
                                 {loading ? 'Menyimpan...' : 'Terbitkan'}
                             </Button>
                         </form>

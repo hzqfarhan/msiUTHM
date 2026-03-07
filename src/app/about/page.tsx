@@ -60,12 +60,46 @@ export default async function AboutPage() {
                 </p>
             </div>
 
+            {/* Mosque Location Map */}
+            <Card className="border-border/50 overflow-hidden">
+                <CardContent className="p-0">
+                    <div className="flex items-center gap-2 p-4 pb-2">
+                        <div className="rounded-lg p-2 bg-primary/10">
+                            <MapPin className="h-4 w-4 text-primary" />
+                        </div>
+                        <h2 className="font-semibold text-sm">Lokasi Masjid</h2>
+                    </div>
+                    <div className="relative w-full aspect-[16/9] sm:aspect-[2/1]">
+                        <iframe
+                            title="Lokasi Masjid Sultan Ibrahim UTHM"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=103.0808%2C1.8560%2C103.0878%2C1.8620&layer=mapnik&marker=1.8590%2C103.0843"
+                            className="absolute inset-0 w-full h-full border-0"
+                            loading="lazy"
+                            referrerPolicy="no-referrer"
+                        />
+                    </div>
+                    <div className="p-3 flex items-center justify-between">
+                        <p className="text-xs text-muted-foreground">
+                            Masjid Sultan Ibrahim, Universiti Tun Hussein Onn Malaysia
+                        </p>
+                        <a
+                            href="https://www.google.com/maps/search/?api=1&query=1.8590,103.0843"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-primary hover:underline whitespace-nowrap ml-2"
+                        >
+                            Buka di Maps →
+                        </a>
+                    </div>
+                </CardContent>
+            </Card>
+
             {/* Mosque Info Card */}
             <Card className="border-border/50">
                 <CardContent className="p-4 space-y-3">
                     <div className="flex items-center gap-2">
-                        <div className="rounded-lg p-2 bg-emerald-100 dark:bg-emerald-900/30">
-                            <Info className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                        <div className="rounded-lg p-2 bg-primary/10">
+                            <Info className="h-4 w-4 text-primary" />
                         </div>
                         <h2 className="font-semibold text-sm">Maklumat Masjid</h2>
                     </div>
@@ -78,15 +112,15 @@ export default async function AboutPage() {
 
                     {mosque?.address && (
                         <div className="flex items-start gap-2 text-xs">
-                            <MapPin className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                            <MapPin className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
                             <span className="text-muted-foreground">{mosque.address}</span>
                         </div>
                     )}
 
                     {mosque?.contact_info?.phone && (
                         <div className="flex items-center gap-2 text-xs">
-                            <Phone className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                            <a href={`tel:${mosque.contact_info.phone}`} className="text-emerald-600 dark:text-emerald-400 hover:underline">
+                            <Phone className="h-3.5 w-3.5 text-primary shrink-0" />
+                            <a href={`tel:${mosque.contact_info.phone}`} className="text-primary hover:underline">
                                 {mosque.contact_info.phone}
                             </a>
                         </div>
@@ -94,8 +128,8 @@ export default async function AboutPage() {
 
                     {mosque?.contact_info?.email && (
                         <div className="flex items-center gap-2 text-xs">
-                            <Mail className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                            <a href={`mailto:${mosque.contact_info.email}`} className="text-emerald-600 dark:text-emerald-400 hover:underline">
+                            <Mail className="h-3.5 w-3.5 text-primary shrink-0" />
+                            <a href={`mailto:${mosque.contact_info.email}`} className="text-primary hover:underline">
                                 {mosque.contact_info.email}
                             </a>
                         </div>
@@ -107,8 +141,8 @@ export default async function AboutPage() {
             <Card className="border-border/50">
                 <CardContent className="p-4 space-y-3">
                     <div className="flex items-center gap-2">
-                        <div className="rounded-lg p-2 bg-blue-100 dark:bg-blue-900/30">
-                            <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                        <div className="rounded-lg p-2 bg-secondary/10">
+                            <Clock className="h-4 w-4 text-secondary" />
                         </div>
                         <h2 className="font-semibold text-sm">Waktu Solat Hari Ini</h2>
                     </div>
@@ -126,7 +160,7 @@ export default async function AboutPage() {
                                         </p>
                                         <p className="font-semibold text-sm">{formatTime12h(time)}</p>
                                         {iqamah && prayer.key !== 'syuruk' && (
-                                            <p className="text-[10px] text-emerald-600 dark:text-emerald-400">
+                                            <p className="text-[10px] text-primary">
                                                 Iqamah +{iqamah.offset_minutes}min
                                             </p>
                                         )}
@@ -138,7 +172,7 @@ export default async function AboutPage() {
                         <p className="text-xs text-muted-foreground">Waktu solat tidak tersedia buat masa ini.</p>
                     )}
 
-                    <Link href="/prayer" className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
+                    <Link href="/prayer" className="text-xs text-primary hover:underline">
                         Lihat jadual penuh →
                     </Link>
                 </CardContent>
@@ -148,8 +182,8 @@ export default async function AboutPage() {
             <Card className="border-border/50">
                 <CardContent className="p-4 space-y-3">
                     <div className="flex items-center gap-2">
-                        <div className="rounded-lg p-2 bg-purple-100 dark:bg-purple-900/30">
-                            <Building2 className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                        <div className="rounded-lg p-2 bg-primary-dark/10">
+                            <Building2 className="h-4 w-4 text-primary-dark" />
                         </div>
                         <h2 className="font-semibold text-sm">Kemudahan Masjid</h2>
                     </div>
@@ -158,12 +192,12 @@ export default async function AboutPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {otherFacilities.map((f) => (
                                 <div key={f.id} className="flex items-start gap-2 text-xs p-2 rounded-lg bg-accent/30">
-                                    <Building2 className="h-3.5 w-3.5 text-purple-500 shrink-0 mt-0.5" />
+                                    <Building2 className="h-3.5 w-3.5 text-primary-dark shrink-0 mt-0.5" />
                                     <div>
                                         <div className="flex items-center gap-1.5">
                                             <span className="font-medium">{f.name}</span>
                                             {f.has_wheelchair_access && (
-                                                <Accessibility className="h-3 w-3 text-blue-500" />
+                                                <Accessibility className="h-3 w-3 text-secondary" />
                                             )}
                                         </div>
                                         {f.location_hint && (
@@ -177,7 +211,7 @@ export default async function AboutPage() {
                         <p className="text-xs text-muted-foreground">Tiada maklumat kemudahan.</p>
                     )}
 
-                    <Link href="/facilities" className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
+                    <Link href="/facilities" className="text-xs text-primary hover:underline">
                         Lihat semua kemudahan →
                     </Link>
                 </CardContent>
@@ -187,8 +221,8 @@ export default async function AboutPage() {
             <Card className="border-border/50">
                 <CardContent className="p-4 space-y-3">
                     <div className="flex items-center gap-2">
-                        <div className="rounded-lg p-2 bg-amber-100 dark:bg-amber-900/30">
-                            <Car className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                        <div className="rounded-lg p-2 bg-navy/10">
+                            <Car className="h-4 w-4 text-navy" />
                         </div>
                         <h2 className="font-semibold text-sm">Tempat Letak Kereta</h2>
                     </div>
@@ -225,8 +259,8 @@ export default async function AboutPage() {
             <Card className="border-border/50">
                 <CardContent className="p-4 space-y-3">
                     <div className="flex items-center gap-2">
-                        <div className="rounded-lg p-2 bg-teal-100 dark:bg-teal-900/30">
-                            <Calendar className="h-4 w-4 text-teal-600 dark:text-teal-400" />
+                        <div className="rounded-lg p-2 bg-primary/10">
+                            <Calendar className="h-4 w-4 text-primary" />
                         </div>
                         <h2 className="font-semibold text-sm">Program & Acara Akan Datang</h2>
                     </div>
@@ -238,7 +272,7 @@ export default async function AboutPage() {
                                 return (
                                     <Link key={event.id} href={`/events/${event.id}`} className="block">
                                         <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent/30 transition-colors">
-                                            <div className="shrink-0 flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300">
+                                            <div className="shrink-0 flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary">
                                                 <span className="text-sm font-bold leading-none">{startDate.getDate()}</span>
                                                 <span className="text-[8px] uppercase">
                                                     {startDate.toLocaleDateString('ms-MY', { month: 'short', timeZone: 'Asia/Kuala_Lumpur' })}
@@ -260,7 +294,7 @@ export default async function AboutPage() {
                         <p className="text-xs text-muted-foreground">Tiada program akan datang buat masa ini.</p>
                     )}
 
-                    <Link href="/events" className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline">
+                    <Link href="/events" className="text-xs text-primary hover:underline">
                         Lihat semua program →
                     </Link>
                 </CardContent>

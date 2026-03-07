@@ -74,7 +74,7 @@ export function PrayerTimetable({ prayerTimes, iqamahSettings, error }: Props) {
                                 <div className="min-w-0">
                                     <p className={cn(
                                         'font-semibold text-xs truncate',
-                                        isNext && 'text-emerald-400'
+                                        isNext && 'text-primary'
                                     )}>
                                         {prayer.label}
                                     </p>
@@ -83,7 +83,7 @@ export function PrayerTimetable({ prayerTimes, iqamahSettings, error }: Props) {
                                 <div className="text-right shrink-0">
                                     <p className={cn(
                                         'font-bold text-sm tabular-nums',
-                                        isNext && 'text-emerald-400'
+                                        isNext && 'text-primary'
                                     )}>
                                         {formatTime12h(time)}
                                     </p>

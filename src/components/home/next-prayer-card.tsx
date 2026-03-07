@@ -34,8 +34,8 @@ export function NextPrayerCard({ prayerTimes, iqamahSettings }: Props) {
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/20 via-emerald-700/10 to-teal-800/20 pointer-events-none" />
 
             {/* Decorative orbs */}
-            <div className="absolute top-0 right-0 w-28 h-28 bg-emerald-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
-            <div className="absolute bottom-0 left-0 w-20 h-20 bg-teal-500/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
+            <div className="absolute top-0 right-0 w-28 h-28 bg-primary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-primary/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
 
             <div className="relative p-5">
                 <div className="flex items-center justify-between mb-3">
@@ -43,13 +43,13 @@ export function NextPrayerCard({ prayerTimes, iqamahSettings }: Props) {
                         <Clock className="h-3.5 w-3.5" />
                         <span>{currentTime}</span>
                     </div>
-                    <span className="text-[10px] uppercase tracking-wider font-medium text-emerald-500 dark:text-emerald-400 glass-badge">
+                    <span className="text-[10px] uppercase tracking-wider font-medium text-primary dark:text-primary glass-badge">
                         Solat Seterusnya
                     </span>
                 </div>
 
                 <div className="text-center space-y-2">
-                    <h2 className="text-2xl font-bold tracking-tight text-emerald-600 dark:text-emerald-400">{nextPrayer.label}</h2>
+                    <h2 className="text-2xl font-bold tracking-tight text-primary dark:text-primary">{nextPrayer.label}</h2>
                     <p className="text-muted-foreground text-sm">
                         {formatTime12h(nextPrayer.time)}
                         {nextIqamah && (

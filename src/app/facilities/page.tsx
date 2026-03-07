@@ -35,7 +35,7 @@ export default async function FacilitiesPage() {
 
             {/* Visitor mode button */}
             <Link href="/facilities?mode=visitor" className="block">
-                <Card className="border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/30 hover:bg-emerald-100/50 dark:hover:bg-emerald-950/50 transition-colors">
+                <Card className="border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
                     <CardContent className="p-3.5 flex items-center gap-3">
                         <span className="text-xl">🧳</span>
                         <div>
@@ -56,14 +56,14 @@ export default async function FacilitiesPage() {
                             <Card key={facility.id} className="border-border/50 hover:bg-accent/30 transition-colors">
                                 <CardContent className="p-3.5">
                                     <div className="flex items-start gap-3">
-                                        <div className="rounded-lg bg-purple-100 dark:bg-purple-900/30 p-2 shrink-0">
-                                            <Building2 className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                                        <div className="rounded-lg bg-secondary/10 p-2 shrink-0">
+                                            <Building2 className="h-4 w-4 text-secondary" />
                                         </div>
                                         <div className="flex-1 min-w-0 space-y-1">
                                             <div className="flex items-center gap-2">
                                                 <h3 className="font-semibold text-sm">{facility.name}</h3>
                                                 {facility.has_wheelchair_access && (
-                                                    <Accessibility className="h-3.5 w-3.5 text-blue-500" />
+                                                    <Accessibility className="h-3.5 w-3.5 text-secondary" />
                                                 )}
                                             </div>
                                             {facility.description && (

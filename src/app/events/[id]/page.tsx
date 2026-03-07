@@ -87,7 +87,7 @@ export default async function EventDetailPage({ params }: Props) {
             {/* Info cards */}
             <div className="grid grid-cols-2 gap-3">
                 <div className="glass-card glass-shimmer rounded-2xl p-3 flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-emerald-500 shrink-0" />
+                    <Calendar className="h-4 w-4 text-primary shrink-0" />
                     <div>
                         <p className="text-xs font-medium">{dateStr}</p>
                         <p className="text-[10px] text-muted-foreground">{timeStr}</p>
@@ -95,7 +95,7 @@ export default async function EventDetailPage({ params }: Props) {
                 </div>
                 {event.location && (
                     <div className="glass-card glass-shimmer rounded-2xl p-3 flex items-center gap-2">
-                        <MapPin className="h-4 w-4 text-emerald-500 shrink-0" />
+                        <MapPin className="h-4 w-4 text-primary shrink-0" />
                         <p className="text-xs font-medium">{event.location}</p>
                     </div>
                 )}
@@ -112,7 +112,7 @@ export default async function EventDetailPage({ params }: Props) {
             <div className="glass-card glass-shimmer rounded-2xl p-4 glow-emerald">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-sm">
-                        <Users className="h-4 w-4 text-emerald-500" />
+                        <Users className="h-4 w-4 text-primary" />
                         <span className="font-medium">{rsvpCount} RSVP</span>
                         {event.max_participants && (
                             <span className="text-xs text-muted-foreground">/ {event.max_participants}</span>

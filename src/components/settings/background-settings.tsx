@@ -46,7 +46,7 @@ export function BackgroundSettings({ onClose }: { onClose?: () => void }) {
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold flex items-center gap-2">
-                    <ImageIcon className="h-4 w-4 text-emerald-500" />
+                    <ImageIcon className="h-4 w-4 text-primary" />
                     Latar Belakang
                 </h3>
                 {onClose && (

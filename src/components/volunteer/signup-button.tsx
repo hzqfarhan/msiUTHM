@@ -42,7 +42,7 @@ export function VolunteerSignupButton({ opportunityId }: Props) {
             onClick={handleSignup}
             disabled={loading}
             size="sm"
-            className="shrink-0 h-8 text-xs bg-teal-600 hover:bg-teal-700 text-white"
+            className="shrink-0 h-8 text-xs bg-primary hover:bg-primary-dark text-white"
         >
             <Hand className="mr-1 h-3 w-3" />
             {loading ? '...' : 'Daftar'}

@@ -129,7 +129,7 @@ export function Sidebar() {
                                 'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200',
                                 collapsed && 'justify-center px-2',
                                 isActive
-                                    ? 'glass-button glow-emerald text-emerald-500 dark:text-emerald-400'
+                                    ? 'glass-button glow-emerald text-primary dark:text-primary'
                                     : 'text-muted-foreground hover:text-foreground hover:bg-[var(--glass-bg)]',
                             )}
                         >
@@ -176,7 +176,7 @@ export function Sidebar() {
                     )}>
                         <Avatar className="h-7 w-7 shrink-0">
                             <AvatarImage src={profile.avatar_url || ''} />
-                            <AvatarFallback className="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+                            <AvatarFallback className="text-xs bg-primary/20 text-primary-dark dark:bg-emerald-900 dark:text-emerald-300">
                                 {(profile.full_name || 'U')[0].toUpperCase()}
                             </AvatarFallback>
                         </Avatar>

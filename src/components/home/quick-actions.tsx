@@ -7,14 +7,14 @@ import {
 } from 'lucide-react';
 
 const actions = [
-    { href: '/prayer', label: 'Waktu Solat', icon: Clock, variant: 'liquid-btn-emerald', iconColor: 'text-emerald-400' },
-    { href: '/events', label: 'Program', icon: Calendar, variant: 'liquid-btn-blue', iconColor: 'text-blue-400' },
-    { href: '/facilities', label: 'Kemudahan', icon: Building2, variant: 'liquid-btn-purple', iconColor: 'text-purple-400' },
-    { href: '/qibla', label: 'Kiblat', icon: Compass, variant: 'liquid-btn-teal', iconColor: 'text-teal-400' },
+    { href: '/prayer', label: 'Waktu Solat', icon: Clock, variant: 'liquid-btn-emerald', iconColor: 'text-primary' },
+    { href: '/events', label: 'Program', icon: Calendar, variant: 'liquid-btn-blue', iconColor: 'text-secondary' },
+    { href: '/facilities', label: 'Kemudahan', icon: Building2, variant: 'liquid-btn-purple', iconColor: 'text-secondary' },
+    { href: '/qibla', label: 'Kiblat', icon: Compass, variant: 'liquid-btn-teal', iconColor: 'text-primary' },
     { href: '/donate', label: 'Infaq', icon: Heart, variant: 'liquid-btn-rose', iconColor: 'text-rose-400' },
-    { href: '/about', label: 'Info Masjid', icon: Info, variant: 'liquid-btn-blue', iconColor: 'text-blue-400' },
+    { href: '/about', label: 'Info Masjid', icon: Info, variant: 'liquid-btn-blue', iconColor: 'text-secondary' },
     { href: '/feedback', label: 'Lapor Isu', icon: MessageSquare, variant: 'liquid-btn-orange', iconColor: 'text-amber-400' },
-    { href: '/volunteer', label: 'Sukarelawan', icon: Users, variant: 'liquid-btn-teal', iconColor: 'text-teal-400' },
+    { href: '/volunteer', label: 'Sukarelawan', icon: Users, variant: 'liquid-btn-teal', iconColor: 'text-primary' },
 ];
 
 export function QuickActions() {

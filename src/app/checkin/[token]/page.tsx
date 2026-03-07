@@ -96,7 +96,7 @@ export default function CheckinPage() {
             <div className="glass-card glass-shimmer rounded-2xl p-8 max-w-sm w-full text-center space-y-4">
                 {state === 'loading' && (
                     <>
-                        <Loader2 className="h-12 w-12 animate-spin text-emerald-500 mx-auto" />
+                        <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
                         <p className="text-sm text-muted-foreground">Memuatkan...</p>
                     </>
                 )}
@@ -104,11 +104,11 @@ export default function CheckinPage() {
                 {state === 'ready' && (
                     <>
                         <div className="mx-auto rounded-full glass-button p-5 w-fit glow-emerald">
-                            <QrCode className="h-10 w-10 text-emerald-500" />
+                            <QrCode className="h-10 w-10 text-primary" />
                         </div>
                         <h2 className="text-lg font-bold">{eventTitle}</h2>
                         <p className="text-sm text-muted-foreground">Tekan butang untuk daftar masuk ke program ini.</p>
-                        <Button onClick={handleCheckin} className="w-full glass-button rounded-xl glow-emerald text-emerald-500 font-medium">
+                        <Button onClick={handleCheckin} className="w-full glass-button rounded-xl glow-emerald text-primary font-medium">
                             <Check className="mr-2 h-4 w-4" /> Daftar Masuk
                         </Button>
                     </>
@@ -116,10 +116,10 @@ export default function CheckinPage() {
 
                 {state === 'success' && (
                     <>
-                        <div className="mx-auto rounded-full bg-emerald-500/20 p-5 w-fit glow-emerald">
-                            <Check className="h-10 w-10 text-emerald-500" />
+                        <div className="mx-auto rounded-full bg-primary/20 p-5 w-fit glow-emerald">
+                            <Check className="h-10 w-10 text-primary" />
                         </div>
-                        <h2 className="text-lg font-bold text-emerald-500">Berjaya!</h2>
+                        <h2 className="text-lg font-bold text-primary">Berjaya!</h2>
                         <p className="text-sm text-muted-foreground">Anda telah berjaya daftar masuk ke &quot;{eventTitle}&quot;.</p>
                     </>
                 )}

@@ -21,11 +21,11 @@ export default async function AdminDashboard() {
     ]);
 
     const stats = [
-        { label: 'Jumlah Program', value: events.count || 0, icon: Calendar, color: 'text-blue-600 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400' },
-        { label: 'Jumlah RSVP', value: rsvps.count || 0, icon: Users, color: 'text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400' },
-        { label: 'Pengumuman', value: announcements.count || 0, icon: Megaphone, color: 'text-purple-600 bg-purple-100 dark:bg-purple-900/30 dark:text-purple-400' },
-        { label: 'Maklum Balas Baru', value: feedback.count || 0, icon: MessageSquare, color: 'text-amber-600 bg-amber-100 dark:bg-amber-900/30 dark:text-amber-400' },
-        { label: 'Peristiwa Analitik', value: analytics.count || 0, icon: BarChart3, color: 'text-teal-600 bg-teal-100 dark:bg-teal-900/30 dark:text-teal-400' },
+        { label: 'Jumlah Program', value: events.count || 0, icon: Calendar, color: 'text-secondary bg-secondary/10' },
+        { label: 'Jumlah RSVP', value: rsvps.count || 0, icon: Users, color: 'text-primary bg-primary/10' },
+        { label: 'Pengumuman', value: announcements.count || 0, icon: Megaphone, color: 'text-primary-dark bg-primary-dark/10' },
+        { label: 'Maklum Balas Baru', value: feedback.count || 0, icon: MessageSquare, color: 'text-accent bg-accent/20' },
+        { label: 'Peristiwa Analitik', value: analytics.count || 0, icon: BarChart3, color: 'text-primary bg-primary/10' },
     ];
 
     return (

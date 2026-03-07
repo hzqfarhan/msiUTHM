@@ -36,9 +36,9 @@ export function FeedbackForm() {
 
     if (submitted) {
         return (
-            <Card className="border-emerald-200 dark:border-emerald-800">
+            <Card className="border-primary/30 dark:border-primary-dark/30">
                 <CardContent className="p-8 text-center space-y-3">
-                    <CheckCircle className="h-12 w-12 mx-auto text-emerald-500" />
+                    <CheckCircle className="h-12 w-12 mx-auto text-primary" />
                     <h3 className="font-semibold">Terima Kasih!</h3>
                     <p className="text-sm text-muted-foreground">
                         Maklum balas anda telah diterima. Pihak masjid akan menyemaknya.
@@ -107,7 +107,7 @@ export function FeedbackForm() {
                     <Button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+                        className="w-full bg-primary hover:bg-primary-dark text-white"
                     >
                         <Send className="mr-2 h-4 w-4" />
                         {loading ? 'Menghantar...' : 'Hantar Maklum Balas'}

@@ -119,7 +119,7 @@ export default function QiblaPage() {
                 {status === 'idle' && (
                     <div className="text-center space-y-4">
                         <div className="mx-auto rounded-full liquid-btn liquid-btn-emerald p-6 w-fit">
-                            <Compass className="h-12 w-12 text-emerald-400" />
+                            <Compass className="h-12 w-12 text-primary" />
                         </div>
                         <p className="text-sm text-muted-foreground max-w-[280px]">
                             Kami perlukan akses lokasi dan kompas peranti anda untuk menentukan arah kiblat.
@@ -132,7 +132,7 @@ export default function QiblaPage() {
 
                 {status === 'requesting' && (
                     <div className="text-center space-y-3 py-8">
-                        <RotateCw className="h-8 w-8 animate-spin text-emerald-500 mx-auto" />
+                        <RotateCw className="h-8 w-8 animate-spin text-primary mx-auto" />
                         <p className="text-sm text-muted-foreground">Mendapatkan lokasi...</p>
                     </div>
                 )}
@@ -299,7 +299,7 @@ export default function QiblaPage() {
                         {/* Bearing readout */}
                         <div className="text-center space-y-2">
                             <div className="liquid-btn liquid-btn-emerald px-6 py-2 inline-flex items-center gap-2">
-                                <span className="text-2xl font-bold text-emerald-400 tabular-nums">
+                                <span className="text-2xl font-bold text-primary tabular-nums">
                                     {Math.round(qiblaAngle)}°
                                 </span>
                                 <span className="text-xs text-muted-foreground">dari Utara</span>

@@ -60,7 +60,7 @@ export default async function EventsPage() {
                                 <CardContent className="p-4">
                                     <div className="flex gap-3">
                                         {/* Date badge */}
-                                        <div className="shrink-0 flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">
+                                        <div className="shrink-0 flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-primary/20 dark:bg-emerald-900/30 text-primary-dark dark:text-emerald-300">
                                             <span className="text-lg font-bold leading-none">{startDate.getDate()}</span>
                                             <span className="text-[9px] uppercase">{startDate.toLocaleDateString('ms-MY', { month: 'short', timeZone: 'Asia/Kuala_Lumpur' })}</span>
                                         </div>

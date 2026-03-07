@@ -16,7 +16,7 @@ import type { FeedbackReport } from '@/lib/types/database';
 const statusConfig: Record<string, { label: string; color: string; icon: typeof Clock }> = {
     new: { label: 'Baru', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300', icon: Clock },
     acknowledged: { label: 'Disemak', color: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300', icon: Eye },
-    resolved: { label: 'Selesai', color: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300', icon: CheckCircle },
+    resolved: { label: 'Selesai', color: 'bg-primary/20 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300', icon: CheckCircle },
 };
 
 export default function AdminFeedbackPage() {

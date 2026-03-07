@@ -23,7 +23,7 @@ export default async function AdminEventsPage() {
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <h2 className="font-semibold text-sm">Urus Program</h2>
-                <Button size="sm" asChild className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700">
+                <Button size="sm" asChild className="h-8 text-xs bg-primary hover:bg-primary-dark">
                     <Link href="/admin/events/new/edit">
                         <Plus className="mr-1 h-3 w-3" /> Tambah Program
                     </Link>

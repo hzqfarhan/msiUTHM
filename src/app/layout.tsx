@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/header';
 import { BottomNav } from '@/components/layout/bottom-nav';
-import { Sidebar } from '@/components/layout/sidebar';
 import { Footer } from '@/components/layout/footer';
 import { InstallPrompt } from '@/components/pwa/install-prompt';
 import { OfflineBanner } from '@/components/pwa/offline-banner';
@@ -69,22 +68,20 @@ export default function RootLayout({
         <div className="mesh-orb mesh-orb-4" aria-hidden="true" />
         <div className="mesh-orb mesh-orb-5" aria-hidden="true" />
 
-        {/* Desktop sidebar */}
-        <Sidebar />
+        {/* Floating header */}
+        <Header />
 
-        <div className="flex min-h-dvh flex-col lg:pl-60" id="main-container">
-          {/* Mobile header (hidden on desktop) */}
-          <Header />
+        <div className="flex min-h-dvh flex-col" id="main-container">
           <OfflineBanner />
 
-          <main className="flex-1 page-content">
+          <main className="flex-1 page-content pt-20 pb-24">
             <div className="mx-auto max-w-screen-lg px-4 py-4 lg:px-8 lg:py-6">
               {children}
               <Footer />
             </div>
           </main>
 
-          {/* Mobile bottom nav */}
+          {/* Floating bottom nav */}
           <BottomNav />
         </div>
 

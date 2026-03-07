@@ -57,7 +57,7 @@ export function RsvpButton({ eventId, hasRsvp }: Props) {
             disabled={loading}
             size="sm"
             variant={hasRsvp ? 'outline' : 'default'}
-            className={hasRsvp ? 'h-8 text-xs' : 'h-8 text-xs bg-emerald-600 hover:bg-emerald-700 text-white'}
+            className={hasRsvp ? 'h-8 text-xs' : 'h-8 text-xs bg-primary hover:bg-primary-dark text-white'}
         >
             {hasRsvp ? (
                 <>

@@ -95,7 +95,7 @@ export function QRGenerator() {
                         key={p.type}
                         onClick={() => { setSelectedType(p.type); setQrDataUrl(null); setInputValue(''); }}
                         className={`rounded-xl px-3 py-2 text-xs font-medium transition-all ${selectedType === p.type
-                                ? 'glass-button glow-emerald text-emerald-500'
+                                ? 'glass-button glow-emerald text-primary'
                                 : 'glass-card text-muted-foreground hover:text-foreground'
                             }`}
                     >
@@ -113,7 +113,7 @@ export function QRGenerator() {
                         placeholder={preset.placeholder}
                         className="glass-input rounded-xl"
                     />
-                    <Button onClick={generateQR} disabled={!inputValue} className="glass-button rounded-xl border-emerald-500/30 text-emerald-500 shrink-0">
+                    <Button onClick={generateQR} disabled={!inputValue} className="glass-button rounded-xl border-primary/30/30 text-primary shrink-0">
                         <QrCode className="mr-1.5 h-4 w-4" /> Jana
                     </Button>
                 </div>

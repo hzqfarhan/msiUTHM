@@ -27,7 +27,7 @@ export function Footer() {
                         href="https://krackeddevs.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium"
+                        className="text-primary dark:text-primary hover:underline font-medium"
                     >
                         Sertai Kami
                     </a>
@@ -36,7 +36,7 @@ export function Footer() {
                         href="https://krackeddevs.com/refer"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium"
+                        className="text-primary dark:text-primary hover:underline font-medium"
                     >
                         Rujukan
                     </a>

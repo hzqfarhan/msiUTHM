@@ -60,7 +60,7 @@ export default async function AdminAnalyticsPage() {
                 {stats.map((stat) => (
                     <Card key={stat.label} className="border-border/50">
                         <CardContent className="p-3.5 flex items-center gap-3">
-                            <div className="rounded-lg p-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
+                            <div className="rounded-lg p-2 bg-primary/20 dark:bg-emerald-900/30 text-primary dark:text-primary">
                                 <stat.icon className="h-4 w-4" />
                             </div>
                             <div>

@@ -144,7 +144,7 @@ export default function AdminEventEditPage() {
                                 id="publish"
                                 checked={isPublished}
                                 onChange={(e) => setIsPublished(e.target.checked)}
-                                className="h-4 w-4 accent-emerald-600"
+                                className="h-4 w-4 accent-primary"
                             />
                             <Label htmlFor="publish" className="text-xs cursor-pointer">
                                 Terbitkan program ini (visible to public)
@@ -154,7 +154,7 @@ export default function AdminEventEditPage() {
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-emerald-600 hover:bg-emerald-700"
+                            className="w-full bg-primary hover:bg-primary-dark"
                         >
                             <Save className="mr-2 h-4 w-4" />
                             {loading ? 'Menyimpan...' : 'Simpan'}

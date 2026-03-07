@@ -46,8 +46,8 @@ function LoginForm() {
         return (
             <Card className="border-border/50">
                 <CardContent className="p-6 text-center space-y-3">
-                    <div className="mx-auto w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                        <Mail className="h-6 w-6 text-emerald-600" />
+                    <div className="mx-auto w-12 h-12 rounded-full bg-primary/20 dark:bg-emerald-900/30 flex items-center justify-center">
+                        <Mail className="h-6 w-6 text-primary" />
                     </div>
                     <h2 className="font-semibold">Semak E-mel Anda</h2>
                     <p className="text-sm text-muted-foreground">
@@ -86,7 +86,7 @@ function LoginForm() {
                     <Button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+                        className="w-full bg-primary hover:bg-primary-dark text-white"
                     >
                         <Mail className="mr-2 h-4 w-4" />
                         {loading ? 'Menghantar...' : 'Log Masuk dengan E-mel'}
@@ -126,7 +126,7 @@ export default function LoginPage() {
             </Button>
 
             <div className="text-center space-y-2">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-600 text-white font-bold text-lg">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white font-bold text-lg">
                     M
                 </div>
                 <h1 className="text-xl font-bold">Log Masuk</h1>

@@ -64,7 +64,7 @@ export default function AdminFacilitiesPage() {
                 <h2 className="font-semibold text-sm">Urus Kemudahan</h2>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <Button size="sm" className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700">
+                        <Button size="sm" className="h-8 text-xs bg-primary hover:bg-primary-dark">
                             <Plus className="mr-1 h-3 w-3" /> Tambah
                         </Button>
                     </DialogTrigger>
@@ -95,10 +95,10 @@ export default function AdminFacilitiesPage() {
                                 <Input name="location_hint" className="text-sm" />
                             </div>
                             <div className="flex items-center gap-2">
-                                <input type="checkbox" name="has_wheelchair_access" value="true" id="wheelchair" className="accent-emerald-600" />
+                                <input type="checkbox" name="has_wheelchair_access" value="true" id="wheelchair" className="accent-primary" />
                                 <Label htmlFor="wheelchair" className="text-xs">Akses OKU</Label>
                             </div>
-                            <Button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700">
+                            <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary-dark">
                                 {loading ? 'Menyimpan...' : 'Simpan'}
                             </Button>
                         </form>
@@ -113,7 +113,7 @@ export default function AdminFacilitiesPage() {
                             <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-2">
                                     <h3 className="font-medium text-sm truncate">{f.name}</h3>
-                                    {f.has_wheelchair_access && <Accessibility className="h-3.5 w-3.5 text-blue-500 shrink-0" />}
+                                    {f.has_wheelchair_access && <Accessibility className="h-3.5 w-3.5 text-secondary shrink-0" />}
                                 </div>
                                 <p className="text-[10px] text-muted-foreground">{f.category}</p>
                             </div>

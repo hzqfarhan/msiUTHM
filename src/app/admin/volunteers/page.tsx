@@ -57,7 +57,7 @@ export default function AdminVolunteersPage() {
                 <h2 className="font-semibold text-sm">Urus Sukarelawan</h2>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <Button size="sm" className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700">
+                        <Button size="sm" className="h-8 text-xs bg-primary hover:bg-primary-dark">
                             <Plus className="mr-1 h-3 w-3" /> Tambah
                         </Button>
                     </DialogTrigger>
@@ -80,7 +80,7 @@ export default function AdminVolunteersPage() {
                                 <Label className="text-xs">Tarikh Akhir</Label>
                                 <Input name="deadline" type="datetime-local" className="text-sm" />
                             </div>
-                            <Button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700">
+                            <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary-dark">
                                 {loading ? 'Menyimpan...' : 'Simpan'}
                             </Button>
                         </form>

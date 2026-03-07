@@ -57,20 +57,20 @@ export function InstallPrompt() {
 
     return (
         <div className="fixed bottom-20 left-4 right-4 z-50 mx-auto max-w-sm animate-in slide-in-from-bottom-4">
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 shadow-lg dark:border-emerald-800 dark:bg-emerald-950/90">
+            <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 shadow-lg dark:border-primary-dark/30 dark:bg-emerald-950/90">
                 <div className="flex items-start gap-3">
-                    <div className="rounded-lg bg-emerald-600 p-2 text-white">
+                    <div className="rounded-lg bg-primary p-2 text-white">
                         <Download className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
                         <p className="font-semibold text-sm text-emerald-900 dark:text-emerald-100">
                             Pasang MSI UTHM
                         </p>
-                        <p className="text-xs text-emerald-700 dark:text-emerald-300 mt-0.5">
+                        <p className="text-xs text-primary-dark dark:text-emerald-300 mt-0.5">
                             Akses pantas waktu solat & program di skrin utama anda.
                         </p>
                         <div className="mt-3 flex gap-2">
-                            <Button size="sm" onClick={handleInstall} className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-8">
+                            <Button size="sm" onClick={handleInstall} className="bg-primary hover:bg-primary-dark text-white text-xs h-8">
                                 Pasang
                             </Button>
                             <Button size="sm" variant="ghost" onClick={handleDismiss} className="text-xs h-8">
@@ -78,7 +78,7 @@ export function InstallPrompt() {
                             </Button>
                         </div>
                     </div>
-                    <button onClick={handleDismiss} className="text-emerald-400 hover:text-emerald-600">
+                    <button onClick={handleDismiss} className="text-primary hover:text-primary">
                         <X className="h-4 w-4" />
                     </button>
                 </div>
