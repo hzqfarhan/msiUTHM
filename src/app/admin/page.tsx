@@ -34,14 +34,14 @@ export default async function AdminDashboard() {
 
             <div className="grid grid-cols-2 gap-3">
                 {stats.map((stat) => (
-                    <Card key={stat.label} className="border-border/50">
-                        <CardContent className="p-3.5 flex items-center gap-3">
-                            <div className={`rounded-lg p-2 ${stat.color}`}>
-                                <stat.icon className="h-4 w-4" />
+                    <Card key={stat.label} className="glass-card border-[var(--glass-border-subtle)] bg-transparent">
+                        <CardContent className="p-4 flex items-center gap-4">
+                            <div className={`rounded-xl p-3 glass-button border-0 ${stat.color}`}>
+                                <stat.icon className="h-5 w-5" />
                             </div>
                             <div>
-                                <p className="text-lg font-bold">{stat.value}</p>
-                                <p className="text-[10px] text-muted-foreground">{stat.label}</p>
+                                <p className="text-2xl font-bold leading-tight">{stat.value}</p>
+                                <p className="text-xs text-muted-foreground font-medium">{stat.label}</p>
                             </div>
                         </CardContent>
                     </Card>
