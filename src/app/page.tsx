@@ -13,6 +13,8 @@ import { PageViewTracker } from '@/components/page-view-tracker';
 import { QrScanTracker } from '@/components/qr-scan-tracker';
 import { Suspense } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   const [prayerResult, iqamahResult, eventsResult, announcementsResult] = await Promise.all([
     getTodayPrayerTimes(),

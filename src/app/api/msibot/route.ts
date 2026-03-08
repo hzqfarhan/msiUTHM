@@ -37,11 +37,10 @@ export async function POST(request: NextRequest) {
     const model = process.env.AI_MODEL || 'gpt-3.5-turbo';
 
     if (!apiKey) {
-        console.error('[MSIBOT] AI_API_KEY not configured');
-        return NextResponse.json(
-            { error: 'Chatbot belum dikonfigurasi. Sila hubungi pentadbir.' },
-            { status: 503 }
-        );
+        console.warn('[MSIBOT] AI_API_KEY not configured. Using fallback response.');
+        return NextResponse.json({
+            reply: 'Sila masukkan kunci API (`AI_API_KEY`) di fail `.env.local` untuk membolehkan saya berfungsi sepenuhnya. Buat masa ini, saya berada dalam mod luar talian (offline).'
+        });
     }
 
     // --- Rate limiting ---

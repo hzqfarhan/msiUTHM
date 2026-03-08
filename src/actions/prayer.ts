@@ -71,7 +71,10 @@ export async function getTodayPrayerTimes(
         }
 
         return { data: times, error: null, source: 'jakim-api' };
-    } catch (err) {
+    } catch (err: any) {
+        if (err?.message?.includes('Dynamic server usage') || err?.digest?.includes('DYNAMIC_SERVER_USAGE')) {
+            throw err;
+        }
         console.error('[Prayer] getTodayPrayerTimes error:', err);
         return { data: null, error: 'Ralat mendapatkan waktu solat. Sila cuba semula.' };
     }
