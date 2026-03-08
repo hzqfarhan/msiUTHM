@@ -11,6 +11,8 @@ export const metadata: Metadata = {
     description: 'Waktu solat dan iqamah Masjid Sultan Ibrahim, UTHM',
 };
 
+export const revalidate = 300; // 5 minutes ISR
+
 export default async function PrayerPage() {
     const [prayerResult, iqamahResult] = await Promise.all([
         getTodayPrayerTimes(),

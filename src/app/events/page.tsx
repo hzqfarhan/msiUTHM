@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     description: 'Senarai program dan acara Masjid Sultan Ibrahim, UTHM',
 };
 
+export const revalidate = 300; // 5 minutes ISR
+
 export default async function EventsPage() {
     const { data: events, error } = await getEvents();
 

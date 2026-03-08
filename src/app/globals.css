@@ -201,6 +201,23 @@ body {
   background-attachment: fixed;
 }
 
+/* CSS-only background layer — replaces BackgroundLayer component (zero JS) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: url('/bg/bg-light.png') center/cover no-repeat;
+  background-color: #F6FAFC;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.dark body::before {
+  background-image: url('/bg/bg-dark.png');
+  background-color: #0A0F1C;
+}
+
 /* Sidebar content offset — desktop only */
 @media (min-width: 1024px) {
   .sidebar-content-offset {
@@ -576,8 +593,8 @@ body {
   .glass-heavy,
   .glass-nav,
   .glass-button {
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
   }
 }
 

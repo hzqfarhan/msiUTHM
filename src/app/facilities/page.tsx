@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     description: 'Direktori kemudahan Masjid Sultan Ibrahim, UTHM',
 };
 
+export const revalidate = 300; // 5 minutes ISR
+
 export default async function FacilitiesPage() {
     const { data: facilities, error } = await getFacilities();
 

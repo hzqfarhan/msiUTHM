@@ -5,6 +5,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
     Home, Clock, Calendar, Megaphone, Building2,
@@ -14,10 +15,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useEffect, useState, useCallback } from 'react';
-import { createClient } from '@/lib/supabase/client';
 import { signOut } from '@/actions/auth';
 import { getHijriDate } from '@/lib/hijri';
-import type { Profile } from '@/lib/types/database';
+import { useProfile } from '@/hooks/use-profile';
 import { cn } from '@/lib/utils';
 
 const mainNav = [
@@ -38,7 +38,7 @@ const infoNav = [
 
 export function Header() {
     const pathname = usePathname();
-    const [profile, setProfile] = useState<Profile | null>(null);
+    const profile = useProfile();
     const [dark, setDark] = useState(false);
     const [hijriDate, setHijriDate] = useState('');
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -51,28 +51,6 @@ export function Header() {
         document.documentElement.classList.toggle('dark', isDark);
 
         setHijriDate(getHijriDate());
-
-        const supabase = createClient();
-        supabase.auth.getUser().then(async ({ data: { user } }) => {
-            if (!user) return;
-            const { data } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', user.id)
-                .single();
-            if (data) {
-                const p = data as Profile;
-                // Sync Google avatar if missing
-                if (!p.avatar_url) {
-                    const googleAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture;
-                    if (googleAvatar) {
-                        await supabase.from('profiles').update({ avatar_url: googleAvatar }).eq('id', user.id);
-                        p.avatar_url = googleAvatar;
-                    }
-                }
-                setProfile(p);
-            }
-        });
     }, []);
 
     // Close drawer on route change
@@ -110,7 +88,7 @@ export function Header() {
                             <Menu className="h-5 w-5" />
                         </button>
                         <Link href="/" className="flex items-center gap-2">
-                            <img src="/bg/app-logo.png" alt="MSI UTHM" className="h-7 w-7 object-contain" />
+                            <Image src="/bg/app-logo.png" alt="MSI UTHM" width={28} height={28} className="h-7 w-7 object-contain" />
                             <div className="flex flex-col">
                                 <span className="font-bold text-foreground text-sm leading-tight">MSI UTHM</span>
                                 {hijriDate && (
@@ -176,7 +154,7 @@ export function Header() {
                 {/* Drawer header */}
                 <div className="flex items-center justify-between h-14 px-4 border-b border-border/30 shrink-0">
                     <div className="flex items-center gap-2.5">
-                        <img src="/bg/app-logo.png" alt="MSI UTHM" className="h-8 w-8 object-contain" />
+                        <Image src="/bg/app-logo.png" alt="MSI UTHM" width={32} height={32} className="h-8 w-8 object-contain" />
                         <div>
                             <p className="text-sm font-bold text-foreground">MSI UTHM</p>
                             <p className="text-[10px] text-muted-foreground">Companion App</p>

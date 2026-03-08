@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     description: 'Pengumuman terkini Masjid Sultan Ibrahim, UTHM',
 };
 
+export const revalidate = 300; // 5 minutes ISR
+
 const categoryLabels: Record<string, string> = {
     general: 'Umum',
     urgent: 'Segera',

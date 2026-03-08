@@ -3,15 +3,19 @@
  * Visible without login, placed in root layout.
  */
 
+import Image from 'next/image';
+
 export function Footer() {
     return (
         <footer className="mt-8 mb-20 lg:mb-4">
             <div className="glass-card rounded-2xl p-4 text-center space-y-2">
                 {/* KrackedDevs Branding */}
                 <div className="flex items-center justify-center gap-2">
-                    <img
+                    <Image
                         src="/bg/krackeddevs-logo.jpg"
                         alt="KrackedDevs Logo"
+                        width={28}
+                        height={28}
                         className="h-7 w-7 rounded-lg object-contain shadow-sm"
                     />
                     <span className="font-semibold text-sm">KrackedDevs</span>

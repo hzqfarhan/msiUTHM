@@ -6,7 +6,6 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { InstallPrompt } from '@/components/pwa/install-prompt';
 import { OfflineBanner } from '@/components/pwa/offline-banner';
-import { BackgroundLayer } from '@/components/settings/background-layer';
 import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({
@@ -58,8 +57,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       </head>
       <body className={`${inter.variable} font-sans antialiased text-foreground`}>
-        {/* Custom background image */}
-        <BackgroundLayer />
+        {/* Background is now CSS-only via body::before — no BackgroundLayer component */}
 
         {/* Animated mesh background orbs — only 3 for performance */}
         <div className="mesh-orb mesh-orb-1" aria-hidden="true" />
