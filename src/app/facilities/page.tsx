@@ -54,39 +54,69 @@ export default async function FacilitiesPage() {
             {Object.entries(grouped).map(([category, items]) => (
                 <div key={category} className="space-y-2">
                     <h2 className="text-xs uppercase tracking-wider font-medium text-muted-foreground">{category}</h2>
-                    <div className="space-y-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {items?.map((facility) => (
-                            <Card key={facility.id} className="border-border/50 hover:bg-accent/30 transition-colors">
-                                <CardContent className="p-3.5">
-                                    <div className="flex items-start gap-3">
+                            <Link key={facility.id} href={`/facilities?highlight=${facility.id}`} className="block h-full group">
+                                <Card className="h-full flex flex-col hover:bg-accent/50 transition-colors border-border/50 overflow-hidden relative">
+                                    {/* Top Image Section */}
+                                    <div className="relative w-full aspect-video bg-secondary/5 border-b border-border/50 overflow-hidden">
                                         {facility.image_url ? (
-                                            <div className="relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shadow-sm border border-border/50 bg-muted/30">
-                                                <Image src={facility.image_url} alt={facility.name} fill className="object-cover" />
-                                            </div>
+                                            <Image
+                                                src={facility.image_url}
+                                                alt={facility.name}
+                                                fill
+                                                className="object-cover transition-transform group-hover:scale-105"
+                                            />
                                         ) : (
-                                            <div className="rounded-lg bg-secondary/10 p-3 shrink-0">
-                                                <Building2 className="h-5 w-5 text-secondary" />
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center text-secondary/40">
+                                                <Building2 className="h-12 w-12 mb-2 opacity-50" />
+                                                <span className="text-[10px] font-medium uppercase tracking-wider">Tiada Gambar</span>
                                             </div>
                                         )}
-                                        <div className="flex-1 min-w-0 space-y-1">
-                                            <div className="flex items-center gap-2">
-                                                <h3 className="font-semibold text-sm">{facility.name}</h3>
-                                                {facility.has_wheelchair_access && (
-                                                    <Accessibility className="h-3.5 w-3.5 text-secondary" />
-                                                )}
-                                            </div>
-                                            {facility.description && (
-                                                <p className="text-xs text-muted-foreground line-clamp-2">{facility.description}</p>
-                                            )}
-                                            {facility.location_hint && (
-                                                <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                                                    <MapPin className="h-3 w-3" /> {facility.location_hint}
+                                    </div>
+
+                                    {/* Content Section */}
+                                    <CardContent className="p-5 flex-1 flex flex-col">
+                                        <div className="flex items-start justify-between gap-2 mb-3">
+                                            <h3 className="font-semibold text-[15px] leading-snug group-hover:text-primary transition-colors">
+                                                {facility.name}
+                                            </h3>
+                                            {facility.has_wheelchair_access && (
+                                                <div className="p-1.5 bg-secondary/10 rounded-full shrink-0" title="Mesra OKU">
+                                                    <Accessibility className="h-4 w-4 text-secondary" />
                                                 </div>
                                             )}
                                         </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
+
+                                        {facility.description && (
+                                            <p className="text-xs text-muted-foreground line-clamp-3 mb-4 flex-1">
+                                                {facility.description}
+                                            </p>
+                                        )}
+
+                                        {/* Spacer */}
+                                        <div className="flex-1" />
+
+                                        {/* Footer Row */}
+                                        {(facility.location_hint || facility.category) && (
+                                            <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50 text-[11px] text-muted-foreground">
+                                                {facility.location_hint ? (
+                                                    <div className="flex items-center gap-1.5 overflow-hidden">
+                                                        <MapPin className="h-3 w-3 shrink-0 text-primary/60" />
+                                                        <span className="truncate">{facility.location_hint}</span>
+                                                    </div>
+                                                ) : <span />}
+
+                                                {facility.category && (
+                                                    <Badge variant="outline" className="text-[9px] bg-background">
+                                                        {facility.category}
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         ))}
                     </div>
                 </div>

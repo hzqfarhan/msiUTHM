@@ -42,7 +42,7 @@ export default async function EventsPage() {
                 </Card>
             )}
 
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {events?.map((event) => {
                     const startDate = new Date(event.start_at);
                     const dateStr = startDate.toLocaleDateString('ms-MY', {
@@ -57,50 +57,73 @@ export default async function EventsPage() {
                         timeZone: 'Asia/Kuala_Lumpur',
                     });
 
+                    // Determine if event is past
+                    const isPast = startDate < new Date();
+
                     return (
-                        <Link key={event.id} href={`/events/${event.id}`} className="block">
-                            <Card className="hover:bg-accent/50 transition-colors border-border/50">
-                                <CardContent className="p-4">
-                                    <div className="flex gap-3">
-                                        {/* Thumbnail or Date badge */}
-                                        {event.poster_image_url ? (
-                                            <div className="shrink-0 w-20 h-20 rounded-xl overflow-hidden relative shadow-sm border border-border/50 bg-muted/30">
-                                                <Image
-                                                    src={event.poster_image_url}
-                                                    alt={event.title}
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                        ) : (
-                                            <div className="shrink-0 flex flex-col items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-primary/10 dark:bg-emerald-900/20 text-primary-dark dark:text-emerald-400 border border-primary/20">
-                                                <span className="text-xl sm:text-2xl font-bold leading-none">{startDate.getDate()}</span>
-                                                <span className="text-[10px] sm:text-xs uppercase font-medium">{startDate.toLocaleDateString('ms-MY', { month: 'short', timeZone: 'Asia/Kuala_Lumpur' })}</span>
+                        <Link key={event.id} href={`/events/${event.id}`} className="block h-full group">
+                            <Card className="h-full flex flex-col hover:bg-accent/50 transition-colors border-border/50 overflow-hidden relative">
+                                {/* Top Image Section */}
+                                <div className="relative w-full aspect-video bg-muted/30 border-b border-border/50 overflow-hidden">
+                                    {event.poster_image_url ? (
+                                        <Image
+                                            src={event.poster_image_url}
+                                            alt={event.title}
+                                            fill
+                                            className="object-cover transition-transform group-hover:scale-105"
+                                        />
+                                    ) : (
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-primary/5 text-primary-dark dark:text-emerald-400">
+                                            <span className="text-4xl font-bold leading-none mb-1">{startDate.getDate()}</span>
+                                            <span className="text-xs uppercase font-medium">{startDate.toLocaleDateString('ms-MY', { month: 'short', year: 'numeric', timeZone: 'Asia/Kuala_Lumpur' })}</span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Content Section */}
+                                <CardContent className="p-5 flex-1 flex flex-col">
+                                    <h3 className="font-semibold text-[15px] leading-snug line-clamp-2 mb-3 group-hover:text-primary transition-colors">
+                                        {event.title}
+                                    </h3>
+
+                                    <div className="space-y-2 text-xs text-muted-foreground mb-4">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar className="h-3.5 w-3.5 shrink-0 text-primary/70" />
+                                            <span className="truncate">{dateStr}, {timeStr}</span>
+                                        </div>
+                                        {event.location && (
+                                            <div className="flex items-center gap-2">
+                                                <MapPin className="h-3.5 w-3.5 shrink-0 text-primary/70" />
+                                                <span className="truncate">{event.location}</span>
                                             </div>
                                         )}
+                                    </div>
 
-                                        <div className="flex-1 min-w-0 space-y-1">
-                                            <h3 className="font-semibold text-sm leading-tight line-clamp-2">{event.title}</h3>
-                                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                                                <span className="flex items-center gap-1">
-                                                    <Calendar className="h-3 w-3" /> {dateStr}, {timeStr}
-                                                </span>
-                                                {event.location && (
-                                                    <span className="flex items-center gap-1">
-                                                        <MapPin className="h-3 w-3" /> {event.location}
-                                                    </span>
+                                    {/* Spacer to push footer to bottom */}
+                                    <div className="flex-1" />
+
+                                    {/* Footer / Tags row */}
+                                    <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/50">
+                                        {event.tags?.length > 0 ? (
+                                            <div className="flex gap-1 flex-wrap overflow-hidden">
+                                                {event.tags.slice(0, 2).map((tag: string) => (
+                                                    <Badge key={tag} variant="secondary" className="text-[10px] h-5 px-2 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 font-medium">
+                                                        {tag}
+                                                    </Badge>
+                                                ))}
+                                                {event.tags.length > 2 && (
+                                                    <Badge variant="secondary" className="text-[9px] h-5 px-1.5 opacity-60">
+                                                        +{event.tags.length - 2}
+                                                    </Badge>
                                                 )}
                                             </div>
-                                            {event.tags?.length > 0 && (
-                                                <div className="flex gap-1 flex-wrap">
-                                                    {event.tags.map((tag: string) => (
-                                                        <Badge key={tag} variant="secondary" className="text-[10px] h-4 px-1.5">
-                                                            {tag}
-                                                        </Badge>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
+                                        ) : (
+                                            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Acara MSI</span>
+                                        )}
+
+                                        <span className={`text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full ${isPast ? 'bg-secondary/10 text-secondary' : 'bg-primary/10 text-primary'}`}>
+                                            {isPast ? 'Berlalu' : 'Akan Datang'}
+                                        </span>
                                     </div>
                                 </CardContent>
                             </Card>
