@@ -16,45 +16,103 @@ This central hub aims to:
 
 ## ✨ Key Features
 
-### 📅 Waktu Solat & Kompas Qiblat (Prayer Times & Qibla)
-- Real-time prayer timings based on JAKIM zones.
-- Dynamic Iqamah countdown timers.
-- Integrated Qibla compass utilizing device orientation sensors.
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>📅 Waktu Solat & Kompas Qiblat (Prayer Times & Qibla)</h3>
+      <ul>
+        <li>Real-time prayer timings based on JAKIM zones.</li>
+        <li>Dynamic Iqamah countdown timers.</li>
+        <li>Integrated Qibla compass utilizing device orientation sensors.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <img src="doc_images/waktu-solat-placeholder.PNG" alt="Waktu Solat Screenshot" width="100%" />
+    </td>
+  </tr>
+</table>
 
-![Waktu Solat Screenshot](doc_images/waktu-solat-placeholder.PNG)
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🕌 Program & Aktiviti (Events & Activities)</h3>
+      <ul>
+        <li>Browse upcoming mosque events with beautiful poster images.</li>
+        <li>RSVP to events directly through the app.</li>
+        <li>"Add to Calendar" functionality for easy scheduling.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <img src="doc_images/program-placeholder.PNG" alt="Program Screenshot" width="100%" />
+    </td>
+  </tr>
+</table>
 
-### 🕌 Program & Aktiviti (Events & Activities)
-- Browse upcoming mosque events with beautiful poster images.
-- RSVP to events directly through the app.
-- "Add to Calendar" functionality for easy scheduling.
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🏢 Kemudahan (Facilities)</h3>
+      <ul>
+        <li>Explore available mosque facilities (halls, meeting rooms, etc.).</li>
+        <li>View facility images, descriptions, and wheelchair accessibility status.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <img src="doc_images/kemudahan-placeholder.PNG" alt="Kemudahan Screenshot" width="100%" />
+    </td>
+  </tr>
+</table>
 
-![Program Screenshot](doc_images/program-placeholder.PNG)
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>💡 Maklum Balas (Feedback & Reporting)</h3>
+      <ul>
+        <li>Users can report issues (e.g., broken pipes, lighting problems) with photos.</li>
+        <li>Track the status of reports as admins acknowledge and resolve them.</li>
+      </ul>
+      <br>
+      <h3>🤖 Pembantu Maya MSIBot (AI Chatbot)</h3>
+      <ul>
+        <li>Integrated AI chatbot (MSIBot) to answer general Islamic questions and provide information about the mosque.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <!-- No specific screenshots provided for these two yet, so left empty or for future use -->
+    </td>
+  </tr>
+</table>
 
-### 🏢 Kemudahan (Facilities)
-- Explore available mosque facilities (halls, meeting rooms, etc.).
-- View facility images, descriptions, and wheelchair accessibility status.
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>💖 Infaq & Sumbangan (Donations)</h3>
+      <ul>
+        <li>Easy access to the mosque's DuitNow QR codes and bank details.</li>
+        <li>Seamless, secure way for the community to contribute financially.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <img src="doc_images/infaq-placeholder.PNG" alt="Infaq Screenshot" width="100%" />
+    </td>
+  </tr>
+</table>
 
-![Kemudahan Screenshot](doc_images/kemudahan-placeholder.PNG)
-
-### 💡 Maklum Balas (Feedback & Reporting)
-- Users can report issues (e.g., broken pipes, lighting problems) with photos.
-- Track the status of reports as admins acknowledge and resolve them.
-
-### 💖 Infaq & Sumbangan (Donations)
-- Easy access to the mosque's DuitNow QR codes and bank details.
-- Seamless, secure way for the community to contribute financially.
-
-![Infaq Screenshot](doc_images/infaq-placeholder.PNG)
-
-### 🤖 Pembantu Maya MSIBot (AI Chatbot)
-- Integrated AI chatbot (MSIBot) to answer general Islamic questions and provide information about the mosque.
-
-### ⚙️ Panel Admin (Admin Dashboard)
-- A comprehensive, secure dashboard for mosque administrators.
-- Full CRUD capabilities for adding events, managing facilities, updating donation QR codes, and resolving user feedback.
-- Analytics and tracking tools for mosque engagement.
-
-![Admin Panel Screenshot](doc_images/admin-panel-placeholder.PNG)
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>⚙️ Panel Admin (Admin Dashboard)</h3>
+      <ul>
+        <li>A comprehensive, secure dashboard for mosque administrators.</li>
+        <li>Full CRUD capabilities for adding events, managing facilities, updating donation QR codes, and resolving user feedback.</li>
+        <li>Analytics and tracking tools for mosque engagement.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <img src="doc_images/admin-panel-placeholder.PNG" alt="Admin Panel Screenshot" width="100%" />
+    </td>
+  </tr>
+</table>
 
 ---
 
