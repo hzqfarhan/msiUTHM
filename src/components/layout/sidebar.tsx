@@ -77,8 +77,8 @@ export function Sidebar() {
 
         // Theme
         const themeStored = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = themeStored === 'dark' || (!themeStored && prefersDark);
+        // Default to light mode for all users unless explicitly toggled to dark
+        const isDark = themeStored === 'dark';
         setDark(isDark);
         document.documentElement.classList.toggle('dark', isDark);
     }, []);
