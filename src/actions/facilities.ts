@@ -42,6 +42,7 @@ export async function createFacility(formData: FormData) {
         location_hint: formData.get('location_hint') as string,
         has_wheelchair_access: formData.get('has_wheelchair_access') === 'true',
         opening_hours: formData.get('opening_hours') as string || null,
+        image_url: formData.get('image_url') as string || null,
     });
 
     if (error) return { error: error.message };
@@ -61,6 +62,7 @@ export async function updateFacility(id: string, formData: FormData) {
         location_hint: formData.get('location_hint') as string,
         has_wheelchair_access: formData.get('has_wheelchair_access') === 'true',
         opening_hours: formData.get('opening_hours') as string || null,
+        image_url: formData.get('image_url') as string || null,
     }).eq('id', id);
 
     if (error) return { error: error.message };

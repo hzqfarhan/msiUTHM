@@ -11,10 +11,12 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Accessibility } from 'lucide-react';
+import { Plus, Trash2, Accessibility, Upload, X, ImageIcon } from 'lucide-react';
 import { createFacility, deleteFacility } from '@/actions/facilities';
 import { FACILITY_CATEGORIES } from '@/lib/constants';
 import { createClient } from '@/lib/supabase/client';
+import { v4 as uuidv4 } from 'uuid';
+import Image from 'next/image';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import type { Facility } from '@/lib/types/database';
@@ -23,6 +25,8 @@ export default function AdminFacilitiesPage() {
     const [facilities, setFacilities] = useState<Facility[]>([]);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -31,6 +35,14 @@ export default function AdminFacilitiesPage() {
             if (data) setFacilities(data as Facility[]);
         });
     }, []);
+
+    // Reset form states when dialog closes
+    useEffect(() => {
+        if (!open) {
+            setImageUrl(null);
+            setUploadProgress(0);
+        }
+    }, [open]);
 
     const handleCreate = async (formData: FormData) => {
         setLoading(true);
@@ -58,6 +70,38 @@ export default function AdminFacilitiesPage() {
         }
     };
 
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        try {
+            setUploadProgress(10);
+            const supabase = createClient();
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${uuidv4()}.${fileExt}`;
+            const filePath = `facilities/${fileName}`;
+
+            setUploadProgress(40);
+            const { error: uploadError } = await supabase.storage
+                .from('avatars')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            setUploadProgress(80);
+            const { data: { publicUrl } } = supabase.storage
+                .from('avatars')
+                .getPublicUrl(filePath);
+
+            setImageUrl(publicUrl);
+            setUploadProgress(100);
+            toast.success('Gambar berjaya dimuat naik');
+        } catch (error: any) {
+            toast.error(`Gagal muat naik: ${error.message}`);
+            setUploadProgress(0);
+        }
+    };
+
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -71,6 +115,53 @@ export default function AdminFacilitiesPage() {
                     <DialogContent className="max-w-sm">
                         <DialogHeader><DialogTitle>Kemudahan Baru</DialogTitle></DialogHeader>
                         <form action={handleCreate} className="space-y-3">
+                            {/* Image Upload */}
+                            <div className="space-y-1.5">
+                                <Label className="text-xs">Gambar Kemudahan</Label>
+                                {imageUrl ? (
+                                    <div className="relative aspect-video rounded-xl overflow-hidden glass-card group">
+                                        <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                                        <input type="hidden" name="image_url" value={imageUrl} />
+                                        <button
+                                            type="button"
+                                            onClick={() => { setImageUrl(null); setUploadProgress(0); }}
+                                            className="absolute top-2 right-2 p-1.5 bg-background/80 hover:bg-destructive hover:text-destructive-foreground rounded-md backdrop-blur-sm transition-colors"
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="relative">
+                                        <Input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleImageUpload}
+                                            disabled={uploadProgress > 0 && uploadProgress < 100}
+                                            className="hidden"
+                                            id="facility-image"
+                                        />
+                                        <Label
+                                            htmlFor="facility-image"
+                                            className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-xl hover:bg-muted/50 transition-colors cursor-pointer"
+                                        >
+                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                {uploadProgress > 0 && uploadProgress < 100 ? (
+                                                    <div className="space-y-2 text-center">
+                                                        <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
+                                                        <p className="text-xs text-muted-foreground">Memuat naik... {uploadProgress}%</p>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        <ImageIcon className="h-8 w-8 text-muted-foreground mb-2" />
+                                                        <p className="text-xs text-muted-foreground">Klik untuk muat naik gambar</p>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </Label>
+                                    </div>
+                                )}
+                            </div>
+
                             <div className="space-y-1.5">
                                 <Label className="text-xs">Nama</Label>
                                 <Input name="name" required className="text-sm" />
@@ -114,6 +205,7 @@ export default function AdminFacilitiesPage() {
                                 <div className="flex items-center gap-2">
                                     <h3 className="font-medium text-sm truncate">{f.name}</h3>
                                     {f.has_wheelchair_access && <Accessibility className="h-3.5 w-3.5 text-secondary shrink-0" />}
+                                    {f.image_url && <ImageIcon className="h-3 w-3 text-muted-foreground shrink-0" />}
                                 </div>
                                 <p className="text-[10px] text-muted-foreground">{f.category}</p>
                             </div>

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Building2, MapPin, Accessibility } from 'lucide-react';
 import { PageViewTracker } from '@/components/page-view-tracker';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -58,9 +59,15 @@ export default async function FacilitiesPage() {
                             <Card key={facility.id} className="border-border/50 hover:bg-accent/30 transition-colors">
                                 <CardContent className="p-3.5">
                                     <div className="flex items-start gap-3">
-                                        <div className="rounded-lg bg-secondary/10 p-2 shrink-0">
-                                            <Building2 className="h-4 w-4 text-secondary" />
-                                        </div>
+                                        {facility.image_url ? (
+                                            <div className="relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shadow-sm border border-border/50 bg-muted/30">
+                                                <Image src={facility.image_url} alt={facility.name} fill className="object-cover" />
+                                            </div>
+                                        ) : (
+                                            <div className="rounded-lg bg-secondary/10 p-3 shrink-0">
+                                                <Building2 className="h-5 w-5 text-secondary" />
+                                            </div>
+                                        )}
                                         <div className="flex-1 min-w-0 space-y-1">
                                             <div className="flex items-center gap-2">
                                                 <h3 className="font-semibold text-sm">{facility.name}</h3>

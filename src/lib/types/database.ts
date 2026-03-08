@@ -108,6 +108,7 @@ export interface Facility {
     category: string | null;
     location_hint: string | null;
     photos: string[];
+    image_url: string | null;
     has_wheelchair_access: boolean;
     opening_hours: string | null;
     lat: number | null;
