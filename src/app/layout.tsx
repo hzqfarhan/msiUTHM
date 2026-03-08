@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { InstallPrompt } from '@/components/pwa/install-prompt';
 import { OfflineBanner } from '@/components/pwa/offline-banner';
+import { MsibotFab } from '@/components/msibot/msibot-fab';
 import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({
@@ -88,6 +89,7 @@ export default function RootLayout({
         </div>
 
         <InstallPrompt />
+        <MsibotFab />
         <Toaster position="top-center" />
       </body>
     </html>
