@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ reply: 'Sila hantar soalan anda.' });
         }
 
-        const endpoint = `https://x.0cd.fun/ai/agent/muslim-ai?query=${encodeURIComponent(query)}&language=ms`;
+        const endpoint = `https://x.0cd.fun/ai/agent/muslim-ai?query=${encodeURIComponent(query)}&language=en`;
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 45000); // 45s timeout
 
