@@ -78,7 +78,8 @@ This central hub aims to:
       </ul>
     </td>
     <td width="50%" valign="top">
-      <!-- No specific screenshots provided for these two yet, so left empty or for future use -->
+      <img src="doc_images/maklum-balas-placeholder.PNG" alt="Maklum Balas Screenshot" width="100%" style="margin-bottom: 1rem;" />
+      <img src="doc_images/msibot-placeholder.PNG" alt="MSIBot Screenshot" width="100%" />
     </td>
   </tr>
 </table>
