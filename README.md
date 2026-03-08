@@ -21,20 +21,20 @@ This central hub aims to:
 - Dynamic Iqamah countdown timers.
 - Integrated Qibla compass utilizing device orientation sensors.
 
-![Waktu Solat Screenshot](doc_images/waktu-solat-placeholder.png)
+![Waktu Solat Screenshot](doc_images/waktu-solat-placeholder.PNG)
 
 ### 🕌 Program & Aktiviti (Events & Activities)
 - Browse upcoming mosque events with beautiful poster images.
 - RSVP to events directly through the app.
 - "Add to Calendar" functionality for easy scheduling.
 
-![Program Screenshot](doc_images/program-placeholder.png)
+![Program Screenshot](doc_images/program-placeholder.PNG)
 
 ### 🏢 Kemudahan (Facilities)
 - Explore available mosque facilities (halls, meeting rooms, etc.).
 - View facility images, descriptions, and wheelchair accessibility status.
 
-![Kemudahan Screenshot](doc_images/kemudahan-placeholder.png)
+![Kemudahan Screenshot](doc_images/kemudahan-placeholder.PNG)
 
 ### 💡 Maklum Balas (Feedback & Reporting)
 - Users can report issues (e.g., broken pipes, lighting problems) with photos.
@@ -44,7 +44,7 @@ This central hub aims to:
 - Easy access to the mosque's DuitNow QR codes and bank details.
 - Seamless, secure way for the community to contribute financially.
 
-![Infaq Screenshot](doc_images/infaq-placeholder.png)
+![Infaq Screenshot](doc_images/infaq-placeholder.PNG)
 
 ### 🤖 Pembantu Maya MSIBot (AI Chatbot)
 - Integrated AI chatbot (MSIBot) to answer general Islamic questions and provide information about the mosque.
@@ -54,7 +54,7 @@ This central hub aims to:
 - Full CRUD capabilities for adding events, managing facilities, updating donation QR codes, and resolving user feedback.
 - Analytics and tracking tools for mosque engagement.
 
-![Admin Panel Screenshot](doc_images/admin-panel-placeholder.png)
+![Admin Panel Screenshot](doc_images/admin-panel-placeholder.PNG)
 
 ---
 
