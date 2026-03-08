@@ -14,8 +14,10 @@ import { Badge } from '@/components/ui/badge';
 import { createEvent, updateEvent, getEventById } from '@/actions/events';
 import { EVENT_TAGS } from '@/lib/constants';
 import { toast } from 'sonner';
-import { Save, ArrowLeft } from 'lucide-react';
+import { Save, ArrowLeft, Upload, Loader2, X } from 'lucide-react';
 import Link from 'next/link';
+import { v4 as uuidv4 } from 'uuid';
+import { createClient } from '@/lib/supabase/client';
 
 export default function AdminEventEditPage() {
     const router = useRouter();
@@ -26,6 +28,9 @@ export default function AdminEventEditPage() {
     const [loading, setLoading] = useState(false);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [isPublished, setIsPublished] = useState(false);
+    const [posterUrl, setPosterUrl] = useState('');
+    const [uploadingPoster, setUploadingPoster] = useState(false);
+    const supabase = createClient();
 
     // Load existing event data
     useEffect(() => {
@@ -34,6 +39,7 @@ export default function AdminEventEditPage() {
                 if (data) {
                     setSelectedTags(data.tags || []);
                     setIsPublished(data.is_published);
+                    setPosterUrl(data.poster_image_url || '');
                     // Populate form fields
                     const form = document.querySelector('form');
                     if (form) {
@@ -53,6 +59,7 @@ export default function AdminEventEditPage() {
         setLoading(true);
         formData.set('tags', JSON.stringify(selectedTags));
         formData.set('is_published', String(isPublished));
+        formData.set('poster_image_url', posterUrl);
 
         try {
             const result = isNew
@@ -74,6 +81,26 @@ export default function AdminEventEditPage() {
         setSelectedTags((prev) =>
             prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
         );
+    };
+
+    const handlePosterUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files || e.target.files.length === 0) return;
+        const file = e.target.files[0];
+        setUploadingPoster(true);
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${uuidv4()}.${fileExt}`;
+            const filePath = `event-posters/${fileName}`;
+            const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file);
+            if (uploadError) throw uploadError;
+            const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
+            setPosterUrl(data.publicUrl);
+            toast.success('Poster berjaya dimuat naik!');
+        } catch (err: any) {
+            toast.error(`Gagal muat naik: ${err.message}`);
+        } finally {
+            setUploadingPoster(false);
+        }
     };
 
     return (
@@ -135,6 +162,30 @@ export default function AdminEventEditPage() {
                                     </Badge>
                                 ))}
                             </div>
+                        </div>
+
+                        {/* Poster Image Upload */}
+                        <div className="space-y-1.5">
+                            <Label className="text-xs">Poster Acara (Opsional)</Label>
+                            <div className="flex items-center gap-3">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handlePosterUpload}
+                                    disabled={uploadingPoster}
+                                    className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 file:cursor-pointer disabled:opacity-50"
+                                />
+                                {uploadingPoster && <Loader2 className="h-5 w-5 animate-spin text-primary shrink-0" />}
+                            </div>
+                            {posterUrl && (
+                                <div className="relative mt-2 inline-block">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img src={posterUrl} alt="Poster Preview" className="w-40 h-auto rounded-xl border border-border/50" />
+                                    <button type="button" onClick={() => setPosterUrl('')} className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-destructive text-white flex items-center justify-center text-xs hover:bg-destructive/80">
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </div>
+                            )}
                         </div>
 
                         {/* Publish toggle */}

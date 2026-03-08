@@ -12,6 +12,7 @@ export const createEventSchema = z.object({
     tags: z.array(z.string()).default([]),
     is_published: z.boolean().default(false),
     max_participants: z.number().int().positive().optional().nullable(),
+    poster_image_url: z.string().url().optional().nullable().or(z.literal('')).or(z.null()),
 });
 
 export const rsvpSchema = z.object({

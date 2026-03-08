@@ -47,6 +47,7 @@ export async function createEvent(formData: FormData) {
         tags: JSON.parse((formData.get('tags') as string) || '[]'),
         is_published: formData.get('is_published') === 'true',
         max_participants: formData.get('max_participants') ? parseInt(formData.get('max_participants') as string) : null,
+        poster_image_url: formData.get('poster_image_url') as string || null,
     };
 
     const parsed = createEventSchema.safeParse(raw);
@@ -78,6 +79,7 @@ export async function updateEvent(id: string, formData: FormData) {
         tags: JSON.parse((formData.get('tags') as string) || '[]'),
         is_published: formData.get('is_published') === 'true',
         max_participants: formData.get('max_participants') ? parseInt(formData.get('max_participants') as string) : null,
+        poster_image_url: formData.get('poster_image_url') as string || null,
     };
 
     const parsed = createEventSchema.safeParse(raw);

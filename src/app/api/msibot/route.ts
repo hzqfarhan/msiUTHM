@@ -105,8 +105,8 @@ export async function POST(request: NextRequest) {
 
         const data = await response.json();
 
-        // The API returns { answer: "..." }
-        const reply = data.answer || 'Maaf, saya tidak dapat menjana jawapan buat masa ini.';
+        // The API returns { status: true, data: "answer string", ... }
+        const reply = data.data || data.answer || 'Maaf, saya tidak dapat menjana jawapan buat masa ini.';
 
         return NextResponse.json({ reply });
     } catch (err) {

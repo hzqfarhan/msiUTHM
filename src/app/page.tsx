@@ -1,6 +1,6 @@
 /**
  * Home page — "Next Up" dashboard.
- * Shows next prayer countdown, next event, latest announcement, quick actions.
+ * Shows next prayer countdown, next event, latest announcement, activities carousel.
  */
 import { getTodayPrayerTimes, getIqamahSettings } from '@/actions/prayer';
 import { getEvents } from '@/actions/events';
@@ -8,6 +8,7 @@ import { getAnnouncements } from '@/actions/announcements';
 import { NextPrayerCard } from '@/components/home/next-prayer-card';
 import { NextEventCard } from '@/components/home/next-event-card';
 import { AnnouncementBanner } from '@/components/home/announcement-banner';
+import { ActivitiesCarousel } from '@/components/home/activities-carousel';
 import { QuickActions } from '@/components/home/quick-actions';
 import { PageViewTracker } from '@/components/page-view-tracker';
 import { QrScanTracker } from '@/components/qr-scan-tracker';
@@ -23,7 +24,8 @@ export default async function HomePage() {
     getAnnouncements(),
   ]);
 
-  const nextEvent = eventsResult.data?.[0] || null;
+  const allEvents = eventsResult.data || [];
+  const nextEvent = allEvents[0] || null;
   const latestAnnouncement = announcementsResult.data?.[0] || null;
 
   return (
@@ -42,11 +44,12 @@ export default async function HomePage() {
         <AnnouncementBanner announcement={latestAnnouncement} />
       )}
 
-      {/* Next Event */}
-      {nextEvent && <NextEventCard event={nextEvent} />}
+      {/* Activities Carousel */}
+      <ActivitiesCarousel events={allEvents} />
 
       {/* Quick Actions Grid */}
       <QuickActions />
     </div>
   );
 }
+
