@@ -3,6 +3,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Heart, Save, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { v4 as uuidv4 } from 'uuid';
+import { createClient } from '@/lib/supabase/client';
 import {
     getDonationSettings, updateDonationSettings, type DonationSettings
 } from '@/actions/donations';
