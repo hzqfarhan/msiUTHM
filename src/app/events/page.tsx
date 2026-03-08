@@ -62,9 +62,9 @@ export default async function EventsPage() {
 
                     return (
                         <Link key={event.id} href={`/events/${event.id}`} className="block h-full group">
-                            <Card className="h-full flex flex-col hover:bg-accent/50 transition-colors border-border/50 overflow-hidden relative">
+                            <Card className="h-full flex flex-col hover:bg-accent/50 transition-colors border-border/50 overflow-hidden relative p-3">
                                 {/* Top Image Section */}
-                                <div className="relative w-full aspect-video bg-muted/30 border-b border-border/50 overflow-hidden">
+                                <div className="relative w-full aspect-video bg-muted/30 rounded-lg overflow-hidden shrink-0">
                                     {event.poster_image_url ? (
                                         <Image
                                             src={event.poster_image_url}
@@ -81,12 +81,12 @@ export default async function EventsPage() {
                                 </div>
 
                                 {/* Content Section */}
-                                <CardContent className="p-5 flex-1 flex flex-col">
+                                <CardContent className="p-2 pt-4 flex-1 flex flex-col">
                                     <h3 className="font-semibold text-[15px] leading-snug line-clamp-2 mb-3 group-hover:text-primary transition-colors">
                                         {event.title}
                                     </h3>
 
-                                    <div className="space-y-2 text-xs text-muted-foreground mb-4">
+                                    <div className="space-y-2 text-xs text-muted-foreground mb-3 border-b border-border/30 pb-3">
                                         <div className="flex items-center gap-2">
                                             <Calendar className="h-3.5 w-3.5 shrink-0 text-primary/70" />
                                             <span className="truncate">{dateStr}, {timeStr}</span>
@@ -98,6 +98,12 @@ export default async function EventsPage() {
                                             </div>
                                         )}
                                     </div>
+
+                                    {event.description && (
+                                        <p className="text-[11px] text-muted-foreground mb-4 flex-1">
+                                            {event.description}
+                                        </p>
+                                    )}
 
                                     {/* Spacer to push footer to bottom */}
                                     <div className="flex-1" />

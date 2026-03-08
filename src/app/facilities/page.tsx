@@ -57,9 +57,9 @@ export default async function FacilitiesPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {items?.map((facility) => (
                             <Link key={facility.id} href={`/facilities?highlight=${facility.id}`} className="block h-full group">
-                                <Card className="h-full flex flex-col hover:bg-accent/50 transition-colors border-border/50 overflow-hidden relative">
+                                <Card className="h-full flex flex-col hover:bg-accent/50 transition-colors border-border/50 overflow-hidden relative p-3">
                                     {/* Top Image Section */}
-                                    <div className="relative w-full aspect-video bg-secondary/5 border-b border-border/50 overflow-hidden">
+                                    <div className="relative w-full aspect-video bg-secondary/5 rounded-lg overflow-hidden shrink-0">
                                         {facility.image_url ? (
                                             <Image
                                                 src={facility.image_url}
@@ -76,7 +76,7 @@ export default async function FacilitiesPage() {
                                     </div>
 
                                     {/* Content Section */}
-                                    <CardContent className="p-5 flex-1 flex flex-col">
+                                    <CardContent className="p-2 pt-4 flex-1 flex flex-col">
                                         <div className="flex items-start justify-between gap-2 mb-3">
                                             <h3 className="font-semibold text-[15px] leading-snug group-hover:text-primary transition-colors">
                                                 {facility.name}
@@ -89,7 +89,7 @@ export default async function FacilitiesPage() {
                                         </div>
 
                                         {facility.description && (
-                                            <p className="text-xs text-muted-foreground line-clamp-3 mb-4 flex-1">
+                                            <p className="text-[11px] text-muted-foreground mb-4 flex-1">
                                                 {facility.description}
                                             </p>
                                         )}
