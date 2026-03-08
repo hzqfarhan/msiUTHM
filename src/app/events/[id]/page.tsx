@@ -59,10 +59,10 @@ export default async function EventDetailPage({ params }: Props) {
             </Button>
 
             {/* Poster */}
-            {event.poster_url && (
+            {event.poster_image_url && (
                 <div className="relative aspect-video rounded-2xl overflow-hidden glass-card">
                     <Image
-                        src={event.poster_url}
+                        src={event.poster_image_url}
                         alt={event.title}
                         fill
                         className="object-cover"

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, MapPin } from 'lucide-react';
 import { PageViewTracker } from '@/components/page-view-tracker';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -61,11 +62,22 @@ export default async function EventsPage() {
                             <Card className="hover:bg-accent/50 transition-colors border-border/50">
                                 <CardContent className="p-4">
                                     <div className="flex gap-3">
-                                        {/* Date badge */}
-                                        <div className="shrink-0 flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-primary/20 dark:bg-emerald-900/30 text-primary-dark dark:text-emerald-300">
-                                            <span className="text-lg font-bold leading-none">{startDate.getDate()}</span>
-                                            <span className="text-[9px] uppercase">{startDate.toLocaleDateString('ms-MY', { month: 'short', timeZone: 'Asia/Kuala_Lumpur' })}</span>
-                                        </div>
+                                        {/* Thumbnail or Date badge */}
+                                        {event.poster_image_url ? (
+                                            <div className="shrink-0 w-20 h-20 rounded-xl overflow-hidden relative shadow-sm border border-border/50 bg-muted/30">
+                                                <Image
+                                                    src={event.poster_image_url}
+                                                    alt={event.title}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="shrink-0 flex flex-col items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-primary/10 dark:bg-emerald-900/20 text-primary-dark dark:text-emerald-400 border border-primary/20">
+                                                <span className="text-xl sm:text-2xl font-bold leading-none">{startDate.getDate()}</span>
+                                                <span className="text-[10px] sm:text-xs uppercase font-medium">{startDate.toLocaleDateString('ms-MY', { month: 'short', timeZone: 'Asia/Kuala_Lumpur' })}</span>
+                                            </div>
+                                        )}
 
                                         <div className="flex-1 min-w-0 space-y-1">
                                             <h3 className="font-semibold text-sm leading-tight line-clamp-2">{event.title}</h3>
