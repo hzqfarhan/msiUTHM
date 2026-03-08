@@ -100,6 +100,20 @@ export async function POST(request: NextRequest) {
         if (!response.ok) {
             const errorText = await response.text().catch(() => 'Unknown error');
             console.error('[MSIBOT] LLM API error:', response.status, errorText);
+
+            if (response.status === 401) {
+                return NextResponse.json(
+                    { error: 'Ralat Pengesahan: Kunci API (AI_API_KEY) tidak sah. Sila semak di Vercel.' },
+                    { status: 401 }
+                );
+            }
+            if (response.status === 429) {
+                return NextResponse.json(
+                    { error: 'Had atau Kuota API telah tamat. Sila semak baki OpenAI/Provider anda.' },
+                    { status: 429 }
+                );
+            }
+
             return NextResponse.json(
                 { error: 'Maaf, MSIBOT sedang menghadapi masalah teknikal. Sila cuba semula.' },
                 { status: 502 }

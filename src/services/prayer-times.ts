@@ -79,8 +79,8 @@ export const jakimProvider: PrayerTimesProvider = {
                 if (entry) return formatEntry(entry, date);
             }
 
-            // Fetch from JAKIM API with timeout + retry
-            const url = `https://www.e-solat.gov.my/index.php?r=esolatApi/takwimsolat&period=month&zone=${zoneCode}`;
+            // Fetch from JAKIM API mirror (api.waktusolat.app) to bypass Vercel IP blocks
+            const url = `https://api.waktusolat.app/solat/${zoneCode}`;
             const response = await fetchWithRetry(url, 5000);
             const data = await response.json();
 
