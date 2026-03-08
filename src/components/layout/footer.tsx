@@ -37,7 +37,7 @@ export function Footer() {
                     </a>
                     <span className="text-muted-foreground">•</span>
                     <a
-                        href="https://krackeddevs.com/refer"
+                        href="https://krackeddevs.com/events/ramadan-challenge-2026"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary dark:text-primary hover:underline font-medium"
