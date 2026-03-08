@@ -31,17 +31,7 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function POST(request: NextRequest) {
-    // --- Env validation ---
-    const apiKey = process.env.AI_API_KEY;
-    const baseUrl = process.env.AI_API_BASE_URL || 'https://api.openai.com/v1';
-    const model = process.env.AI_MODEL || 'gpt-3.5-turbo';
-
-    if (!apiKey) {
-        console.warn('[MSIBOT] AI_API_KEY not configured. Using fallback response.');
-        return NextResponse.json({
-            reply: 'Sila masukkan kunci API (`AI_API_KEY`) di fail `.env.local` untuk membolehkan saya berfungsi sepenuhnya. Buat masa ini, saya berada dalam mod luar talian (offline).'
-        });
-    }
+    // API Key is now hardcoded for Muslim AI Agent
 
     // --- Rate limiting ---
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
@@ -65,33 +55,24 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Tiada mesej diberikan.' }, { status: 400 });
     }
 
-    // Limit conversation history to last 10 messages to control token usage
-    const recentMessages = userMessages.slice(-10);
-
-    // --- Build messages array with system prompt ---
-    const messages: ChatMessage[] = [
-        { role: 'system', content: MSIBOT_SYSTEM_PROMPT },
-        ...recentMessages,
-    ];
-
-    // --- Call LLM API ---
+    // --- Call Muslim AI Agent API ---
     try {
-        const endpoint = `${baseUrl.replace(/\/$/, '')}/chat/completions`;
+        const lastUserMessage = userMessages.filter(m => m.role === 'user').pop();
+        const query = lastUserMessage?.content || '';
+
+        if (!query) {
+            return NextResponse.json({ reply: 'Sila hantar soalan anda.' });
+        }
+
+        const endpoint = `https://x.0cd.fun/ai/agent/muslim-ai?query=${encodeURIComponent(query)}&language=ms`;
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 15000); // 15s timeout
 
         const response = await fetch(endpoint, {
-            method: 'POST',
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`,
+                'x-api-key': '0cd-b5df99832b42af16e3313b4845759a5e95fc9da16a39e1ee',
             },
-            body: JSON.stringify({
-                model,
-                messages,
-                temperature: 0.7,
-                max_tokens: 500,
-            }),
             signal: controller.signal,
         });
 
@@ -101,15 +82,15 @@ export async function POST(request: NextRequest) {
             const errorText = await response.text().catch(() => 'Unknown error');
             console.error('[MSIBOT] LLM API error:', response.status, errorText);
 
-            if (response.status === 401) {
+            if (response.status === 401 || response.status === 403) {
                 return NextResponse.json(
-                    { error: 'Ralat Pengesahan: Kunci API (AI_API_KEY) tidak sah. Sila semak di Vercel.' },
-                    { status: 401 }
+                    { error: 'Ralat Pengesahan: Kunci API Muslim AI tidak sah.' },
+                    { status: response.status }
                 );
             }
             if (response.status === 429) {
                 return NextResponse.json(
-                    { error: 'Had atau Kuota API telah tamat. Sila semak baki OpenAI/Provider anda.' },
+                    { error: 'Had atau Kuota API Muslim AI telah tamat.' },
                     { status: 429 }
                 );
             }
@@ -121,7 +102,9 @@ export async function POST(request: NextRequest) {
         }
 
         const data = await response.json();
-        const reply = data.choices?.[0]?.message?.content || 'Maaf, saya tidak dapat menjana jawapan.';
+
+        // The API returns { answer: "..." }
+        const reply = data.answer || 'Maaf, saya tidak dapat menjana jawapan buat masa ini.';
 
         return NextResponse.json({ reply });
     } catch (err) {
