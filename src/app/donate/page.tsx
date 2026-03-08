@@ -1,299 +1,71 @@
-/**
- * Donation / Infaq page — full-featured with multiple payment methods,
- * campaigns, copy buttons, QR display, and liquid glass styling.
- */
-import { getDonationSettings, getDonationMethods, getDonationCampaigns } from '@/actions/donations';
-import { CopyButton } from '@/components/ui/copy-button';
+import { getDonationSettings } from '@/actions/donations';
 import { PageViewTracker } from '@/components/page-view-tracker';
-import { Heart, Building2, QrCode, ExternalLink, Target, Calendar, Phone, Mail, User } from 'lucide-react';
-import Image from 'next/image';
+import { Heart, ScanLine } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Infaq & Sumbangan',
-    description: 'Maklumat sumbangan Masjid Sultan Ibrahim, UTHM',
+    description: 'Sebarkan kebaikan melalui sumbangan untuk masjid.',
 };
 
-export const revalidate = 300;
+export const revalidate = 60; // 1 min revalidate so they see changes relatively soon
 
 export default async function DonatePage() {
-    const [settingsResult, methodsResult, campaignsResult] = await Promise.all([
-        getDonationSettings(),
-        getDonationMethods(),
-        getDonationCampaigns(),
-    ]);
-
+    const settingsResult = await getDonationSettings();
     const settings = settingsResult.data;
-    const methods = methodsResult.data || [];
-    const campaigns = campaignsResult.data || [];
 
     return (
-        <div className="space-y-5">
+        <div className="space-y-6">
             <PageViewTracker />
 
             {/* Header */}
-            <div className="text-center space-y-2">
-                <div className="mx-auto w-14 h-14 rounded-2xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
-                    <Heart className="h-7 w-7 text-rose-600 dark:text-rose-400" />
+            <div className="text-center space-y-3 pt-4">
+                <div className="mx-auto w-16 h-16 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
+                    <Heart className="h-8 w-8 text-rose-600 dark:text-rose-400" />
                 </div>
-                <h1 className="text-xl font-bold">{settings?.title || 'Infaq & Sumbangan'}</h1>
-                <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                    {settings?.intro_text || 'Sumbangan anda membantu penyelenggaraan dan aktiviti dakwah masjid.'}
-                </p>
+                <div>
+                    <h1 className="text-2xl font-bold text-foreground">
+                        {settings?.title || 'Infaq & Sumbangan'}
+                    </h1>
+                    <p className="text-sm text-muted-foreground mt-2 max-w-sm mx-auto leading-relaxed">
+                        {settings?.intro_text || 'Sumbangan anda memastikan rumah Allah ini kekal subur menabur bakti kepada komuniti.'}
+                    </p>
+                </div>
             </div>
 
-            {/* ─── Donation Methods ─────────────────────────────── */}
-            {methods.length > 0 ? (
-                <div className="space-y-3">
-                    <h2 className="text-sm font-semibold px-1">Cara Menderma</h2>
-                    {methods.map((method) => (
-                        <div key={method.id} className="glass-card rounded-2xl p-4 space-y-3">
-                            {method.method_type === 'bank_transfer' && (
-                                <>
-                                    <div className="flex items-center gap-2">
-                                        <Building2 className="h-4 w-4 text-primary shrink-0" />
-                                        <span className="text-sm font-semibold">{method.label}</span>
-                                    </div>
-                                    <div className="grid grid-cols-1 gap-2.5 text-sm">
-                                        {method.bank_name && (
-                                            <div>
-                                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Bank</p>
-                                                <p className="font-medium">{method.bank_name}</p>
-                                            </div>
-                                        )}
-                                        {method.account_name && (
-                                            <div>
-                                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Nama Akaun</p>
-                                                <p className="font-medium">{method.account_name}</p>
-                                            </div>
-                                        )}
-                                        {method.account_number && (
-                                            <div>
-                                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">No. Akaun</p>
-                                                <div className="flex items-center gap-2">
-                                                    <p className="font-mono font-semibold tracking-wider">{method.account_number}</p>
-                                                    <CopyButton text={method.account_number} label="No. Akaun" />
-                                                </div>
-                                            </div>
-                                        )}
-                                        {method.reference_note && (
-                                            <div>
-                                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Rujukan</p>
-                                                <div className="flex items-center gap-2">
-                                                    <p className="text-xs">{method.reference_note}</p>
-                                                    <CopyButton text={method.reference_note} label="Rujukan" />
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </>
-                            )}
+            {/* Main QR Card */}
+            {settings?.qr_image_url ? (
+                <div className="glass-card rounded-3xl p-6 sm:p-8 max-w-md mx-auto text-center space-y-6 relative overflow-hidden">
+                    {/* Decorative Background Blur */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
 
-                            {method.method_type === 'duitnow_qr' && (
-                                <>
-                                    <div className="flex items-center gap-2">
-                                        <QrCode className="h-4 w-4 text-primary shrink-0" />
-                                        <span className="text-sm font-semibold">{method.label}</span>
-                                    </div>
-                                    {method.qr_image_url && (
-                                        <div className="text-center">
-                                            <div className="inline-block rounded-xl border border-border/50 p-2 bg-white">
-                                                <Image
-                                                    src={method.qr_image_url}
-                                                    alt={`QR ${method.label}`}
-                                                    width={200}
-                                                    height={200}
-                                                    className="w-48 h-48 object-contain"
-                                                />
-                                            </div>
-                                            <p className="text-[10px] text-muted-foreground mt-2">
-                                                Imbas QR untuk membuat bayaran
-                                            </p>
-                                        </div>
-                                    )}
-                                    {method.reference_note && (
-                                        <div className="flex items-center gap-2 justify-center">
-                                            <p className="text-xs text-muted-foreground">{method.reference_note}</p>
-                                            <CopyButton text={method.reference_note} label="Rujukan" />
-                                        </div>
-                                    )}
-                                </>
-                            )}
+                    <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
+                        <ScanLine className="h-3.5 w-3.5" />
+                        Imbas kod QR di bawah
+                    </div>
 
-                            {method.method_type === 'external_link' && (
-                                <>
-                                    <div className="flex items-center gap-2">
-                                        <ExternalLink className="h-4 w-4 text-primary shrink-0" />
-                                        <span className="text-sm font-semibold">{method.label}</span>
-                                    </div>
-                                    {method.external_url && (
-                                        <a
-                                            href={method.external_url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-                                        >
-                                            <ExternalLink className="h-4 w-4" />
-                                            Buka Pautan Sumbangan
-                                        </a>
-                                    )}
-                                </>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            ) : settings ? (
-                /* Fallback: show legacy donation_info data if no methods defined */
-                <div className="glass-card rounded-2xl p-4 space-y-3">
-                    <div className="flex items-center gap-2">
-                        <Building2 className="h-4 w-4 text-primary shrink-0" />
-                        <span className="text-sm font-semibold">Maklumat Pindahan Bank</span>
+                    <div className="relative mx-auto w-64 h-64 p-3 rounded-2xl bg-white border border-border shadow-sm flex items-center justify-center">
+                        {/* Using standard img for external arbitrary URLs without needing domains configured in next.config.js */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={settings.qr_image_url}
+                            alt="QR Code Sumbangan"
+                            className="max-w-full max-h-full object-contain"
+                        />
                     </div>
-                    <div className="grid grid-cols-1 gap-2.5 text-sm">
-                        {settings.bank_name && (
-                            <div>
-                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Bank</p>
-                                <p className="font-medium">{settings.bank_name}</p>
-                            </div>
-                        )}
-                        {settings.account_name && (
-                            <div>
-                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Nama Akaun</p>
-                                <p className="font-medium">{settings.account_name}</p>
-                            </div>
-                        )}
-                        {settings.account_number && (
-                            <div>
-                                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">No. Akaun</p>
-                                <div className="flex items-center gap-2">
-                                    <p className="font-mono font-semibold tracking-wider">{settings.account_number}</p>
-                                    <CopyButton text={settings.account_number} label="No. Akaun" />
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    {settings.qr_image_url && (
-                        <div className="text-center pt-2">
-                            <div className="inline-block rounded-xl border border-border/50 p-2 bg-white">
-                                <Image
-                                    src={settings.qr_image_url}
-                                    alt="QR Code Sumbangan"
-                                    width={200}
-                                    height={200}
-                                    className="w-48 h-48 object-contain"
-                                />
-                            </div>
-                            <p className="text-[10px] text-muted-foreground mt-2">Imbas QR untuk membuat bayaran</p>
-                        </div>
-                    )}
+
                     {settings.notes && (
-                        <p className="text-xs text-muted-foreground italic border-t border-border/30 pt-3">{settings.notes}</p>
+                        <div className="bg-muted/50 rounded-xl p-4 text-sm text-foreground/80 leading-relaxed border border-border/50">
+                            {settings.notes}
+                        </div>
                     )}
                 </div>
             ) : (
-                /* Empty state */
-                <div className="glass-card rounded-2xl p-8 text-center text-muted-foreground">
-                    <Heart className="h-10 w-10 mx-auto mb-3 opacity-30" />
-                    <p className="font-medium">Maklumat sumbangan belum dikemaskini.</p>
-                    <p className="text-xs mt-1">Sila semak semula nanti.</p>
+                <div className="glass-card rounded-3xl p-10 max-w-md mx-auto text-center">
+                    <Heart className="h-10 w-10 text-muted-foreground/30 mx-auto mb-4" />
+                    <p className="font-medium text-foreground">Maklumat Infaq Belum Dikemaskini</p>
+                    <p className="text-xs text-muted-foreground mt-2">Sila semak semula nanti untuk menyumbang.</p>
                 </div>
-            )}
-
-            {/* ─── Campaigns ──────────────────────────────────── */}
-            {campaigns.length > 0 && (
-                <div className="space-y-3">
-                    <h2 className="text-sm font-semibold px-1">Kempen Sumbangan</h2>
-                    {campaigns.map((campaign) => {
-                        const progress = campaign.target_amount && campaign.current_amount
-                            ? Math.min(100, (campaign.current_amount / campaign.target_amount) * 100)
-                            : null;
-
-                        return (
-                            <div key={campaign.id} className="glass-card rounded-2xl p-4 space-y-3">
-                                <div className="flex items-start gap-3">
-                                    <div className="h-9 w-9 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                                        <Target className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className="font-semibold text-sm">{campaign.title}</h3>
-                                        {campaign.description && (
-                                            <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{campaign.description}</p>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Progress bar */}
-                                {progress !== null && campaign.target_amount && (
-                                    <div className="space-y-1.5">
-                                        <div className="h-2 rounded-full bg-muted overflow-hidden">
-                                            <div
-                                                className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-500"
-                                                style={{ width: `${progress}%` }}
-                                            />
-                                        </div>
-                                        <div className="flex justify-between text-[10px] text-muted-foreground">
-                                            <span>RM {(campaign.current_amount || 0).toLocaleString()}</span>
-                                            <span>RM {campaign.target_amount.toLocaleString()}</span>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* Date range */}
-                                {(campaign.start_date || campaign.end_date) && (
-                                    <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-                                        <Calendar className="h-3 w-3" />
-                                        {campaign.start_date && (
-                                            <span>{new Date(campaign.start_date).toLocaleDateString('ms-MY', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                                        )}
-                                        {campaign.start_date && campaign.end_date && <span>—</span>}
-                                        {campaign.end_date && (
-                                            <span>{new Date(campaign.end_date).toLocaleDateString('ms-MY', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
-
-            {/* ─── Contact Info ────────────────────────────────── */}
-            {settings && (settings.contact_name || settings.contact_phone || settings.contact_email) && (
-                <div className="glass-card rounded-2xl p-4 space-y-2">
-                    <h2 className="text-sm font-semibold">Pengesahan & Hubungi</h2>
-                    <div className="space-y-1.5 text-xs text-muted-foreground">
-                        {settings.contact_name && (
-                            <div className="flex items-center gap-2">
-                                <User className="h-3.5 w-3.5" />
-                                <span>{settings.contact_name}</span>
-                            </div>
-                        )}
-                        {settings.contact_phone && (
-                            <div className="flex items-center gap-2">
-                                <Phone className="h-3.5 w-3.5" />
-                                <a href={`tel:${settings.contact_phone}`} className="hover:text-primary transition-colors">{settings.contact_phone}</a>
-                            </div>
-                        )}
-                        {settings.contact_email && (
-                            <div className="flex items-center gap-2">
-                                <Mail className="h-3.5 w-3.5" />
-                                <a href={`mailto:${settings.contact_email}`} className="hover:text-primary transition-colors">{settings.contact_email}</a>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
-
-            {/* ─── Disclaimer ─────────────────────────────────── */}
-            <p className="text-[10px] text-center text-muted-foreground px-4">
-                ⚠️ {settings?.disclaimer_text || 'Ini hanya maklumat rujukan. Tiada pemprosesan bayaran dilakukan melalui aplikasi ini.'}
-            </p>
-
-            {/* ─── Last Updated ────────────────────────────────── */}
-            {settings?.updated_at && (
-                <p className="text-[9px] text-center text-muted-foreground">
-                    Dikemas kini: {new Date(settings.updated_at).toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })}
-                </p>
             )}
         </div>
     );

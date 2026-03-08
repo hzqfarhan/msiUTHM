@@ -8,6 +8,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MSIBOT_SYSTEM_PROMPT } from '@/lib/msibot-prompt';
 
+export const maxDuration = 60; // Allow sufficient time for the Muslim AI Endpoint to respond
+
 interface ChatMessage {
     role: 'user' | 'assistant' | 'system';
     content: string;
@@ -66,7 +68,7 @@ export async function POST(request: NextRequest) {
 
         const endpoint = `https://x.0cd.fun/ai/agent/muslim-ai?query=${encodeURIComponent(query)}&language=ms`;
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 15000); // 15s timeout
+        const timeout = setTimeout(() => controller.abort(), 45000); // 45s timeout
 
         const response = await fetch(endpoint, {
             method: 'GET',
