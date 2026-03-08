@@ -108,8 +108,7 @@ export async function updateDonationSettings(settings: Partial<DonationSettings>
     const supabase = await createClient();
     const { error } = await supabase
         .from('donation_info')
-        .update(settings)
-        .eq('mosque_id', DEFAULT_MOSQUE_ID);
+        .upsert({ mosque_id: DEFAULT_MOSQUE_ID, ...settings });
 
     if (error) return { error: error.message };
     return { error: null };

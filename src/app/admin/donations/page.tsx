@@ -8,7 +8,7 @@ import {
 } from '@/actions/donations';
 
 export default function AdminDonationsPage() {
-    const [settings, setSettings] = useState<DonationSettings | null>(null);
+    const [settings, setSettings] = useState<Partial<DonationSettings> | null>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -16,7 +16,18 @@ export default function AdminDonationsPage() {
     const loadData = useCallback(async () => {
         setLoading(true);
         const s = await getDonationSettings();
-        if (s.data) setSettings(s.data);
+        if (s.data) {
+            setSettings(s.data);
+        } else {
+            // Emulate an empty draft state for form interaction
+            setSettings({
+                title: '',
+                intro_text: '',
+                qr_image_url: '',
+                notes: '',
+                mosque_id: 'default_mosque'
+            });
+        }
         setLoading(false);
     }, []);
 
@@ -30,6 +41,7 @@ export default function AdminDonationsPage() {
     const handleSaveSettings = async () => {
         if (!settings) return;
         setSaving(true);
+
         const { error } = await updateDonationSettings({
             title: settings.title,
             intro_text: settings.intro_text,
@@ -49,7 +61,7 @@ export default function AdminDonationsPage() {
     }
 
     return (
-        <div className="space-y-4 max-w-2xl">
+        <div className="space-y-4 w-full">
             <div>
                 <h2 className="text-xl font-bold">Pengurusan Sumbangan (QR)</h2>
                 <p className="text-sm text-muted-foreground">Urus gambar QR dan maklumat paparan infaq.</p>
@@ -65,40 +77,34 @@ export default function AdminDonationsPage() {
                 </div>
             )}
 
-            {settings ? (
-                <div className="glass-card rounded-2xl p-5 space-y-4">
-                    <InputField label="Tajuk Halaman (Cth: Tabung Pembangunan Masjid)" value={settings.title || ''} onChange={v => setSettings({ ...settings, title: v })} />
+            <div className="glass-card rounded-2xl p-5 space-y-4">
+                <InputField label="Tajuk Halaman (Cth: Tabung Pembangunan Masjid)" value={settings?.title || ''} onChange={v => setSettings({ ...settings, title: v } as DonationSettings)} />
 
-                    <TextareaField label="Teks Pengenalan" value={settings.intro_text || ''} onChange={v => setSettings({ ...settings, intro_text: v })} />
+                <TextareaField label="Teks Pengenalan" value={settings?.intro_text || ''} onChange={v => setSettings({ ...settings, intro_text: v } as DonationSettings)} />
 
-                    <InputField label="Pautan / URL Imej QR (Sila muat naik gambar di tempat lain dan letak link di sini)" value={settings.qr_image_url || ''} onChange={v => setSettings({ ...settings, qr_image_url: v })} />
+                <InputField label="Pautan / URL Imej QR (Sila muat naik gambar di tempat lain dan letak link di sini)" value={settings?.qr_image_url || ''} onChange={v => setSettings({ ...settings, qr_image_url: v } as DonationSettings)} />
 
-                    {settings.qr_image_url && (
-                        <div className="mt-2 p-4 border border-border/50 rounded-xl bg-white/5 inline-block text-center">
-                            <p className="text-xs text-muted-foreground mb-2">Pratonton QR:</p>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={settings.qr_image_url} alt="QR Preview" className="w-40 h-40 object-contain mx-auto" onError={(e) => e.currentTarget.style.display = 'none'} />
-                        </div>
-                    )}
-
-                    <TextareaField label="Nota / Nombor Rujukan (Jika Ada)" value={settings.notes || ''} onChange={v => setSettings({ ...settings, notes: v })} />
-
-                    <div className="pt-2">
-                        <button
-                            onClick={handleSaveSettings}
-                            disabled={saving}
-                            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 transition-all w-full justify-center"
-                        >
-                            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                            Simpan Paparan Sumbangan
-                        </button>
+                {settings?.qr_image_url && (
+                    <div className="mt-2 p-4 border border-border/50 rounded-xl bg-white/5 inline-block text-center w-full">
+                        <p className="text-xs text-muted-foreground mb-2">Pratonton QR:</p>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={settings.qr_image_url} alt="QR Preview" className="w-40 h-40 object-contain mx-auto" onError={(e) => e.currentTarget.style.display = 'none'} />
                     </div>
+                )}
+
+                <TextareaField label="Nota / Nombor Rujukan (Jika Ada)" value={settings?.notes || ''} onChange={v => setSettings({ ...settings, notes: v } as DonationSettings)} />
+
+                <div className="pt-2">
+                    <button
+                        onClick={handleSaveSettings}
+                        disabled={saving}
+                        className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 transition-all w-full justify-center"
+                    >
+                        {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                        Simpan Paparan Sumbangan
+                    </button>
                 </div>
-            ) : (
-                <div className="glass-card p-8 text-center text-muted-foreground rounded-2xl">
-                    Rekod tetapan sumbangan tiada dalam pangkalan data.
-                </div>
-            )}
+            </div>
         </div>
     );
 }

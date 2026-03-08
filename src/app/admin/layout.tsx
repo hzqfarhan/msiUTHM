@@ -55,7 +55,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
         <div className="min-h-screen flex flex-col lg:flex-row relative z-10">
             {/* Desktop Sidebar (Admin) */}
-            <aside className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 w-64 glass-heavy border-r border-[var(--glass-border-subtle)] z-40">
+            <aside className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 w-[14rem] glass-heavy border-r border-[var(--glass-border-subtle)] z-40">
                 <div className="flex items-center gap-4 h-16 border-b border-[var(--glass-border-subtle)] px-4 shrink-0">
                     <Link href="/" title="Kembali ke Aplikasi" className="h-9 w-9 flex items-center justify-center rounded-xl glass-button text-muted-foreground hover:text-foreground shrink-0 border-0">
                         <ArrowLeft className="h-4 w-4" />
@@ -150,8 +150,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </nav>
 
             {/* Main Content Area */}
-            <main className="flex-1 lg:pl-64 pt-16 lg:pt-0 min-h-screen">
-                <div className="p-4 lg:p-8 max-w-6xl space-y-6">
+            {/* The root layout (`src/app/layout.tsx`) applies `sidebar-content-offset` globally which adds `pl-14rem` or 224px. */}
+            <main className="flex-1 pt-16 lg:pt-0 min-h-screen">
+                <div className="p-4 lg:p-8 w-full space-y-6">
                     {children}
                 </div>
             </main>
