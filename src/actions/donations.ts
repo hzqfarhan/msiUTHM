@@ -106,11 +106,23 @@ export async function getDonationCampaigns() {
  */
 export async function updateDonationSettings(settings: Partial<DonationSettings>) {
     const supabase = await createClient();
+
+    // We remove id and updated_at so Supabase can handle them properly during an upsert
+    const { id, updated_at, ...updatePayload } = settings;
+
     const { error } = await supabase
         .from('donation_info')
-        .upsert({ mosque_id: DEFAULT_MOSQUE_ID, ...settings });
+        .upsert({
+            mosque_id: DEFAULT_MOSQUE_ID,
+            ...updatePayload
+        }, {
+            onConflict: 'mosque_id'
+        });
 
-    if (error) return { error: error.message };
+    if (error) {
+        console.error('Error updating donation settings:', error);
+        return { error: error.message };
+    }
     return { error: null };
 }
 
