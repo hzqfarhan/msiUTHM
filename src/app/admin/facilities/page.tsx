@@ -11,8 +11,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Trash2, Accessibility, Upload, X, ImageIcon } from 'lucide-react';
-import { createFacility, deleteFacility } from '@/actions/facilities';
+import { Plus, Trash2, Accessibility, Upload, X, ImageIcon, Edit } from 'lucide-react';
+import { createFacility, updateFacility, deleteFacility } from '@/actions/facilities';
 import { FACILITY_CATEGORIES } from '@/lib/constants';
 import { createClient } from '@/lib/supabase/client';
 import { v4 as uuidv4 } from 'uuid';
@@ -27,6 +27,7 @@ export default function AdminFacilitiesPage() {
     const [loading, setLoading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [editingFacility, setEditingFacility] = useState<Facility | null>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -41,16 +42,21 @@ export default function AdminFacilitiesPage() {
         if (!open) {
             setImageUrl(null);
             setUploadProgress(0);
+            setEditingFacility(null);
+        } else if (editingFacility) {
+            setImageUrl(editingFacility.image_url);
         }
-    }, [open]);
+    }, [open, editingFacility]);
 
-    const handleCreate = async (formData: FormData) => {
+    const handleSubmit = async (formData: FormData) => {
         setLoading(true);
         try {
-            const result = await createFacility(formData);
+            const result = editingFacility
+                ? await updateFacility(editingFacility.id, formData)
+                : await createFacility(formData);
             if (result.error) toast.error(result.error);
             else {
-                toast.success('Kemudahan ditambah!');
+                toast.success(editingFacility ? 'Kemudahan dikemas kini!' : 'Kemudahan ditambah!');
                 setOpen(false);
                 router.refresh();
                 const supabase = createClient();
@@ -108,13 +114,13 @@ export default function AdminFacilitiesPage() {
                 <h2 className="font-semibold text-sm">Urus Kemudahan</h2>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <Button size="sm" className="h-8 text-xs bg-primary hover:bg-primary-dark">
+                        <Button size="sm" className="h-8 text-xs bg-primary hover:bg-primary-dark" onClick={() => setEditingFacility(null)}>
                             <Plus className="mr-1 h-3 w-3" /> Tambah
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-sm">
-                        <DialogHeader><DialogTitle>Kemudahan Baru</DialogTitle></DialogHeader>
-                        <form action={handleCreate} className="space-y-3">
+                    <DialogContent className="max-w-sm max-h-[90vh] overflow-y-auto">
+                        <DialogHeader><DialogTitle>{editingFacility ? 'Edit Kemudahan' : 'Kemudahan Baru'}</DialogTitle></DialogHeader>
+                        <form action={handleSubmit} className="space-y-3">
                             {/* Image Upload */}
                             <div className="space-y-1.5">
                                 <Label className="text-xs">Gambar Kemudahan</Label>
@@ -164,15 +170,15 @@ export default function AdminFacilitiesPage() {
 
                             <div className="space-y-1.5">
                                 <Label className="text-xs">Nama</Label>
-                                <Input name="name" required className="text-sm" />
+                                <Input name="name" defaultValue={editingFacility?.name || ''} required className="text-sm" />
                             </div>
                             <div className="space-y-1.5">
                                 <Label className="text-xs">Penerangan</Label>
-                                <Textarea name="description" rows={2} className="text-sm resize-none" />
+                                <Textarea name="description" defaultValue={editingFacility?.description || ''} rows={2} className="text-sm resize-none" />
                             </div>
                             <div className="space-y-1.5">
                                 <Label className="text-xs">Kategori</Label>
-                                <Select name="category">
+                                <Select name="category" defaultValue={editingFacility?.category || ''}>
                                     <SelectTrigger><SelectValue placeholder="Pilih..." /></SelectTrigger>
                                     <SelectContent>
                                         {FACILITY_CATEGORIES.map((c) => (
@@ -183,10 +189,10 @@ export default function AdminFacilitiesPage() {
                             </div>
                             <div className="space-y-1.5">
                                 <Label className="text-xs">Petunjuk Lokasi</Label>
-                                <Input name="location_hint" className="text-sm" />
+                                <Input name="location_hint" defaultValue={editingFacility?.location_hint || ''} className="text-sm" />
                             </div>
                             <div className="flex items-center gap-2">
-                                <input type="checkbox" name="has_wheelchair_access" value="true" id="wheelchair" className="accent-primary" />
+                                <input type="checkbox" name="has_wheelchair_access" value="true" id="wheelchair" defaultChecked={editingFacility?.has_wheelchair_access} className="accent-primary" />
                                 <Label htmlFor="wheelchair" className="text-xs">Akses OKU</Label>
                             </div>
                             <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary-dark">
@@ -209,9 +215,14 @@ export default function AdminFacilitiesPage() {
                                 </div>
                                 <p className="text-[10px] text-muted-foreground">{f.category}</p>
                             </div>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(f.id)}>
-                                <Trash2 className="h-3.5 w-3.5" />
-                            </Button>
+                            <div className="flex gap-1 shrink-0">
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-primary" onClick={() => { setEditingFacility(f); setOpen(true); }}>
+                                    <Edit className="h-3.5 w-3.5" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(f.id)}>
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                 ))}
