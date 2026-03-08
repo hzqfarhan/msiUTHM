@@ -8,6 +8,7 @@ import { InstallPrompt } from '@/components/pwa/install-prompt';
 import { OfflineBanner } from '@/components/pwa/offline-banner';
 import { MsibotFab } from '@/components/msibot/msibot-fab';
 import { Toaster } from '@/components/ui/sonner';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -91,6 +92,7 @@ export default function RootLayout({
         <InstallPrompt />
         <MsibotFab />
         <Toaster position="top-center" />
+        <Analytics />
       </body>
     </html>
   );
