@@ -142,16 +142,16 @@ export function MsibotChat({ open, onClose }: Props) {
                             <div>
                                 <p className="font-semibold text-sm">Assalamualaikum! 👋</p>
                                 <p className="text-xs text-muted-foreground mt-1 max-w-[260px] mx-auto">
-                                    Saya MSIBOT, pembantu maya MSI UTHM.
-                                    Tanya saya tentang waktu solat, program, kemudahan, atau infaq!
+                                    Saya MSIBOT, rakan AI anda.
+                                    Tanya saya apa sahaja kemusykilan agama atau info berkaitan masjid!
                                 </p>
                             </div>
                             <div className="flex flex-wrap gap-1.5 justify-center pt-1">
                                 {[
-                                    'Waktu solat hari ini?',
-                                    'Ada program apa?',
-                                    'Macam mana nak infaq?',
-                                    'Kemudahan masjid',
+                                    'Apakah rukun iman?',
+                                    'Kelebihan selawat',
+                                    'Doa dipermudahkan urusan',
+                                    'Cara solat sunat Dhuha',
                                 ].map(q => (
                                     <button
                                         key={q}
