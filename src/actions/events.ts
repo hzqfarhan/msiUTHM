@@ -14,8 +14,7 @@ export async function getEvents() {
         .from('events')
         .select('*')
         .eq('is_published', true)
-        .gte('start_at', new Date().toISOString())
-        .order('start_at', { ascending: true });
+        .order('start_at', { ascending: false });
 
     if (error) return { error: error.message, data: null };
     return { data, error: null };
