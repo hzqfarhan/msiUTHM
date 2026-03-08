@@ -1,38 +1,108 @@
-# msiUTHM
-MSI UTHM Companion is a community-focused web app built for Masjid Sultan Ibrahim at Universiti Tun Hussein Onn Malaysia. It provides prayer times, mosque information, facilities, and upcoming community events in one simple platform, helping students and the local community stay connected with their mosque.
+# MSI UTHM Companion Web App 🕌
 
-## Getting Started
+Welcome to the **MSI UTHM Companion** repository! This is a modern, community-focused web application built for **Masjid Sultan Ibrahim (MSI)** at Universiti Tun Hussein Onn Malaysia (UTHM).
 
-First, run the development server:
+## 🌟 Why This Was Built
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The **MSI UTHM Companion** was created to bridge the gap between the mosque administration and the local community, especially the students. Traditionally, information about prayer times, upcoming events, and mosque facilities was scattered or difficult to access. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This central hub aims to:
+- Provide accurate, location-based prayer times and Iqamah countdowns.
+- Digitize the management of mosque programs, facilities, and volunteer efforts.
+- Make it easier for the community to contribute (Infaq) and provide feedback.
+- Serve as a blueprint for modernizing mosque management systems everywhere.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Key Features
 
-## Learn More
+### 📅 Waktu Solat & Kompas Qiblat (Prayer Times & Qibla)
+- Real-time prayer timings based on JAKIM zones.
+- Dynamic Iqamah countdown timers.
+- Integrated Qibla compass utilizing device orientation sensors.
 
-To learn more about Next.js, take a look at the following resources:
+![Waktu Solat Screenshot](doc_images/waktu-solat-placeholder.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🕌 Program & Aktiviti (Events & Activities)
+- Browse upcoming mosque events with beautiful poster images.
+- RSVP to events directly through the app.
+- "Add to Calendar" functionality for easy scheduling.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![Program Screenshot](doc_images/program-placeholder.png)
 
-## Deploy on Vercel
+### 🏢 Kemudahan (Facilities)
+- Explore available mosque facilities (halls, meeting rooms, etc.).
+- View facility images, descriptions, and wheelchair accessibility status.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Kemudahan Screenshot](doc_images/kemudahan-placeholder.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 💡 Maklum Balas (Feedback & Reporting)
+- Users can report issues (e.g., broken pipes, lighting problems) with photos.
+- Track the status of reports as admins acknowledge and resolve them.
 
+### 💖 Infaq & Sumbangan (Donations)
+- Easy access to the mosque's DuitNow QR codes and bank details.
+- Seamless, secure way for the community to contribute financially.
+
+![Infaq Screenshot](doc_images/infaq-placeholder.png)
+
+### 🤖 Pembantu Maya MSIBot (AI Chatbot)
+- Integrated AI chatbot (MSIBot) to answer general Islamic questions and provide information about the mosque.
+
+### ⚙️ Panel Admin (Admin Dashboard)
+- A comprehensive, secure dashboard for mosque administrators.
+- Full CRUD capabilities for adding events, managing facilities, updating donation QR codes, and resolving user feedback.
+- Analytics and tracking tools for mosque engagement.
+
+![Admin Panel Screenshot](doc_images/admin-panel-placeholder.png)
+
+---
+
+## 🛠️ Technology Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) with a custom Glassmorphism aesthetic
+- **Database & Auth:** [Supabase](https://supabase.com/) (PostgreSQL, Row Level Security, Storage)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Deployment:** Vercel
+
+---
+
+## 🚀 Getting Started Locally
+
+### Prerequisites
+1. Node.js 18+ install
+2. A Supabase project
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/hzqfarhan/MSIUTHM.git
+   cd MSIUTHM
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Setup environment variables:
+   Copy `.env.local.example` to `.env.local` and add your Supabase credentials:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+---
+
+## 📝 License
+
+This project is intended for the community use of Masjid Sultan Ibrahim UTHM. Reach out to the repository owner for licensing queries.
