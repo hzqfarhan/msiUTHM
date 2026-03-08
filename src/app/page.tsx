@@ -9,7 +9,6 @@ import { NextPrayerCard } from '@/components/home/next-prayer-card';
 import { NextEventCard } from '@/components/home/next-event-card';
 import { AnnouncementBanner } from '@/components/home/announcement-banner';
 import { ActivitiesCarousel } from '@/components/home/activities-carousel';
-import { QuickActions } from '@/components/home/quick-actions';
 import { PageViewTracker } from '@/components/page-view-tracker';
 import { QrScanTracker } from '@/components/qr-scan-tracker';
 import { Suspense } from 'react';
@@ -46,9 +45,6 @@ export default async function HomePage() {
 
       {/* Activities Carousel */}
       <ActivitiesCarousel events={allEvents} />
-
-      {/* Quick Actions Grid */}
-      <QuickActions />
     </div>
   );
 }
