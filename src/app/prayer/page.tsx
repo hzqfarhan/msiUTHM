@@ -1,5 +1,6 @@
 /**
  * Prayer Times page — full today's timetable with iqamah times.
+ * Server-renders with default zone, client upgrades to geolocation if available.
  */
 import { getTodayPrayerTimes, getIqamahSettings } from '@/actions/prayer';
 import { PrayerTimetable } from '@/components/prayer/prayer-timetable';
@@ -25,7 +26,7 @@ export default async function PrayerPage() {
             <div>
                 <h1 className="text-xl font-bold">Waktu Solat</h1>
                 <p className="text-sm text-muted-foreground">
-                    Masjid Sultan Ibrahim, UTHM — Zon JHR01
+                    Masjid Sultan Ibrahim, UTHM — Zon JHR04
                 </p>
             </div>
             <PrayerTimetable

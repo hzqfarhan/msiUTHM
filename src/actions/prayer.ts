@@ -10,67 +10,90 @@ import { getTodayDateString } from '@/lib/utils';
 
 /**
  * Get prayer times for today. Tries DB cache first, then fetches from API.
+ * Accepts optional zoneCode for geolocation-based prayer times.
  */
-export async function getTodayPrayerTimes(): Promise<{ data: PrayerTimes | null; error: string | null }> {
+export async function getTodayPrayerTimes(
+    zoneCode: string = JAKIM_ZONE_CODE
+): Promise<{ data: PrayerTimes | null; error: string | null; source?: string }> {
     const today = getTodayDateString();
-    const supabase = await createClient();
 
-    // 1. Try cache
-    const { data: cached } = await supabase
-        .from('prayer_times_cache')
-        .select('*')
-        .eq('mosque_id', DEFAULT_MOSQUE_ID)
-        .eq('date', today)
-        .single();
+    try {
+        const supabase = await createClient();
 
-    if (cached) {
-        return {
-            data: {
-                date: cached.date,
-                subuh: cached.subuh,
-                syuruk: cached.syuruk,
-                zohor: cached.zohor,
-                asar: cached.asar,
-                maghrib: cached.maghrib,
-                isyak: cached.isyak,
-            },
-            error: null,
-        };
+        // 1. Try DB cache (only for default zone — custom zones bypass cache)
+        if (zoneCode === JAKIM_ZONE_CODE) {
+            const { data: cached } = await supabase
+                .from('prayer_times_cache')
+                .select('*')
+                .eq('mosque_id', DEFAULT_MOSQUE_ID)
+                .eq('date', today)
+                .single();
+
+            if (cached) {
+                return {
+                    data: {
+                        date: cached.date,
+                        subuh: cached.subuh,
+                        syuruk: cached.syuruk,
+                        zohor: cached.zohor,
+                        asar: cached.asar,
+                        maghrib: cached.maghrib,
+                        isyak: cached.isyak,
+                    },
+                    error: null,
+                    source: 'cache',
+                };
+            }
+        }
+
+        // 2. Fetch from JAKIM API (with timeout + retry built into jakimProvider)
+        const times = await jakimProvider.fetchTimes(today, zoneCode);
+        if (!times) {
+            return { data: null, error: 'Tidak dapat mendapatkan waktu solat dari JAKIM. Sila cuba semula.' };
+        }
+
+        // 3. Cache in DB (upsert) — only for default zone
+        if (zoneCode === JAKIM_ZONE_CODE) {
+            const { error: upsertError } = await supabase.from('prayer_times_cache').upsert({
+                mosque_id: DEFAULT_MOSQUE_ID,
+                date: times.date,
+                subuh: times.subuh,
+                syuruk: times.syuruk,
+                zohor: times.zohor,
+                asar: times.asar,
+                maghrib: times.maghrib,
+                isyak: times.isyak,
+            }, { onConflict: 'mosque_id,date' });
+
+            if (upsertError) {
+                console.warn('[Prayer] Cache upsert failed (non-fatal):', upsertError.message);
+            }
+        }
+
+        return { data: times, error: null, source: 'jakim-api' };
+    } catch (err) {
+        console.error('[Prayer] getTodayPrayerTimes error:', err);
+        return { data: null, error: 'Ralat mendapatkan waktu solat. Sila cuba semula.' };
     }
-
-    // 2. Fetch from JAKIM API
-    const times = await jakimProvider.fetchTimes(today, JAKIM_ZONE_CODE);
-    if (!times) {
-        return { data: null, error: 'Tidak dapat mendapatkan waktu solat' };
-    }
-
-    // 3. Cache in DB (upsert)
-    await supabase.from('prayer_times_cache').upsert({
-        mosque_id: DEFAULT_MOSQUE_ID,
-        date: times.date,
-        subuh: times.subuh,
-        syuruk: times.syuruk,
-        zohor: times.zohor,
-        asar: times.asar,
-        maghrib: times.maghrib,
-        isyak: times.isyak,
-    }, { onConflict: 'mosque_id,date' });
-
-    return { data: times, error: null };
 }
 
 /**
  * Get iqamah settings for the mosque.
  */
 export async function getIqamahSettings() {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-        .from('iqamah_settings')
-        .select('*')
-        .eq('mosque_id', DEFAULT_MOSQUE_ID);
+    try {
+        const supabase = await createClient();
+        const { data, error } = await supabase
+            .from('iqamah_settings')
+            .select('*')
+            .eq('mosque_id', DEFAULT_MOSQUE_ID);
 
-    if (error) return { data: null, error: error.message };
-    return { data, error: null };
+        if (error) return { data: null, error: error.message };
+        return { data, error: null };
+    } catch (err) {
+        console.error('[Prayer] getIqamahSettings error:', err);
+        return { data: null, error: 'Ralat mendapatkan tetapan iqamah.' };
+    }
 }
 
 /**

@@ -5,8 +5,8 @@
 // MSI default mosque ID (matches seed data)
 export const DEFAULT_MOSQUE_ID = process.env.NEXT_PUBLIC_MOSQUE_ID || '00000000-0000-0000-0000-000000000001';
 
-// JAKIM zone code for Batu Pahat, Johor
-export const JAKIM_ZONE_CODE = 'JHR01';
+// JAKIM zone code for Batu Pahat, Johor (MSI UTHM)
+export const JAKIM_ZONE_CODE = 'JHR04';
 
 // Malaysia timezone
 export const TIMEZONE = 'Asia/Kuala_Lumpur';
