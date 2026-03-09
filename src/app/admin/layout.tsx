@@ -33,6 +33,7 @@ const adminNav = [
     { href: '/admin/feedback', label: 'Maklum Balas', icon: MessageSquare },
     { href: '/admin/volunteers', label: 'Sukarelawan', icon: Users },
     { href: '/admin/donations', label: 'Sumbangan', icon: Heart }, // Added Sumbangan
+    { href: '/admin/users', label: 'Pengguna', icon: Users },
     { href: '/admin/analytics', label: 'Analitik', icon: BarChart3 },
     { href: '/admin/verification', label: 'Pengesahan', icon: ShieldCheck },
 ];

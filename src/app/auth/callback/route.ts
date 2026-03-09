@@ -28,10 +28,13 @@ export async function GET(request: Request) {
                         user.user_metadata?.name ||
                         null;
 
-                    if (googleAvatar || googleName) {
+                    if (googleAvatar || googleName || user.email) {
                         const updates: Record<string, string> = {};
                         if (googleAvatar) updates.avatar_url = googleAvatar;
                         if (googleName) updates.full_name = googleName;
+                        if (user.email) updates.email = user.email;
+
+                        updates.provider = user.app_metadata?.provider || 'email';
 
                         await supabase
                             .from('profiles')

@@ -4,12 +4,14 @@
  * In production, generate these with `supabase gen types typescript`.
  */
 
-export type UserRole = 'user' | 'admin';
+export type UserRole = 'student' | 'member' | 'staff' | 'moderator' | 'admin';
 
 export interface Profile {
     id: string;
     full_name: string | null;
     role: UserRole;
+    email: string | null;
+    provider: string | null;
     community_role: 'student' | 'staff' | 'alumni' | 'community' | null;
     faculty: string | null;
     batch: string | null;

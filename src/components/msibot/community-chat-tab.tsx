@@ -1,18 +1,40 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Send, User, AlertCircle, Loader2, Lock } from 'lucide-react';
+import { Send, User, AlertCircle, Loader2, Lock, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
 import { useProfile } from '@/hooks/use-profile';
 import type { CommunityChatMessage } from '@/lib/types/database';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
 
 interface EmbellishedMessage extends CommunityChatMessage {
     isOptimistic?: boolean;
     profiles?: {
         full_name: string | null;
-        community_role: string | null;
+        role: string | null;
+        avatar_url: string | null;
     } | null;
+}
+
+function RoleBadge({ role }: { role: string | null | undefined }) {
+    if (!role) return null;
+    switch (role) {
+        case 'admin':
+            return <Badge variant="default" className="text-[9px] px-1 h-3.5 bg-red-500 hover:bg-red-600 text-white border-0">Admin</Badge>;
+        case 'moderator':
+            return <Badge variant="secondary" className="text-[9px] px-1 h-3.5 bg-orange-100 text-orange-700 hover:bg-orange-200 border-0">Mod</Badge>;
+        case 'staff':
+            return <Badge variant="outline" className="text-[9px] px-1 h-3.5 border-blue-200 text-blue-600 bg-blue-50/50">Staf</Badge>;
+        case 'member':
+            return <Badge variant="outline" className="text-[9px] px-1 h-3.5 border-emerald-200 text-emerald-600 bg-emerald-50/50">Kariah</Badge>;
+        case 'student':
+            return <Badge variant="outline" className="text-[9px] px-1 h-3.5 text-muted-foreground bg-muted/50 border-muted">Pelajar</Badge>;
+        default:
+            return null;
+    }
 }
 
 export function CommunityChatTab() {
@@ -42,10 +64,10 @@ export function CommunityChatTab() {
 
         const loadMessages = async () => {
             try {
-                // Fetch last 50 messages
+                // Fetch last 50 messages with their profile info
                 const { data, error: fetchErr } = await supabase
                     .from('community_chat_messages')
-                    .select('*, profiles(full_name, community_role)')
+                    .select('*, profiles(full_name, role, avatar_url)')
                     .order('created_at', { ascending: false })
                     .limit(50);
 
@@ -73,10 +95,6 @@ export function CommunityChatTab() {
                         // Avoid duplicating if we optimistically added our own
                         setMessages(prev => {
                             if (prev.some(m => m.id === newMessage.id)) return prev;
-
-                            // To get profile data for incoming message, we'd ideally fetch it, 
-                            // but for MVP we might just refetch or display 'Seseorang'
-                            // For simplicity, fetch the single user profile here quickly:
                             return [...prev, { ...newMessage }];
                         });
 
@@ -84,7 +102,7 @@ export function CommunityChatTab() {
                         if (newMessage.user_id !== profile.id) {
                             const { data: userData } = await supabase
                                 .from('profiles')
-                                .select('full_name, community_role')
+                                .select('full_name, role, avatar_url')
                                 .eq('id', newMessage.user_id)
                                 .single();
 
@@ -133,7 +151,7 @@ export function CommunityChatTab() {
             message: text,
             created_at: new Date().toISOString(),
             isOptimistic: true,
-            profiles: { full_name: profile.full_name, community_role: profile.community_role || 'user' }
+            profiles: { full_name: profile.full_name, role: profile.role, avatar_url: profile.avatar_url }
         };
 
         setMessages(prev => [...prev, optimisticMsg]);
@@ -164,6 +182,31 @@ export function CommunityChatTab() {
         }
     }, [input, sending, profile, supabase]);
 
+    const deleteMessage = async (id: string, isYourOwn: boolean) => {
+        if (!confirm(isYourOwn ? 'Adakah anda pasti mahu memadam mesej ini?' : 'MODERATOR: Padam mesej ini?')) return;
+
+        // Optimistically remove from UI
+        setMessages(prev => prev.filter(m => m.id !== id));
+
+        try {
+            const { error } = await supabase
+                .from('community_chat_messages')
+                .delete()
+                .eq('id', id);
+
+            if (error) {
+                throw error;
+            } else {
+                toast.success('Mesej dipadam');
+            }
+        } catch (err) {
+            console.error('Gagal memadam mesej:', err);
+            toast.error('Gagal memadam mesej. Anda tiada kebenaran.');
+            // Note: If you wanted a robust rollback, you would store the deleted message temporarily and inject it back.
+            // For MVP, relying on Realtime or user refresh is fine as it will error silently and they will see it didn't disappear if they reopen.
+        }
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -181,7 +224,6 @@ export function CommunityChatTab() {
                     <h3 className="font-semibold">Log Masuk Diperlukan</h3>
                     <p className="text-sm text-muted-foreground">Sila log masuk untuk menyertai ruang chat komuniti ini.</p>
                 </div>
-                {/* Notice: login CTA is handled by the wrapper or FAB, keeping this clean */}
             </div>
         );
     }
@@ -191,7 +233,7 @@ export function CommunityChatTab() {
             {/* Messages */}
             <div
                 ref={scrollRef}
-                className="flex-1 overflow-y-auto px-4 py-3 space-y-4 scrollbar-hide"
+                className="flex-1 overflow-y-auto px-1 sm:px-4 py-3 space-y-4 scrollbar-hide"
             >
                 {loading ? (
                     <div className="h-full flex items-center justify-center">
@@ -205,32 +247,56 @@ export function CommunityChatTab() {
                 ) : (
                     messages.map((msg) => {
                         const isMe = msg.user_id === profile.id;
+                        const isAdminOrMod = profile.role === 'admin' || profile.role === 'moderator';
+                        const canDelete = isMe || isAdminOrMod;
                         const name = isMe ? 'Anda' : (msg.profiles?.full_name || 'Ahli Komuniti');
+                        const initials = name.substring(0, 2).toUpperCase();
 
                         return (
                             <div
                                 key={msg.id}
                                 className={cn(
-                                    'flex flex-col gap-1',
-                                    isMe ? 'items-end' : 'items-start',
+                                    'flex gap-2 group',
+                                    isMe ? 'flex-row-reverse' : 'flex-row',
                                     msg.isOptimistic && 'opacity-70'
                                 )}
                             >
-                                <div className="flex items-baseline gap-2 px-1">
-                                    <span className="text-[10px] font-medium text-muted-foreground">{name}</span>
-                                    <span className="text-[9px] text-muted-foreground/50">
-                                        {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                    </span>
-                                </div>
-                                <div
-                                    className={cn(
-                                        'max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed',
-                                        isMe
-                                            ? 'bg-primary text-primary-foreground rounded-br-sm'
-                                            : 'glass-card border border-[var(--glass-border)] rounded-bl-sm',
-                                    )}
-                                >
-                                    <p className="whitespace-pre-wrap break-words">{msg.message}</p>
+                                <Avatar className="h-7 w-7 border border-[var(--glass-border)] shrink-0 mt-1">
+                                    <AvatarImage src={msg.profiles?.avatar_url || ''} />
+                                    <AvatarFallback className="text-[10px] bg-primary/10 text-primary font-medium">{initials}</AvatarFallback>
+                                </Avatar>
+
+                                <div className={cn('flex flex-col gap-1 max-w-[80%]', isMe ? 'items-end' : 'items-start')}>
+                                    <div className={cn('flex items-center gap-1.5 px-1 flex-wrap', isMe && 'flex-row-reverse')}>
+                                        <span className="text-[11px] font-medium text-foreground">{name}</span>
+                                        {!isMe && <RoleBadge role={msg.profiles?.role} />}
+                                        <span className="text-[9px] text-muted-foreground/50 whitespace-nowrap">
+                                            {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </span>
+                                    </div>
+
+                                    <div className={cn('relative flex items-center gap-1.5', isMe && 'flex-row-reverse')}>
+                                        <div
+                                            className={cn(
+                                                'rounded-2xl px-3 py-2 text-sm leading-relaxed',
+                                                isMe
+                                                    ? 'bg-primary text-primary-foreground rounded-tr-sm'
+                                                    : 'glass-card border border-[var(--glass-border)] rounded-tl-sm',
+                                            )}
+                                        >
+                                            <p className="whitespace-pre-wrap break-words">{msg.message}</p>
+                                        </div>
+
+                                        {canDelete && (
+                                            <button
+                                                onClick={() => deleteMessage(msg.id, isMe)}
+                                                className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full shrink-0"
+                                                title={isMe ? "Padam mesej anda" : "Tindakan Moderator: Padam"}
+                                            >
+                                                <Trash2 className="h-3.5 w-3.5" />
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         );
@@ -256,7 +322,7 @@ export function CommunityChatTab() {
                         onChange={e => setInput(e.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder="Mesej komuniti..."
-                        className="flex-1 h-10 rounded-xl glass-input px-3.5 text-sm placeholder:text-muted-foreground/50"
+                        className="flex-1 h-10 rounded-xl glass-input px-3.5 text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
                         disabled={sending}
                         maxLength={500}
                     />
