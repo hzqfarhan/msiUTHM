@@ -78,7 +78,7 @@ export default function RootLayout({
 
         {/* Main content */}
         <div
-          className="flex min-h-dvh flex-col sidebar-content-offset transition-[padding] duration-300"
+          className="flex min-h-dvh flex-col sidebar-content-offset transition-[padding] duration-300 pt-14 lg:pt-0"
           id="main-container"
         >
           <OfflineBanner />
@@ -88,7 +88,7 @@ export default function RootLayout({
             <TickerWrapper />
           </Suspense>
 
-          <main className="flex-1 page-content pt-16 pb-6 lg:pt-4 lg:pb-6">
+          <main className="flex-1 page-content pt-4 pb-6 lg:pt-4 lg:pb-6">
             <div className="mx-auto max-w-screen-lg px-3 py-2 lg:px-4 lg:py-3">
               {children}
               <Footer />
