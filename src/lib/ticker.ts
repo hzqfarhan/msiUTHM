@@ -5,7 +5,7 @@
  */
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { getTodayPrayerTimes } from '@/actions/prayer';
 import { getNextPrayer, type PrayerTimes } from '@/services/prayer-times';
 import { formatTime12h } from '@/lib/utils';
@@ -73,10 +73,12 @@ export async function getTickerItems(): Promise<TickerItem[]> {
 
     // 2. Total Users (real data)
     try {
-        const supabase = await createClient();
-        const { count } = await supabase
+        const supabaseAdmin = createAdminClient();
+        const { count, error } = await supabaseAdmin
             .from('profiles')
             .select('*', { count: 'exact', head: true });
+
+        if (error) throw error;
 
         if (count !== null) {
             items.push({
