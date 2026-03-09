@@ -723,20 +723,3 @@ body::before {
   padding: 0.15rem 0.5rem;
   border-radius: 9999px;
 }
-
-/* ============================================================
-   DESKTOP LAYOUT OVERRIDES (Foolproof Fix)
-   ============================================================ */
-@media (min-width: 1024px) {
-  #main-container {
-    padding-left: 240px !important;
-  }
-
-  .desktop-sidebar {
-    position: fixed !important;
-    left: 0 !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    width: 240px !important;
-  }
-}
