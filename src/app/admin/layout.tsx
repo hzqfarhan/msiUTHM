@@ -152,7 +152,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
             {/* Main Content Area */}
             {/* The root layout (`src/app/layout.tsx`) applies `sidebar-content-offset` globally which adds `pl-14rem` or 224px. */}
-            <main className="flex-1 pt-16 lg:pt-0 min-h-screen">
+            <main className="flex-1 pt-2 lg:pt-0 min-h-screen">
                 <div className="p-4 lg:p-8 w-full space-y-6">
                     {children}
                 </div>

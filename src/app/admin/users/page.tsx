@@ -52,39 +52,40 @@ export default async function AdminUsersPage() {
                 <p className="text-sm text-muted-foreground">Kawal peranan dan akses pengguna aplikasi.</p>
             </div>
 
-            <div className="grid gap-3">
-                {users?.map((usr) => (
-                    <Card key={usr.id} className="glass-card border-[var(--glass-border-subtle)] overflow-hidden">
-                        <CardContent className="p-4 sm:p-5 flex items-center justify-between gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                {users?.map((usr, index) => (
+                    <Card key={usr.id} className="glass-card border-[var(--glass-border-subtle)] overflow-hidden relative">
+                        {/* Number #1 */}
+                        <div className="absolute top-2 left-2.5 text-[10px] sm:text-xs font-bold text-muted-foreground/40 pointer-events-none">
+                            #{index + 1}
+                        </div>
+                        <CardContent className="p-3 sm:p-4 mt-2 flex flex-col items-center justify-center text-center gap-3 h-full">
 
-                            <div className="flex items-center gap-4 min-w-0">
-                                <Avatar className="h-10 w-10 sm:h-12 sm:w-12 border border-[var(--glass-border)] shrink-0">
-                                    <AvatarImage src={usr.avatar_url || ''} alt={usr.full_name || 'Pengguna'} />
-                                    <AvatarFallback className="bg-primary/10 text-primary font-medium">
-                                        <UserIcon className="h-5 w-5 opacity-50" />
-                                    </AvatarFallback>
-                                </Avatar>
+                            <Avatar className="h-12 w-12 sm:h-14 sm:w-14 border border-[var(--glass-border)] shrink-0 shadow-sm">
+                                <AvatarImage src={usr.avatar_url || ''} alt={usr.full_name || 'Pengguna'} />
+                                <AvatarFallback className="bg-primary/10 text-primary font-medium">
+                                    <UserIcon className="h-5 w-5 opacity-50" />
+                                </AvatarFallback>
+                            </Avatar>
 
-                                <div className="space-y-0.5 min-w-0">
-                                    <div className="flex items-center gap-2">
-                                        <p className="font-semibold text-sm sm:text-base leading-tight truncate">
-                                            {usr.full_name || 'Tiada Nama'}
-                                        </p>
-                                        {usr.id === user.id && (
-                                            <Badge variant="outline" className="text-[10px] px-1.5 h-4 border-primary/20 text-primary hidden sm:inline-flex">Anda</Badge>
-                                        )}
-                                    </div>
-                                    <p className="text-xs text-muted-foreground truncate hidden sm:block">
-                                        {usr.email || 'Tiada emel'}
-                                        {usr.provider && ` • via ${usr.provider}`}
+                            <div className="space-y-0.5 min-w-0 flex flex-col items-center w-full">
+                                <div className="flex items-center gap-1.5 max-w-full justify-center flex-wrap">
+                                    <p className="font-semibold text-xs sm:text-sm leading-tight truncate px-1 max-w-full">
+                                        {usr.full_name || 'Tiada Nama'}
                                     </p>
-                                    <div className="sm:hidden text-[10px] text-muted-foreground mt-0.5">
-                                        Diperoleh pada {new Date(usr.created_at).toLocaleDateString()}
-                                    </div>
+                                    {usr.id === user.id && (
+                                        <Badge variant="outline" className="text-[9px] px-1 h-3.5 border-primary/20 text-primary shrink-0 hidden sm:inline-flex">Anda</Badge>
+                                    )}
+                                </div>
+                                <p className="text-[10px] sm:text-xs text-muted-foreground truncate w-full px-1">
+                                    {usr.email || 'Tiada emel'}
+                                </p>
+                                <div className="text-[9px] text-muted-foreground mt-0.5">
+                                    Sertai {new Date(usr.created_at).toLocaleDateString()}
                                 </div>
                             </div>
 
-                            <div className="shrink-0">
+                            <div className="w-full mt-auto pt-2.5 border-t border-[var(--glass-border-subtle)] flex justify-center">
                                 {/* The Client Component for role updates */}
                                 <UserRoleForm
                                     userId={usr.id}
@@ -98,7 +99,7 @@ export default async function AdminUsersPage() {
                 ))}
 
                 {(!users || users.length === 0) && (
-                    <div className="text-center py-12 glass-card rounded-2xl border-[var(--glass-border)]">
+                    <div className="col-span-full text-center py-12 glass-card rounded-2xl border-[var(--glass-border)]">
                         <UserIcon className="h-8 w-8 mx-auto text-muted-foreground/50 mb-3" />
                         <p className="text-sm font-medium">Tiada pengguna dijumpai.</p>
                     </div>

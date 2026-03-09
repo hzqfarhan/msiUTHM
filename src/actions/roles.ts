@@ -60,7 +60,15 @@ export async function updateUserRole(formData: FormData) {
         }
 
         // 4. Update the profile
-        const { error: updateError } = await supabase
+        // We must use the service_role key to bypass RLS since the current policy 
+        // only allows users to update their *own* profiles.
+        const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+        const supabaseAdmin = createSupabaseClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!
+        );
+
+        const { error: updateError } = await supabaseAdmin
             .from('profiles')
             .update({ role, updated_at: new Date().toISOString() })
             .eq('id', userId);
