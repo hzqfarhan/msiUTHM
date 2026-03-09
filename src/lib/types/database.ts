@@ -10,6 +10,12 @@ export interface Profile {
     id: string;
     full_name: string | null;
     role: UserRole;
+    community_role: 'student' | 'staff' | 'alumni' | 'community' | null;
+    faculty: string | null;
+    batch: string | null;
+    volunteering_interests: string[] | null;
+    notification_preferences: Record<string, unknown> | null;
+    onboarding_completed: boolean;
     avatar_url: string | null;
     phone: string | null;
     created_at: string;
@@ -182,6 +188,13 @@ export interface DonationInfo {
     updated_at: string;
 }
 
+export interface CommunityChatMessage {
+    id: string;
+    user_id: string;
+    message: string;
+    created_at: string;
+}
+
 // Prayer name type for consistency
 export type PrayerName = 'subuh' | 'syuruk' | 'zohor' | 'asar' | 'maghrib' | 'isyak';
 
@@ -220,6 +233,7 @@ export interface Database {
             push_subscriptions: TableDef<PushSubscription, 'user_id' | 'endpoint' | 'keys'>;
             analytics_events: TableDef<AnalyticsEvent, 'event_name'>;
             donation_info: TableDef<DonationInfo, 'mosque_id'>;
+            community_chat_messages: TableDef<CommunityChatMessage, 'user_id' | 'message'>;
         };
         Views: Record<string, never>;
         Functions: Record<string, never>;

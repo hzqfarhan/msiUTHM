@@ -51,16 +51,23 @@ export async function GET(request: Request) {
                 if (currentUser) {
                     const { data: profile } = await supabase
                         .from('profiles')
-                        .select('created_at')
+                        .select('created_at, onboarding_completed')
                         .eq('id', currentUser.id)
                         .single();
 
-                    if (profile?.created_at) {
+                    if (profile) {
                         const createdAt = new Date(profile.created_at).getTime();
                         if (Date.now() - createdAt < 120000) { // 2 minutes
                             const url = new URL(finalRedirect);
                             url.searchParams.set('firstLogin', 'true');
                             finalRedirect = url.toString();
+                        }
+
+                        // Redirect to onboarding if not completed
+                        if (!profile.onboarding_completed) {
+                            const onboardingUrl = new URL(`${origin}/auth/onboarding`);
+                            onboardingUrl.searchParams.set('redirect', finalRedirect.replace(origin, ''));
+                            finalRedirect = onboardingUrl.toString();
                         }
                     }
                 }

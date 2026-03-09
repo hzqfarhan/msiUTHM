@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Mail, ArrowLeft } from 'lucide-react';
+import { Mail, ArrowLeft, Bell, HeartHandshake, Users, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -62,10 +62,10 @@ function LoginForm() {
     }
 
     return (
-        <Card className="border-border/50">
+        <Card className="border-border/50 shadow-sm">
             <CardContent className="p-6 space-y-4">
                 {errorParam && (
-                    <p className="text-sm text-destructive text-center">
+                    <p className="text-sm text-destructive text-center bg-destructive/10 p-2 rounded-md">
                         {errorParam === 'auth_failed' ? 'Log masuk gagal. Sila cuba lagi.' : 'Link tidak sah.'}
                     </p>
                 )}
@@ -101,7 +101,7 @@ function LoginForm() {
                 </div>
 
                 <form action={handleGoogle}>
-                    <Button type="submit" variant="outline" className="w-full">
+                    <Button type="submit" variant="outline" className="w-full bg-background hover:bg-accent/50">
                         <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
                             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
@@ -116,26 +116,77 @@ function LoginForm() {
     );
 }
 
-export default function LoginPage() {
+function BenefitsSection() {
     return (
-        <div className="space-y-4 max-w-sm mx-auto pt-8">
-            <Button variant="ghost" size="sm" asChild className="-ml-2">
-                <Link href="/">
-                    <ArrowLeft className="mr-1 h-3 w-3" /> Kembali
-                </Link>
-            </Button>
-
-            <div className="text-center space-y-2">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white font-bold text-lg">
-                    M
+        <div className="mt-8 space-y-4">
+            <h3 className="text-sm font-semibold text-center text-muted-foreground uppercase tracking-wider">
+                Mengapa cipta akaun?
+            </h3>
+            <div className="grid gap-3 text-sm">
+                <div className="flex items-start gap-3">
+                    <div className="mt-0.5 bg-primary/10 p-1.5 rounded-md text-primary">
+                        <Bell className="w-4 h-4" />
+                    </div>
+                    <div>
+                        <p className="font-medium">Pengumuman Terkini</p>
+                        <p className="text-muted-foreground text-xs">Terima notifikasi khusus dan info masjid yang diperibadikan.</p>
+                    </div>
                 </div>
-                <h1 className="text-xl font-bold">Log Masuk</h1>
-                <p className="text-sm text-muted-foreground">MSI UTHM Companion</p>
+                <div className="flex items-start gap-3">
+                    <div className="mt-0.5 bg-primary/10 p-1.5 rounded-md text-primary">
+                        <HeartHandshake className="w-4 h-4" />
+                    </div>
+                    <div>
+                        <p className="font-medium">Sertai Sukarelawan</p>
+                        <p className="text-muted-foreground text-xs">Akses peluang kesukarelawanan yang dipadankan dengan minat anda.</p>
+                    </div>
+                </div>
+                <div className="flex items-start gap-3">
+                    <div className="mt-0.5 bg-primary/10 p-1.5 rounded-md text-primary">
+                        <Users className="w-4 h-4" />
+                    </div>
+                    <div>
+                        <p className="font-medium">Ciri Komuniti Eksklusif</p>
+                        <p className="text-muted-foreground text-xs">Akses perbualan komuniti, simpan profil, dan banyak lagi.</p>
+                    </div>
+                </div>
             </div>
 
-            <Suspense fallback={<div className="h-48" />}>
-                <LoginForm />
-            </Suspense>
+            <div className="mt-6 pt-6 border-t border-border/50 text-xs text-muted-foreground text-center space-y-2">
+                <div className="flex justify-center mb-2">
+                    <ShieldCheck className="w-5 h-5 text-emerald-600/70" />
+                </div>
+                <p><strong>Privasi anda keutamaan kami.</strong></p>
+                <p>Data anda hanya digunakan untuk ciri komuniti masjid dan tidak akan dijual. Anda mempunyai kawalan penuh ke atas profil anda.</p>
+            </div>
+        </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <div className="min-h-[80vh] flex flex-col items-center justify-center p-4">
+            <div className="w-full max-w-sm space-y-6">
+                <Button variant="ghost" size="sm" asChild className="-ml-2 mb-2">
+                    <Link href="/">
+                        <ArrowLeft className="mr-1 h-4 w-4" /> Kembali
+                    </Link>
+                </Button>
+
+                <div className="text-center space-y-2">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary to-emerald-400 text-white font-bold text-2xl shadow-lg shadow-primary/20">
+                        M
+                    </div>
+                    <h1 className="text-2xl font-bold tracking-tight">Log Masuk</h1>
+                    <p className="text-sm text-muted-foreground">MSI UTHM Companion</p>
+                </div>
+
+                <Suspense fallback={<div className="h-48" />}>
+                    <LoginForm />
+                </Suspense>
+
+                <BenefitsSection />
+            </div>
         </div>
     );
 }
