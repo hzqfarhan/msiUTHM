@@ -47,6 +47,8 @@ export function LiveNewsTicker({ items, speed = 40, className }: LiveNewsTickerP
             aria-label="Maklumat terkini MSI UTHM"
             className={cn(
                 'relative w-full overflow-hidden select-none',
+                // Push down on mobile to clear the fixed 3.5rem (56px) header
+                'mt-14 lg:mt-0',
                 // Dark translucent background with subtle border
                 'bg-[#0B1E4A]/90 backdrop-blur-sm',
                 'border-b border-[#00C6C8]/10',

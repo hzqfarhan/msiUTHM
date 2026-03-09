@@ -613,15 +613,12 @@ body::before {
   }
 }
 
-/* ============================================================
-   TICKER ANIMATION — smooth infinite scroll
-   ============================================================ */
 .ticker-track {
   animation: ticker-scroll var(--ticker-speed, 40s) linear infinite;
-}
-
-.ticker-track:hover {
-  animation-play-state: paused;
+  will-change: transform;
+  transform: translateZ(0);
+  /* Pointer events none prevents touch/click from interfering with scroll */
+  pointer-events: none;
 }
 
 @keyframes ticker-scroll {
