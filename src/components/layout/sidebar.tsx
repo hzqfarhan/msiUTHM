@@ -64,6 +64,16 @@ function NavItem({ href, label, icon: Icon, collapsed, pathname }: {
     );
 }
 
+function getRoleBadgeProps(role: string | null | undefined) {
+    switch (role) {
+        case 'admin': return { label: 'Admin', className: 'bg-amber-500/20 text-amber-500 dark:bg-amber-400/20 dark:text-amber-400' };
+        case 'moderator': return { label: 'Mod', className: 'bg-orange-500/20 text-orange-600 dark:bg-orange-400/20 dark:text-orange-400' };
+        case 'staff': return { label: 'Staf', className: 'bg-blue-500/20 text-blue-600 dark:bg-blue-400/20 dark:text-blue-400' };
+        case 'student': return { label: 'Pelajar', className: 'bg-slate-500/20 text-slate-600 dark:bg-slate-400/20 dark:text-slate-400' };
+        default: return { label: 'Member', className: 'bg-primary/15 text-primary' };
+    }
+}
+
 export function Sidebar() {
     const pathname = usePathname();
     const router = useRouter();
@@ -230,14 +240,17 @@ export function Sidebar() {
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-1.5">
                                         <p className="text-xs font-semibold truncate">{profile.full_name || 'Pengguna'}</p>
-                                        <span className={cn(
-                                            'text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full leading-none shrink-0',
-                                            profile.role === 'admin'
-                                                ? 'bg-amber-500/20 text-amber-500 dark:bg-amber-400/20 dark:text-amber-400'
-                                                : 'bg-primary/15 text-primary',
-                                        )}>
-                                            {profile.role === 'admin' ? 'Admin' : 'Member'}
-                                        </span>
+                                        {(() => {
+                                            const badgeInfo = getRoleBadgeProps(profile.role);
+                                            return (
+                                                <span className={cn(
+                                                    'text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full leading-none shrink-0',
+                                                    badgeInfo.className
+                                                )}>
+                                                    {badgeInfo.label}
+                                                </span>
+                                            );
+                                        })()}
                                     </div>
                                     <form action={signOut}>
                                         <button type="submit" className="text-[10px] text-muted-foreground hover:text-destructive flex items-center gap-1 transition-colors">
