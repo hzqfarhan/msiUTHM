@@ -5,7 +5,7 @@
 'use client';
 
 import { useState, lazy, Suspense } from 'react';
-import { Bot } from 'lucide-react';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 
@@ -45,7 +45,15 @@ export function MsibotFab() {
                 )}
                 aria-label="Buka MSIBOT"
             >
-                <Bot className="h-6 w-6" />
+                <div className="relative h-10 w-10 overflow-hidden rounded-xl">
+                    <Image
+                        src="/msibot/chibi-msi.png"
+                        alt="MSIBOT"
+                        fill
+                        className="object-contain"
+                        sizes="40px"
+                    />
+                </div>
                 {/* Notification dot */}
                 <span className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-accent border-2 border-background animate-pulse" />
             </button>

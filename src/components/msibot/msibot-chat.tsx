@@ -5,7 +5,8 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Send, Bot, User, AlertCircle, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { X, Send, User, AlertCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Message {
@@ -127,8 +128,14 @@ export function MsibotChat({ open, onClose }: Props) {
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--glass-border-subtle)] shrink-0">
                     <div className="flex items-center gap-2.5">
-                        <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
-                            <Bot className="h-4 w-4 text-primary" />
+                        <div className="relative h-8 w-8 rounded-full overflow-hidden bg-primary/10">
+                            <Image
+                                src="/msibot/msi-head.png"
+                                alt="MSIBOT"
+                                fill
+                                className="object-contain"
+                                sizes="32px"
+                            />
                         </div>
                         <div>
                             <h3 className="text-sm font-bold">MSIBOT</h3>
@@ -152,8 +159,14 @@ export function MsibotChat({ open, onClose }: Props) {
                     {/* Welcome message */}
                     {messages.length === 0 && !loading && (
                         <div className="text-center py-8 space-y-3">
-                            <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
-                                <Bot className="h-7 w-7 text-primary" />
+                            <div className="relative h-20 w-20 mx-auto drop-shadow-lg">
+                                <Image
+                                    src="/msibot/chibi-msi.png"
+                                    alt="MSIBOT"
+                                    fill
+                                    className="object-contain"
+                                    sizes="80px"
+                                />
                             </div>
                             <div>
                                 <p className="font-semibold text-sm">Assalamualaikum! 👋</p>
@@ -191,8 +204,14 @@ export function MsibotChat({ open, onClose }: Props) {
                             )}
                         >
                             {msg.role === 'assistant' && (
-                                <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
-                                    <Bot className="h-3 w-3 text-primary" />
+                                <div className="relative h-6 w-6 rounded-full overflow-hidden bg-primary/10 shrink-0 mt-0.5">
+                                    <Image
+                                        src="/msibot/msi-head.png"
+                                        alt="MSIBOT"
+                                        fill
+                                        className="object-contain"
+                                        sizes="24px"
+                                    />
                                 </div>
                             )}
                             <div
@@ -216,8 +235,14 @@ export function MsibotChat({ open, onClose }: Props) {
                     {/* Loading indicator */}
                     {loading && (
                         <div className="flex gap-2 items-start">
-                            <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                                <Bot className="h-3 w-3 text-primary" />
+                            <div className="relative h-6 w-6 rounded-full overflow-hidden bg-primary/10 shrink-0 mt-0.5">
+                                <Image
+                                    src="/msibot/msi-head.png"
+                                    alt="MSIBOT"
+                                    fill
+                                    className="object-contain"
+                                    sizes="24px"
+                                />
                             </div>
                             <div className="glass-card rounded-2xl rounded-bl-md px-3.5 py-2.5">
                                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
