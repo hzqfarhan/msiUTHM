@@ -8,6 +8,7 @@ import { TickerWrapper } from '@/components/layout/ticker-wrapper';
 import { InstallPrompt } from '@/components/pwa/install-prompt';
 import { OfflineBanner } from '@/components/pwa/offline-banner';
 import { MsibotFab } from '@/components/msibot/msibot-fab';
+import { WelcomeToast } from '@/components/auth/welcome-toast';
 import { Toaster } from '@/components/ui/sonner';
 import { Analytics } from '@vercel/analytics/next';
 import { Suspense } from 'react';
@@ -98,6 +99,9 @@ export default function RootLayout({
 
         <InstallPrompt />
         <MsibotFab />
+        <Suspense fallback={null}>
+          <WelcomeToast />
+        </Suspense>
         <Toaster position="top-center" />
         <Analytics />
       </body>

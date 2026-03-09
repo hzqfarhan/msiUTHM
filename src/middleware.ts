@@ -6,7 +6,7 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-    let supabaseResponse = NextResponse.next({ request });
+    const supabaseResponse = NextResponse.next({ request });
 
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -52,6 +52,17 @@ export async function middleware(request: NextRequest) {
             url.pathname = '/';
             return NextResponse.redirect(url);
         }
+    }
+
+    // Protect user-only routes
+    const protectedRoutes = ['/feedback', '/volunteer'];
+    const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route));
+
+    if (isProtectedRoute && !user) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/auth/login';
+        url.searchParams.set('redirect', request.nextUrl.pathname);
+        return NextResponse.redirect(url);
     }
 
     return supabaseResponse;

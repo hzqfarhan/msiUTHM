@@ -19,6 +19,8 @@ import { useEffect, useState } from 'react';
 import { signOut } from '@/actions/auth';
 import { useProfile } from '@/hooks/use-profile';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const mainNav = [
     { href: '/', label: 'Utama', icon: Home },
@@ -64,6 +66,7 @@ function NavItem({ href, label, icon: Icon, collapsed, pathname }: {
 
 export function Sidebar() {
     const pathname = usePathname();
+    const router = useRouter();
     const profile = useProfile();
     const [collapsed, setCollapsed] = useState(false);
     const [dark, setDark] = useState(false);
@@ -72,6 +75,7 @@ export function Sidebar() {
         // Restore collapsed state
         const stored = localStorage.getItem('sidebar-collapsed');
         const isCollapsed = stored === 'true';
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         if (isCollapsed) setCollapsed(true);
         document.body.dataset.sidebarCollapsed = String(isCollapsed);
 
@@ -79,6 +83,7 @@ export function Sidebar() {
         const themeStored = localStorage.getItem('theme');
         // Default to light mode for all users unless explicitly toggled to dark
         const isDark = themeStored === 'dark';
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setDark(isDark);
         document.documentElement.classList.toggle('dark', isDark);
     }, []);
@@ -91,6 +96,11 @@ export function Sidebar() {
     };
 
     const toggleTheme = () => {
+        if (!profile) {
+            toast.error('Sila log masuk untuk menukar tema gelap.');
+            router.push(`/auth/login?redirect=${encodeURIComponent(pathname)}`);
+            return;
+        }
         const newDark = !dark;
         setDark(newDark);
         document.documentElement.classList.toggle('dark', newDark);

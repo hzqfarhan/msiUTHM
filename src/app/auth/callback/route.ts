@@ -43,7 +43,32 @@ export async function GET(request: Request) {
                 // Non-critical: don't block login if profile sync fails
             }
 
-            return NextResponse.redirect(`${origin}${redirect}`);
+            let finalRedirect = `${origin}${redirect}`;
+
+            try {
+                // Check if this is a first-time login (created in the last 2 minutes)
+                const { data: { user: currentUser } } = await supabase.auth.getUser();
+                if (currentUser) {
+                    const { data: profile } = await supabase
+                        .from('profiles')
+                        .select('created_at')
+                        .eq('id', currentUser.id)
+                        .single();
+
+                    if (profile?.created_at) {
+                        const createdAt = new Date(profile.created_at).getTime();
+                        if (Date.now() - createdAt < 120000) { // 2 minutes
+                            const url = new URL(finalRedirect);
+                            url.searchParams.set('firstLogin', 'true');
+                            finalRedirect = url.toString();
+                        }
+                    }
+                }
+            } catch {
+                // Ignore any errors with the first-time check, let the login succeed normally
+            }
+
+            return NextResponse.redirect(finalRedirect);
         }
     }
 

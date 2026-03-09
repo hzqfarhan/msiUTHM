@@ -19,6 +19,8 @@ import { signOut } from '@/actions/auth';
 import { getHijriDate } from '@/lib/hijri';
 import { useProfile } from '@/hooks/use-profile';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const mainNav = [
     { href: '/', label: 'Utama', icon: Home },
@@ -38,6 +40,7 @@ const infoNav = [
 
 export function Header() {
     const pathname = usePathname();
+    const router = useRouter();
     const profile = useProfile();
     const [dark, setDark] = useState(false);
     const [hijriDate, setHijriDate] = useState('');
@@ -47,13 +50,16 @@ export function Header() {
         const stored = localStorage.getItem('theme');
         // Default to light mode for all users unless explicitly toggled to dark
         const isDark = stored === 'dark';
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setDark(isDark);
         document.documentElement.classList.toggle('dark', isDark);
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setHijriDate(getHijriDate());
     }, []);
 
     // Close drawer on route change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { setDrawerOpen(false); }, [pathname]);
 
     // Lock body scroll when drawer open
@@ -63,13 +69,18 @@ export function Header() {
     }, [drawerOpen]);
 
     const toggleTheme = useCallback(() => {
+        if (!profile) {
+            toast.error('Sila log masuk untuk menukar tema gelap.');
+            router.push(`/auth/login?redirect=${encodeURIComponent(pathname)}`);
+            return;
+        }
         setDark(prev => {
             const newDark = !prev;
             document.documentElement.classList.toggle('dark', newDark);
             localStorage.setItem('theme', newDark ? 'dark' : 'light');
             return newDark;
         });
-    }, []);
+    }, [profile, router, pathname]);
 
     if (pathname.startsWith('/admin')) return null;
 

@@ -7,7 +7,9 @@
 import { useState, lazy, Suspense } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useProfile } from '@/hooks/use-profile';
+import { toast } from 'sonner';
 
 // Lazy-load the chat panel so it doesn't slow down initial page load
 const MsibotChat = lazy(() =>
@@ -18,11 +20,18 @@ export function MsibotFab() {
     const [open, setOpen] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
+    const profile = useProfile();
 
     // Hide on admin pages
     if (pathname.startsWith('/admin')) return null;
 
     const handleOpen = () => {
+        if (!profile) {
+            toast.error('Sila log masuk untuk menggunakan MSIBOT.');
+            router.push(`/auth/login?redirect=${encodeURIComponent(pathname)}`);
+            return;
+        }
         setLoaded(true); // trigger lazy load
         setOpen(true);
     };

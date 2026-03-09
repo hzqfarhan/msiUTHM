@@ -1,0 +1,59 @@
+﻿
+C:\Users\haziq\Desktop\MSIUTHM\src\components\layout\header.tsx
+  53:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\haziq\Desktop\MSIUTHM\src\components\layout\header.tsx:53:9
+  51 |         // Default to light mode for all users unless explicitly toggled to dark
+  52 |         const isDark = stored === 'dark';
+> 53 |         setDark(isDark);
+     |         ^^^^^^^ Avoid calling setState() directly within an effect
+  54 |         document.documentElement.classList.toggle('dark', isDark);
+  55 |
+  56 |         setHijriDate(getHijriDate());  react-hooks/set-state-in-effect
+  60:23  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\haziq\Desktop\MSIUTHM\src\components\layout\header.tsx:60:23
+  58 |
+  59 |     // Close drawer on route change
+> 60 |     useEffect(() => { setDrawerOpen(false); }, [pathname]);
+     |                       ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  61 |
+  62 |     // Lock body scroll when drawer open
+  63 |     useEffect(() => {                                                                           react-hooks/set-state-in-effect
+
+C:\Users\haziq\Desktop\MSIUTHM\src\components\layout\sidebar.tsx
+  78:26  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\haziq\Desktop\MSIUTHM\src\components\layout\sidebar.tsx:78:26
+  76 |         const stored = localStorage.getItem('sidebar-collapsed');
+  77 |         const isCollapsed = stored === 'true';
+> 78 |         if (isCollapsed) setCollapsed(true);
+     |                          ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  79 |         document.body.dataset.sidebarCollapsed = String(isCollapsed);
+  80 |
+  81 |         // Theme  react-hooks/set-state-in-effect
+
+C:\Users\haziq\Desktop\MSIUTHM\src\middleware.ts
+  9:9  error  'supabaseResponse' is never reassigned. Use 'const' instead  prefer-const
+
+Γ£û 4 problems (4 errors, 0 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+
