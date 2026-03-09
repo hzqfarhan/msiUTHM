@@ -33,7 +33,7 @@ export function MsibotFab() {
             <button
                 onClick={() => (open ? setOpen(false) : handleOpen())}
                 className={cn(
-                    'fixed bottom-2 right-2 z-[75] h-24 w-24 md:bottom-6 md:right-4 md:h-40 md:w-40',
+                    'fixed bottom-2 right-2 z-[75] h-32 w-32 md:bottom-6 md:right-4 md:h-40 md:w-40',
                     'hover:scale-105 active:scale-95 drop-shadow-xl',
                     'transition-all duration-300',
                     open && 'scale-0 opacity-0 pointer-events-none cursor-default',
@@ -46,7 +46,7 @@ export function MsibotFab() {
                         alt="MSIBOT"
                         fill
                         className="object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)] md:drop-shadow-[0_10px_10px_rgba(0,0,0,0.25)]"
-                        sizes="(max-width: 768px) 96px, 160px"
+                        sizes="(max-width: 768px) 128px, 160px"
                         priority
                     />
                     {/* Notification dot (positioned to sit on the chibi head/shoulder) */}
