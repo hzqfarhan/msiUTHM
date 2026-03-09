@@ -1,11 +1,21 @@
+'use client';
+
 /**
  * Footer — KrackedDevs promo for Ramadan Challenge #RC26.
- * Visible without login, placed in root layout.
+ * Visible without login, placed in root layout but hidden in Admin panels.
  */
 
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export function Footer() {
+    const pathname = usePathname();
+
+    // Hide footer banner in admin panel
+    if (pathname && pathname.startsWith('/admin')) {
+        return null;
+    }
+
     return (
         <footer className="mt-8 mb-20 lg:mb-4">
             <div className="glass-card rounded-2xl p-4 text-center space-y-2">

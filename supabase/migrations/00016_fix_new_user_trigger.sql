@@ -6,12 +6,14 @@
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, full_name, avatar_url, role)
+  INSERT INTO public.profiles (id, full_name, avatar_url, role, email, provider)
   VALUES (
     NEW.id,
     COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', ''),
     COALESCE(NEW.raw_user_meta_data->>'avatar_url', NEW.raw_user_meta_data->>'picture', ''),
-    'member'
+    'member',
+    NEW.email,
+    COALESCE(NEW.raw_app_meta_data->>'provider', 'email')
   );
   RETURN NEW;
 END;
