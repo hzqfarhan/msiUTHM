@@ -613,6 +613,34 @@ body::before {
   }
 }
 
+/* ============================================================
+   TICKER ANIMATION — smooth infinite scroll
+   ============================================================ */
+.ticker-track {
+  animation: ticker-scroll var(--ticker-speed, 40s) linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+    overflow-x: auto;
+  }
+}
+
 /* Shimmer animation for idle elements */
 @keyframes shimmer {
   0% {

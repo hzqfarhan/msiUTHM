@@ -4,11 +4,13 @@ import './globals.css';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
+import { TickerWrapper } from '@/components/layout/ticker-wrapper';
 import { InstallPrompt } from '@/components/pwa/install-prompt';
 import { OfflineBanner } from '@/components/pwa/offline-banner';
 import { MsibotFab } from '@/components/msibot/msibot-fab';
 import { Toaster } from '@/components/ui/sonner';
 import { Analytics } from '@vercel/analytics/next';
+import { Suspense } from 'react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -80,6 +82,11 @@ export default function RootLayout({
           id="main-container"
         >
           <OfflineBanner />
+
+          {/* Live news ticker — non-blocking with Suspense */}
+          <Suspense fallback={null}>
+            <TickerWrapper />
+          </Suspense>
 
           <main className="flex-1 page-content pt-16 pb-6 lg:pt-4 lg:pb-6">
             <div className="mx-auto max-w-screen-lg px-3 py-2 lg:px-4 lg:py-3">
