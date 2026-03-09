@@ -13,6 +13,13 @@ interface Message {
     content: string;
 }
 
+const FIXED_RESPONSES: Record<string, string> = {
+    'Apakah rukun iman?': 'Rukun Iman ada enam perkara asas: 1. Beriman kepada Allah. 2. Beriman kepada Malaikat. 3. Beriman kepada Kitab-kitab. 4. Beriman kepada Rasul-rasul. 5. Beriman kepada Hari Kiamat. 6. Beriman kepada Qada dan Qadar.',
+    'Kelebihan selawat': 'Kelebihan selawat sangat besar. Antaranya: Allah SWT akan berselawat (menurunkan rahmat) 10 kali kepada mereka yang berselawat, dihapuskan dosa, diangkat darjat, dan mendapat syafaat Rasulullah SAW di Hari Kiamat kelak.',
+    'Doa dipermudahkan urusan': 'Doa yang afdal untuk memohon dipermudahkan urusan: "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي يَفْقَهُوا قَوْلِي" (Rabbish rahli sadri, wa yassirli amri, wahlul uqdatam min lisani, yafqahu qauli).',
+    'Cara solat sunat Dhuha': 'Solat sunat Dhuha dilakukan antara 2 hingga 8 rakaat. Waktunya bermula kira-kira 20 minit selepas waktu Syuruk sehinggalah hampir masuk waktu Zohor. Sunat membaca Surah As-Syams pada rakaat pertama dan Surah Ad-Dhuha pada rakaat kedua selepas Al-Fatihah.',
+};
+
 interface Props {
     open: boolean;
     onClose: () => void;
@@ -50,6 +57,15 @@ export function MsibotChat({ open, onClose }: Props) {
         setInput('');
         setError(null);
         setLoading(true);
+
+        // Check for fixed hardcoded responses to save API usage
+        if (FIXED_RESPONSES[text]) {
+            setTimeout(() => {
+                setMessages(prev => [...prev, { role: 'assistant', content: FIXED_RESPONSES[text] }]);
+                setLoading(false);
+            }, 600); // simulated natural delay
+            return;
+        }
 
         try {
             const res = await fetch('/api/msibot', {

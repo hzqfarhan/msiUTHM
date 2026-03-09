@@ -7,11 +7,29 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Compass, MapPin, AlertTriangle, RotateCw } from 'lucide-react';
 
-// Kaaba coordinates
 const KAABA_LAT = 21.4225;
 const KAABA_LNG = 39.8262;
 
+// MSI UTHM approximate coordinates
+const MSI_LAT = 1.8601;
+const MSI_LNG = 103.0858;
+
 type Status = 'idle' | 'requesting' | 'granted' | 'denied' | 'unsupported';
+
+// Haversine distance in meters
+function getDistanceMeters(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    const R = 6371e3; // Earth radius in meters
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
 
 function computeQibla(lat: number, lng: number): number {
     const φ1 = (lat * Math.PI) / 180;
@@ -19,7 +37,7 @@ function computeQibla(lat: number, lng: number): number {
     const Δλ = ((KAABA_LNG - lng) * Math.PI) / 180;
     const x = Math.sin(Δλ);
     const y = Math.cos(φ1) * Math.tan(φ2) - Math.sin(φ1) * Math.cos(Δλ);
-    let bearing = (Math.atan2(x, y) * 180) / Math.PI;
+    const bearing = (Math.atan2(x, y) * 180) / Math.PI;
     return (bearing + 360) % 360;
 }
 
@@ -27,8 +45,11 @@ export default function QiblaPage() {
     const [status, setStatus] = useState<Status>('idle');
     const [qiblaAngle, setQiblaAngle] = useState<number | null>(null);
     const [compassHeading, setCompassHeading] = useState<number>(0);
+    const [compassAccuracy, setCompassAccuracy] = useState<number | null>(null);
     const [hasOrientation, setHasOrientation] = useState(false);
+    const [manualHeading, setManualHeading] = useState<string>('');
     const [userCoords, setUserCoords] = useState<{ lat: number; lng: number } | null>(null);
+    const [isIndoorMsi, setIsIndoorMsi] = useState(false);
 
     const requestPermissions = useCallback(async () => {
         setStatus('requesting');
@@ -44,15 +65,20 @@ export default function QiblaPage() {
                 setUserCoords({ lat: latitude, lng: longitude });
                 const angle = computeQibla(latitude, longitude);
                 setQiblaAngle(angle);
+
+                // Check distance to MSI UTHM (< 500 meters)
+                const dist = getDistanceMeters(latitude, longitude, MSI_LAT, MSI_LNG);
+                setIsIndoorMsi(dist < 500);
+
                 setStatus('granted');
             },
             () => setStatus('denied'),
             { enableHighAccuracy: true, timeout: 10000 },
         );
 
-        if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+        if (typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
             try {
-                const response = await (DeviceOrientationEvent as any).requestPermission();
+                const response = await (DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> }).requestPermission();
                 if (response !== 'granted') return;
             } catch {
                 // Ignore
@@ -63,8 +89,11 @@ export default function QiblaPage() {
     useEffect(() => {
         const handleOrientation = (e: DeviceOrientationEvent) => {
             if (e.alpha !== null) {
-                const heading = (e as any).webkitCompassHeading ?? (360 - (e.alpha || 0));
+                const eventWithWebKit = e as DeviceOrientationEvent & { webkitCompassHeading?: number, webkitCompassAccuracy?: number };
+                const heading = eventWithWebKit.webkitCompassHeading ?? (360 - (e.alpha || 0));
+                const accuracy = eventWithWebKit.webkitCompassAccuracy ?? null;
                 setCompassHeading(heading);
+                setCompassAccuracy(accuracy);
                 setHasOrientation(true);
             }
         };
@@ -73,7 +102,9 @@ export default function QiblaPage() {
         return () => window.removeEventListener('deviceorientation', handleOrientation, true);
     }, []);
 
-    const needleRotation = qiblaAngle !== null ? qiblaAngle - compassHeading : 0;
+    // Use manual heading if provided and orientation is missing/unstable
+    const effectiveHeading = hasOrientation ? compassHeading : (parseFloat(manualHeading) || 0);
+    const needleRotation = qiblaAngle !== null ? qiblaAngle - effectiveHeading : 0;
     const compassSize = 280;
     const center = compassSize / 2;
     const outerR = center - 8;
@@ -290,28 +321,61 @@ export default function QiblaPage() {
                                     />
                                 </g>
 
+                                {/* End SVG content */}
                                 {/* Center dot */}
                                 <circle cx={center} cy={center} r="5" fill="#10b981" filter="url(#glow)" />
                                 <circle cx={center} cy={center} r="2" fill="#fff" opacity="0.8" />
                             </svg>
+
+                            {/* Accuracy Status Badge */}
+                            {compassAccuracy !== null && compassAccuracy > 20 && (
+                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap bg-amber-500/90 text-amber-950 px-3 py-1 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 animate-pulse">
+                                    <AlertTriangle className="h-3 w-3" />
+                                    Kalibrasi Semula (Bentuk &apos;8&apos;)
+                                </div>
+                            )}
                         </div>
 
                         {/* Bearing readout */}
-                        <div className="text-center space-y-2">
+                        <div className="text-center space-y-3 w-full max-w-[280px]">
+                            {isIndoorMsi && (
+                                <div className="bg-primary/10 text-primary border border-primary/20 p-3 rounded-xl text-xs font-medium mb-2">
+                                    <MapPin className="inline h-3.5 w-3.5 mr-1 align-sub" />
+                                    Anda berada di kawasan MSI UTHM. Arah kiblat adalah lurus menghadap dinding Mihrab utama.
+                                </div>
+                            )}
+
                             <div className="liquid-btn liquid-btn-emerald px-6 py-2 inline-flex items-center gap-2">
                                 <span className="text-2xl font-bold text-primary tabular-nums">
                                     {Math.round(qiblaAngle)}°
                                 </span>
                                 <span className="text-xs text-muted-foreground">dari Utara</span>
                             </div>
+
                             {!hasOrientation && (
-                                <p className="text-xs text-amber-500 liquid-btn liquid-btn-gold px-3 py-1 text-[10px]">
-                                    ⚠ Kompas tidak disokong — arah manual
-                                </p>
+                                <div className="space-y-2 mt-4">
+                                    <p className="text-xs text-amber-500 liquid-btn liquid-btn-gold px-3 py-1 text-[10px] w-full text-center">
+                                        ⚠ Sensor kompas tidak aktif atau terhalang.
+                                    </p>
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="number"
+                                            placeholder="Masukkan darjah (0-360)"
+                                            className="flex-1 glass-input rounded-xl px-3 py-2 text-sm text-center"
+                                            value={manualHeading}
+                                            onChange={(e) => setManualHeading(e.target.value)}
+                                        />
+                                        <p className="text-[10px] text-muted-foreground whitespace-nowrap">
+                                            Arah Utara <br /> Manual
+                                        </p>
+                                    </div>
+                                </div>
                             )}
+
                             {userCoords && (
-                                <p className="text-[10px] text-muted-foreground">
-                                    📍 {userCoords.lat.toFixed(4)}, {userCoords.lng.toFixed(4)}
+                                <p className="text-[10px] text-muted-foreground pt-1">
+                                    📍 Lat: {userCoords.lat.toFixed(4)}, Lng: {userCoords.lng.toFixed(4)}
+                                    {compassAccuracy !== null && ` • Ketepatan: ${Math.round(compassAccuracy)}°`}
                                 </p>
                             )}
                         </div>
