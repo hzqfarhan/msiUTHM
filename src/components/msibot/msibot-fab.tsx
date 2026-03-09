@@ -33,29 +33,24 @@ export function MsibotFab() {
             <button
                 onClick={() => (open ? setOpen(false) : handleOpen())}
                 className={cn(
-                    'fixed bottom-6 right-4 z-[75] h-14 w-14 rounded-2xl',
-                    'flex items-center justify-center',
-                    'bg-primary text-primary-foreground shadow-lg',
-                    'hover:bg-primary/90 hover:scale-105',
-                    'active:scale-95',
+                    'fixed bottom-6 right-4 z-[75] h-16 w-16',
+                    'hover:scale-105 active:scale-95 drop-shadow-lg',
                     'transition-all duration-200',
-                    // Subtle glow effect
-                    'shadow-[0_4px_24px_rgba(0,198,200,0.3)]',
                     open && 'scale-0 opacity-0',
                 )}
                 aria-label="Buka MSIBOT"
             >
-                <div className="relative h-10 w-10 overflow-hidden rounded-xl">
+                <div className="relative h-full w-full">
                     <Image
                         src="/msibot/chibi-msi.png"
                         alt="MSIBOT"
                         fill
                         className="object-contain"
-                        sizes="40px"
+                        sizes="64px"
                     />
+                    {/* Notification dot (positioned to sit on the chibi head/shoulder) */}
+                    <span className="absolute top-0 right-0 h-3.5 w-3.5 rounded-full bg-accent border-2 border-background animate-pulse" />
                 </div>
-                {/* Notification dot */}
-                <span className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-accent border-2 border-background animate-pulse" />
             </button>
 
             {/* Chat panel (lazy loaded) */}
