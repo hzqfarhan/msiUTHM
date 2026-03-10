@@ -61,7 +61,7 @@ export function LiveNewsTicker({ items, speed = 40, className }: LiveNewsTickerP
 
             {/* Scrolling track — hover pauses, reduced motion shows static */}
             <div
-                className="ticker-track flex items-center h-full"
+                className="ticker-track animate-[ticker-scroll_var(--ticker-speed,40s)_linear_infinite] flex items-center h-full"
                 style={{ '--ticker-speed': `${speed}s` } as React.CSSProperties}
             >
                 {/* Duplicate content for seamless infinite loop */}

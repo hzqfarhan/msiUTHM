@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { Mail, ArrowLeft, Bell, HeartHandshake, Users, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
@@ -174,8 +175,14 @@ export default function LoginPage() {
                 </Button>
 
                 <div className="text-center space-y-2">
-                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary to-emerald-400 text-white font-bold text-2xl shadow-lg shadow-primary/20">
-                        M
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center">
+                        <Image
+                            src="/bg/app-logo.png"
+                            alt="MSI UTHM"
+                            width={56}
+                            height={56}
+                            className="h-full w-full object-contain drop-shadow-md"
+                        />
                     </div>
                     <h1 className="text-2xl font-bold tracking-tight">Log Masuk</h1>
                     <p className="text-sm text-muted-foreground">MSI UTHM Companion</p>

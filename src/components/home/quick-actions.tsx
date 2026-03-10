@@ -3,11 +3,12 @@
  */
 import Link from 'next/link';
 import {
-    Clock, Calendar, Building2, Heart, MessageSquare, Users, Compass, Info,
+    Clock, Calendar, Building2, Heart, MessageSquare, Users, Compass, Info, BookOpen,
 } from 'lucide-react';
 
 const actions = [
     { href: '/prayer', label: 'Waktu Solat', icon: Clock, variant: 'liquid-btn-emerald', iconColor: 'text-primary' },
+    { href: '/quran', label: 'Al-Quran', icon: BookOpen, variant: 'liquid-btn-gold', iconColor: 'text-primary' },
     { href: '/events', label: 'Program', icon: Calendar, variant: 'liquid-btn-blue', iconColor: 'text-secondary' },
     { href: '/facilities', label: 'Kemudahan', icon: Building2, variant: 'liquid-btn-purple', iconColor: 'text-secondary' },
     { href: '/qibla', label: 'Kiblat', icon: Compass, variant: 'liquid-btn-teal', iconColor: 'text-primary' },

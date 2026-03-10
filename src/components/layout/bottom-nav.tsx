@@ -6,13 +6,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Clock, Calendar, Megaphone, Compass, ChevronUp, ChevronDown } from 'lucide-react';
+import { Home, Clock, Calendar, Megaphone, Compass, ChevronUp, ChevronDown, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
 const navItems = [
     { href: '/', label: 'Utama', icon: Home },
     { href: '/prayer', label: 'Solat', icon: Clock },
+    { href: '/quran', label: 'Quran', icon: BookOpen },
     { href: '/events', label: 'Program', icon: Calendar },
     { href: '/announcements', label: 'Berita', icon: Megaphone },
     { href: '/qibla', label: 'Kiblat', icon: Compass },

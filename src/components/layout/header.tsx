@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 import {
     Home, Clock, Calendar, Megaphone, Building2,
     Heart, MessageSquare, Users, Compass, Info,
-    Shield, LogOut, Moon, Sun, User, Menu, X,
+    Shield, LogOut, Moon, Sun, User, Menu, X, BookOpen,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -25,6 +25,7 @@ import { useRouter } from 'next/navigation';
 const mainNav = [
     { href: '/', label: 'Utama', icon: Home },
     { href: '/prayer', label: 'Waktu Solat', icon: Clock },
+    { href: '/quran', label: 'Al-Quran', icon: BookOpen },
     { href: '/events', label: 'Program', icon: Calendar },
     { href: '/announcements', label: 'Berita', icon: Megaphone },
     { href: '/facilities', label: 'Kemudahan', icon: Building2 },

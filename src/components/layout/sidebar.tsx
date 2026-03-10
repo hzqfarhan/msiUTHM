@@ -12,7 +12,7 @@ import {
     Home, Clock, Calendar, Megaphone, Building2,
     Heart, MessageSquare, Users, Compass, Info,
     Shield, ChevronLeft, ChevronRight,
-    LogOut, Moon, Sun, User,
+    LogOut, Moon, Sun, User, BookOpen,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
@@ -25,6 +25,7 @@ import { useRouter } from 'next/navigation';
 const mainNav = [
     { href: '/', label: 'Utama', icon: Home },
     { href: '/prayer', label: 'Waktu Solat', icon: Clock },
+    { href: '/quran', label: 'Al-Quran', icon: BookOpen },
     { href: '/events', label: 'Program', icon: Calendar },
     { href: '/announcements', label: 'Berita', icon: Megaphone },
     { href: '/facilities', label: 'Kemudahan', icon: Building2 },

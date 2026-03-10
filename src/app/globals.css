@@ -50,6 +50,16 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* ============================================================
    LIGHT MODE — Frosted Glass on Light
    ============================================================ */
@@ -614,26 +624,19 @@ body::before {
 }
 
 .ticker-track {
-  animation: ticker-scroll var(--ticker-speed, 40s) linear infinite;
   will-change: transform;
   transform: translateZ(0);
   /* Pointer events none prevents touch/click from interfering with scroll */
   pointer-events: none;
 }
 
-@keyframes ticker-scroll {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+.ticker-track:hover {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ticker-track {
-    animation: none;
+    animation: none !important;
     overflow-x: auto;
   }
 }
