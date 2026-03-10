@@ -4,6 +4,7 @@ import React, { createContext, useContext, useRef, useState, useCallback, useEff
 import { useProfile } from '@/hooks/use-profile';
 import { useRouter, usePathname } from 'next/navigation';
 import { toast } from 'sonner';
+import { MALAY_SURAH_NAMES } from '@/services/quran';
 
 interface TrackInfo {
     surahNumber: number;
@@ -18,6 +19,8 @@ interface AudioState {
     loading: boolean;
     error: string | null;
     repeat: boolean;
+    currentTime: number;
+    duration: number;
 }
 
 interface QuranAudioContextType {
@@ -26,6 +29,7 @@ interface QuranAudioContextType {
     stop: () => void;
     togglePause: () => void;
     toggleRepeat: () => void;
+    seek: (time: number) => void;
 }
 
 const QuranAudioContext = createContext<QuranAudioContextType | undefined>(undefined);
@@ -42,6 +46,8 @@ export function QuranAudioProvider({ children }: { children: React.ReactNode }) 
         loading: false,
         error: null,
         repeat: false,
+        currentTime: 0,
+        duration: 0,
     });
 
     // Ensure audio element exists
@@ -87,6 +93,23 @@ export function QuranAudioProvider({ children }: { children: React.ReactNode }) 
                 error: null,
             }));
 
+            // Set Media Session metadata for lockscreen / external player
+            if ('mediaSession' in navigator) {
+                const sName = MALAY_SURAH_NAMES[surahNumber] || `Surah ${surahNumber}`;
+                const displayTitle = ayahNumber
+                    ? `${sName} | ${surahNumber} : ${ayahNumber}`
+                    : `${sName} | Surah ${surahNumber}`;
+
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: displayTitle,
+                    artist: 'Al-Quran',
+                    album: 'MSI UTHM',
+                    artwork: [
+                        { src: '/app-logo.png', sizes: '512x512', type: 'image/png' }
+                    ]
+                });
+            }
+
             const onCanPlay = () => {
                 audio.play().then(() => {
                     setState((s) => ({ ...s, playing: true, loading: false }));
@@ -116,14 +139,26 @@ export function QuranAudioProvider({ children }: { children: React.ReactNode }) 
                 }));
             };
 
+            const onTimeUpdate = () => {
+                setState((s) => ({ ...s, currentTime: audio.currentTime }));
+            };
+
+            const onLoadedMetadata = () => {
+                setState((s) => ({ ...s, duration: audio.duration || 0 }));
+            };
+
             // Clean previous listeners
             audio.removeEventListener('canplaythrough', onCanPlay);
             audio.removeEventListener('ended', onEnded);
             audio.removeEventListener('error', onError);
+            audio.removeEventListener('timeupdate', onTimeUpdate);
+            audio.removeEventListener('loadedmetadata', onLoadedMetadata);
 
             audio.addEventListener('canplaythrough', onCanPlay, { once: true });
             audio.addEventListener('ended', onEnded);
             audio.addEventListener('error', onError, { once: true });
+            audio.addEventListener('timeupdate', onTimeUpdate);
+            audio.addEventListener('loadedmetadata', onLoadedMetadata);
 
             audio.load();
         },
@@ -134,7 +169,15 @@ export function QuranAudioProvider({ children }: { children: React.ReactNode }) 
         const audio = getAudio();
         audio.pause();
         audio.src = '';
-        setState((s) => ({ ...s, track: null, playing: false, loading: false, error: null }));
+        setState((s) => ({ ...s, track: null, playing: false, loading: false, error: null, currentTime: 0, duration: 0 }));
+    }, [getAudio]);
+
+    const seek = useCallback((time: number) => {
+        const audio = getAudio();
+        if (audio.src) {
+            audio.currentTime = time;
+            setState((s) => ({ ...s, currentTime: time }));
+        }
     }, [getAudio]);
 
     const togglePause = useCallback(() => {
@@ -163,7 +206,7 @@ export function QuranAudioProvider({ children }: { children: React.ReactNode }) 
     }, []);
 
     return (
-        <QuranAudioContext.Provider value={{ state, play, stop, togglePause, toggleRepeat }}>
+        <QuranAudioContext.Provider value={{ state, play, stop, togglePause, toggleRepeat, seek }}>
             {children}
         </QuranAudioContext.Provider>
     );
