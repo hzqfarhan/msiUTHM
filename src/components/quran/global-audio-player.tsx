@@ -23,7 +23,7 @@ export function GlobalAudioPlayer() {
     const label = state.track?.label || (state.track?.ayahNumber ? `Ayat ${state.track.ayahNumber}` : 'Sepenuh Surah');
 
     return (
-        <div className="fixed bottom-16 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-full pl-4 pr-[130px] sm:px-4 max-w-[440px] sm:max-w-md animate-in slide-in-from-bottom-5 fade-in duration-300 pointer-events-none">
+        <div className="fixed bottom-2 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-full pl-4 pr-[130px] sm:px-4 max-w-[440px] sm:max-w-md animate-in slide-in-from-bottom-5 fade-in duration-300 pointer-events-none">
             <div className="glass-card glass-heavy border-[var(--glass-border)] shadow-[0_8px_32px_-4px_rgba(0,0,0,0.3)] rounded-2xl p-3 flex items-center gap-3 relative overflow-hidden pointer-events-auto">
 
                 {/* Visual playing indicator (glow) */}

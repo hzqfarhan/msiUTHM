@@ -100,12 +100,13 @@ export function QuranAudioProvider({ children }: { children: React.ReactNode }) 
                     ? `${sName} | ${surahNumber} : ${ayahNumber}`
                     : `${sName} | Surah ${surahNumber}`;
 
+                const logoUrl = typeof window !== 'undefined' ? `${window.location.origin}/bg/app-logo.png` : '/bg/app-logo.png';
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: displayTitle,
                     artist: 'Al-Quran',
                     album: 'MSI UTHM',
                     artwork: [
-                        { src: '/app-logo.png', sizes: '512x512', type: 'image/png' }
+                        { src: logoUrl, sizes: '512x512', type: 'image/png' }
                     ]
                 });
             }
