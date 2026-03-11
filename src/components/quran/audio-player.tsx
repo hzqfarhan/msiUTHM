@@ -31,7 +31,7 @@ export function SurahAudioButton({
             aria-label={playing ? 'Pause audio' : 'Main audio surah'}
             className={cn(
                 'glass-button rounded-xl px-4 py-2.5 flex items-center gap-2 text-sm font-medium transition-all',
-                playing && 'glow-emerald text-primary',
+                playing && 'glow-emerald text-navy dark:text-primary',
                 className,
             )}
         >
@@ -68,7 +68,7 @@ export function AyahAudioButton({
             className={cn(
                 'h-8 w-8 rounded-lg flex items-center justify-center transition-all',
                 isPlaying
-                    ? 'glass-button glow-emerald text-primary'
+                    ? 'glass-button glow-emerald text-navy dark:text-primary'
                     : 'text-muted-foreground hover:text-foreground hover:bg-white/10',
                 className,
             )}

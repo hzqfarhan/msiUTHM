@@ -113,7 +113,7 @@ export function PrayerTimetable({ prayerTimes, iqamahSettings, error }: Props) {
             <div className="text-center space-y-0.5">
                 <p className="text-xs text-muted-foreground">{gregorianDate}</p>
                 {hijriDate && (
-                    <p className="text-[11px] text-primary/80 font-medium">{hijriDate}</p>
+                    <p className="text-[11px] text-navy dark:text-primary/80 font-medium">{hijriDate}</p>
                 )}
             </div>
 
@@ -121,7 +121,7 @@ export function PrayerTimetable({ prayerTimes, iqamahSettings, error }: Props) {
             {countdownText && (
                 <div className="glass-card rounded-xl px-4 py-3 flex items-center gap-3">
                     <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 shrink-0">
-                        <Clock className="h-4 w-4 text-primary" />
+                        <Clock className="h-4 w-4 text-navy dark:text-primary" />
                     </div>
                     <div className="min-w-0">
                         <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
@@ -132,7 +132,7 @@ export function PrayerTimetable({ prayerTimes, iqamahSettings, error }: Props) {
                         </p>
                     </div>
                     {countdown.nextPrayer && (
-                        <p className="ml-auto text-primary font-bold text-sm tabular-nums shrink-0">
+                        <p className="ml-auto text-navy dark:text-primary font-bold text-sm tabular-nums shrink-0">
                             {formatTime12h(countdown.nextPrayer.time)}
                         </p>
                     )}
@@ -166,7 +166,7 @@ export function PrayerTimetable({ prayerTimes, iqamahSettings, error }: Props) {
                                 <div className="min-w-0">
                                     <p className={cn(
                                         'font-semibold text-xs truncate',
-                                        isNext && 'text-primary'
+                                        isNext && 'text-navy dark:text-primary'
                                     )}>
                                         {prayer.label}
                                     </p>
@@ -175,7 +175,7 @@ export function PrayerTimetable({ prayerTimes, iqamahSettings, error }: Props) {
                                 <div className="text-right shrink-0">
                                     <p className={cn(
                                         'font-bold text-sm tabular-nums',
-                                        isNext && 'text-primary'
+                                        isNext && 'text-navy dark:text-primary'
                                     )}>
                                         {formatTime12h(time)}
                                     </p>

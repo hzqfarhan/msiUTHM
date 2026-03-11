@@ -12,7 +12,7 @@ interface Props {
 const categoryColors: Record<string, string> = {
     urgent: 'text-red-400 bg-red-500/10',
     general: 'text-secondary bg-secondary/10',
-    event: 'text-primary bg-primary/10',
+    event: 'text-navy dark:text-primary bg-primary/10',
     facilities: 'text-amber-400 bg-amber-500/10',
 };
 

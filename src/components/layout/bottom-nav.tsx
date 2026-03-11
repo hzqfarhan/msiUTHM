@@ -64,7 +64,7 @@ export function BottomNav() {
                                 'flex items-center gap-1.5 rounded-xl transition-all duration-200',
                                 expanded ? 'px-3 py-2' : 'px-2.5 py-2',
                                 isActive
-                                    ? 'glass-button glow-emerald text-primary'
+                                    ? 'glass-button glow-emerald text-navy dark:text-primary'
                                     : 'text-muted-foreground hover:text-foreground hover:bg-white/10',
                             )}
                         >

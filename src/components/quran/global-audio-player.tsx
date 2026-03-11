@@ -63,7 +63,7 @@ export function GlobalAudioPlayer() {
                         className={cn(
                             "h-8 w-8 rounded-full flex items-center justify-center transition-colors",
                             state.repeat
-                                ? "text-primary bg-primary/10"
+                                ? "text-navy dark:text-primary bg-primary/10"
                                 : "text-muted-foreground hover:bg-white/10 hover:text-foreground"
                         )}
                         aria-label="Ulang / Repeat"

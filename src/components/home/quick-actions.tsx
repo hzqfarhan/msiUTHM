@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Quick Actions Grid ΓÇö liquid glass pill-style buttons.
  */
 import Link from 'next/link';
@@ -7,14 +7,14 @@ import {
 } from 'lucide-react';
 
 const actions = [
-    { href: '/qibla', label: 'Kiblat', icon: Compass, variant: 'liquid-btn-teal', iconColor: 'text-primary' },
-    { href: '/quran', label: 'Al-Quran', icon: BookOpen, variant: 'liquid-btn-gold', iconColor: 'text-primary' },
-    { href: '/prayer', label: 'Waktu Solat', icon: Clock, variant: 'liquid-btn-emerald', iconColor: 'text-primary' },
+    { href: '/qibla', label: 'Kiblat', icon: Compass, variant: 'liquid-btn-teal', iconColor: 'text-navy dark:text-primary' },
+    { href: '/quran', label: 'Al-Quran', icon: BookOpen, variant: 'liquid-btn-gold', iconColor: 'text-navy dark:text-primary' },
+    { href: '/prayer', label: 'Waktu Solat', icon: Clock, variant: 'liquid-btn-emerald', iconColor: 'text-navy dark:text-primary' },
     { href: '/events', label: 'Program', icon: Calendar, variant: 'liquid-btn-blue', iconColor: 'text-secondary' },
     { href: '/facilities', label: 'Kemudahan', icon: Building2, variant: 'liquid-btn-purple', iconColor: 'text-secondary' },
     { href: '/donate', label: 'Infaq', icon: Heart, variant: 'liquid-btn-rose', iconColor: 'text-rose-400' },
     { href: '/feedback', label: 'Lapor Isu', icon: MessageSquare, variant: 'liquid-btn-orange', iconColor: 'text-amber-400' },
-    { href: '/volunteer', label: 'Sukarelawan', icon: Users, variant: 'liquid-btn-teal', iconColor: 'text-primary' },
+    { href: '/volunteer', label: 'Sukarelawan', icon: Users, variant: 'liquid-btn-teal', iconColor: 'text-navy dark:text-primary' },
 ];
 
 export function QuickActions() {

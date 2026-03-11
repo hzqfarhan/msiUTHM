@@ -263,7 +263,7 @@ export function CommunityChatTab() {
                             >
                                 <Avatar className="h-7 w-7 border border-[var(--glass-border)] shrink-0 mt-1">
                                     <AvatarImage src={msg.profiles?.avatar_url || ''} />
-                                    <AvatarFallback className="text-[10px] bg-primary/10 text-primary font-medium">{initials}</AvatarFallback>
+                                    <AvatarFallback className="text-[10px] bg-primary/10 text-navy dark:text-primary font-medium">{initials}</AvatarFallback>
                                 </Avatar>
 
                                 <div className={cn('flex flex-col gap-1 max-w-[80%]', isMe ? 'items-end' : 'items-start')}>

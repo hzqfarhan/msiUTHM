@@ -43,13 +43,13 @@ export function NextPrayerCard({ prayerTimes, iqamahSettings }: Props) {
                         <Clock className="h-3.5 w-3.5" />
                         <span>{currentTime}</span>
                     </div>
-                    <span className="text-[10px] uppercase tracking-wider font-medium text-primary dark:text-primary glass-badge">
+                    <span className="text-[10px] uppercase tracking-wider font-medium text-navy dark:text-primary glass-badge">
                         Solat Seterusnya
                     </span>
                 </div>
 
                 <div className="text-center space-y-2">
-                    <h2 className="text-2xl font-bold tracking-tight text-primary dark:text-primary">{nextPrayer.label}</h2>
+                    <h2 className="text-2xl font-bold tracking-tight text-navy dark:text-primary">{nextPrayer.label}</h2>
                     <p className="text-muted-foreground text-sm">
                         {formatTime12h(nextPrayer.time)}
                         {nextIqamah && (

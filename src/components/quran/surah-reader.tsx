@@ -65,14 +65,27 @@ export function SurahReader({ surahNumber }: SurahReaderProps) {
 
         setSurahInfo(arabicData);
 
-        const merged: MergedAyah[] = arabicData.ayahs.map((a, i) => ({
-            numberInSurah: a.numberInSurah,
-            globalNumber: a.number,
-            arabic: a.text,
-            english: englishAyahs[i]?.text || '',
-            malay: malayAyahs[i]?.text || '',
-            audioUrl: audioAyahs[i]?.audio || getAyahAudioUrl(a.number),
-        }));
+        const merged: MergedAyah[] = arabicData.ayahs.map((a, i) => {
+            let arabicText = a.text;
+            // The API includes Bismillah in the first ayah except for Surah 1 & 9
+            const bismillahStr = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ';
+            const bismillahStrAlternate = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ'; // without trailing space
+            if (a.numberInSurah === 1 && surahNumber !== 1 && surahNumber !== 9) {
+                if (arabicText.startsWith(bismillahStr)) {
+                    arabicText = arabicText.replace(bismillahStr, '').trim();
+                } else if (arabicText.startsWith(bismillahStrAlternate)) {
+                    arabicText = arabicText.replace(bismillahStrAlternate, '').trim();
+                }
+            }
+            return {
+                numberInSurah: a.numberInSurah,
+                globalNumber: a.number,
+                arabic: arabicText,
+                english: englishAyahs[i]?.text || '',
+                malay: malayAyahs[i]?.text || '',
+                audioUrl: audioAyahs[i]?.audio || getAyahAudioUrl(a.number),
+            };
+        });
 
         setAyahs(merged);
         setLoading(false);
@@ -221,7 +234,7 @@ export function SurahReader({ surahNumber }: SurahReaderProps) {
                             {/* Ayah header */}
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <span className="flex items-center justify-center h-7 w-7 rounded-md bg-primary/10 text-primary text-xs font-bold">
+                                    <span className="flex items-center justify-center h-7 w-7 rounded-md bg-primary/10 text-navy dark:text-primary text-xs font-bold">
                                         {ayah.numberInSurah}
                                     </span>
                                     <button
@@ -229,7 +242,7 @@ export function SurahReader({ surahNumber }: SurahReaderProps) {
                                         className={cn(
                                             "h-8 w-8 rounded-lg flex items-center justify-center transition-all",
                                             isBookmarked(surahNumber, ayah.numberInSurah)
-                                                ? "text-primary bg-primary/10"
+                                                ? "text-navy dark:text-primary bg-primary/10"
                                                 : "text-muted-foreground hover:bg-white/10 hover:text-foreground"
                                         )}
                                         aria-label={isBookmarked(surahNumber, ayah.numberInSurah) ? "Buang Penanda Buku" : "Tambah Penanda Buku"}
