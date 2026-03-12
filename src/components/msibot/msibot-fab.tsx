@@ -27,7 +27,8 @@ export function MsibotFab() {
     if (pathname.startsWith('/admin')) return null;
 
     const handleOpen = () => {
-        if (!profile) {
+        if (profile === undefined) return; // Wait for profile to load
+        if (profile === null) {
             toast.error('Sila log masuk untuk menggunakan MSIBOT.');
             router.push(`/auth/login?redirect=${encodeURIComponent(pathname)}`);
             return;
@@ -35,6 +36,7 @@ export function MsibotFab() {
         setLoaded(true); // trigger lazy load
         setOpen(true);
     };
+
 
     return (
         <>

@@ -8,7 +8,7 @@ import type { Profile } from '@/lib/types/database';
  * Shared profile hook — caches at module level so sidebar + header
  * never duplicate the Supabase getUser() + profiles query.
  */
-let cachedProfile: Profile | null = null;
+let cachedProfile: Profile | null | undefined = undefined;
 let fetchPromise: Promise<Profile | null> | null = null;
 
 async function fetchProfile(): Promise<Profile | null> {
@@ -57,17 +57,36 @@ async function fetchProfile(): Promise<Profile | null> {
     return cachedProfile;
 }
 
+/**
+ * Shared profile hook — caches at module level so sidebar + header
+ * never duplicate the Supabase getUser() + profiles query.
+ * 
+ * Returns:
+ * - `undefined`: while loading the initial state
+ * - `null`: if no user is logged in
+ * - `Profile`: the user's profile data
+ */
 export function useProfile() {
-    const [profile, setProfile] = useState<Profile | null>(cachedProfile);
+    const [profile, setProfile] = useState<Profile | null | undefined>(cachedProfile);
 
     useEffect(() => {
-        if (cachedProfile) {
+        // If we already have a cached result (null or object), use it.
+        // We only show 'undefined' if we haven't even started/finished the first fetch.
+        if (cachedProfile !== undefined) {
             setProfile(cachedProfile);
             return;
         }
+
         if (!fetchPromise) fetchPromise = fetchProfile();
-        fetchPromise.then(p => setProfile(p));
+        fetchPromise.then(p => {
+            setProfile(p);
+        }).catch(err => {
+            console.error("Profile fetch failed:", err);
+            setProfile(null);
+        });
+
     }, []);
 
     return profile;
 }
+

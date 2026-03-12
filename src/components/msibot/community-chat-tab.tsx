@@ -74,13 +74,16 @@ export function CommunityChatTab() {
                 if (fetchErr) throw fetchErr;
 
                 // Reverse to show chronologically (oldest top, newest bottom)
-                setMessages(data?.reverse() || []);
-            } catch (err) {
+                const msgs = data?.reverse() || [];
+                console.log(`[CommunityChat] Loaded ${msgs.length} messages`);
+                setMessages(msgs);
+            } catch (err: any) {
                 console.error("Failed to load messages:", err);
-                setError('Ralat memuat turun mesej komuniti.');
+                setError(`Ralat: ${err.message || 'Gagal memuat turun mesej komuniti.'}`);
             } finally {
                 setLoading(false);
             }
+
         };
 
         const subscribeToChanges = () => {
@@ -214,7 +217,15 @@ export function CommunityChatTab() {
         }
     };
 
-    if (!profile) {
+    if (profile === undefined) {
+        return (
+            <div className="h-full flex items-center justify-center bg-background/50">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground/50" />
+            </div>
+        );
+    }
+
+    if (profile === null) {
         return (
             <div className="flex flex-col h-full bg-background/50 items-center justify-center p-6 text-center space-y-4">
                 <div className="h-16 w-16 bg-muted rounded-full flex items-center justify-center">
@@ -227,6 +238,7 @@ export function CommunityChatTab() {
             </div>
         );
     }
+
 
     return (
         <div className="flex flex-col h-full bg-background/50">
