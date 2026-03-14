@@ -19,8 +19,8 @@ This central hub aims to:
 <h3 align="center">Vercel Analytics</h3>
 
 <div align="center">
-  <img src="doc_images/imageA.png" alt="Vercel Analytics" width="80%" />
-  <img src="doc_images/imageB.png" alt="Vercel Analytics" width="80%" />
+  <img src="doc_images/imageA.png" alt="Vercel Analytics" width="100%" />
+  <img src="doc_images/imageB.png" alt="Vercel Analytics" width="100%" />
 
 </div>
 
