@@ -34,9 +34,31 @@ This central hub aims to:
   </div>
     <h3>Vercel Analytics</h3>
       <div style="text-align: center;">
-    <img src="doc_images/imageC.png" alt="Feature 3" width="100%" />
+    <img src="doc_images/imageX.PNG" alt="Feature 3" width="100%" />
       
   </div>
+    <div style="text-align: center;">
+    <img src="doc_images/imageY.PNG" alt="Feature 4" width="100%" />
+      
+  </div>
+  <div style="text-align: center; margin-top: 15px;">
+  <a
+    href="https://vt.tiktok.com/ZSuPF47Jx/"
+    target="_blank"
+    rel="noopener noreferrer"
+    style="
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    "
+  >
+    Visit TikTok
+  </a>
+</div>
      <h3>Tiktok Analytics</h3>
 </div>
 </table>
