@@ -19,11 +19,9 @@ This central hub aims to:
 <h3 align="center">Vercel Analytics</h3>
 
 <div align="center">
-  <img src="doc_images/imageB.png" alt="TikTok Analytics" width="70%" />
-  <br><br>
-  <a href="https://vt.tiktok.com/ZSuPF47Jx/" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/Visit-TikTok-black?style=for-the-badge&logo=tiktok" alt="Visit TikTok" />
-  </a>
+  <img src="doc_images/imageA.png" alt="Vercel Analytics" width="80%" />
+  <img src="doc_images/imageB.png" alt="Vercel Analytics" width="80%" />
+
 </div>
 
 
@@ -34,12 +32,16 @@ This central hub aims to:
 <table>
   <tr>
     <td width="50%" align="center">
-      <img src="doc_images/imageX.PNG" alt="Vercel Analytics 1" width="100%" />
+      <img src="doc_images/imageX.PNG" alt="Tiktok Analytics 1" width="100%" />
     </td>
     <td width="50%" align="center">
-      <img src="doc_images/imageY.PNG" alt="Vercel Analytics 2" width="100%" />
+      <img src="doc_images/imageY.PNG" alt="Tiktok Analytics 2" width="100%" />
     </td>
   </tr>
+    <br><br>
+  <a href="https://vt.tiktok.com/ZSuPF47Jx/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Visit-TikTok-black?style=for-the-badge&logo=tiktok" alt="Visit TikTok" />
+  </a>
 </table>
 
 
