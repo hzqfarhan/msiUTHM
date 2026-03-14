@@ -4,7 +4,7 @@ Welcome to the **MSI UTHM Companion** repository! This is a modern, community-fo
 
 ## 🌟 Why This Was Built
 
-The **MSI UTHM Companion** was created to bridge the gap between the mosque administration and the local community, especially the students. Traditionally, information about prayer times, upcoming events, and mosque facilities was scattered or difficult to access. 
+The **MSI UTHM Companion** was created to bridge the gap between the mosque administration and the local community, especially the students. Traditionally, information about prayer times, upcoming events, and mosque facilities was scattered or difficult to access.
 
 This central hub aims to:
 - Provide accurate, location-based prayer times and Iqamah countdowns.
@@ -106,11 +106,16 @@ This central hub aims to:
       <ul>
         <li>A comprehensive, secure dashboard for mosque administrators.</li>
         <li>Full CRUD capabilities for adding events, managing facilities, updating donation QR codes, and resolving user feedback.</li>
-        <li>Analytics and tracking tools for mosque engagement.</li>
+        <li>Detailed analytics panels for tracking engagement, reports, donations, and event participation.</li>
+        <li>User growth insights to monitor new registrations and community adoption over time.</li>
       </ul>
     </td>
     <td width="50%" valign="top">
-      <img src="doc_images/admin-panel-placeholder.PNG" alt="Admin Panel Screenshot" width="100%" />
+      <p><strong>📊 Analytics Overview</strong></p>
+      <img src="doc_images/admin-analytics-placeholder.PNG" alt="Analytics Overview Screenshot" width="100%" style="margin-bottom: 1rem;" />
+
+      <p><strong>📈 User Growth</strong></p>
+      <img src="doc_images/user-growth-placeholder.PNG" alt="User Growth Screenshot" width="100%" />
     </td>
   </tr>
 </table>
@@ -130,7 +135,7 @@ This central hub aims to:
 ## 🚀 Getting Started Locally
 
 ### Prerequisites
-1. Node.js 18+ install
+1. Node.js 18+ installed
 2. A Supabase project
 
 ### Installation
@@ -146,7 +151,7 @@ This central hub aims to:
    npm install
    ```
 
-3. Setup environment variables:
+3. Setup environment variables:  
    Copy `.env.local.example` to `.env.local` and add your Supabase credentials:
    ```env
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
