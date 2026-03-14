@@ -13,63 +13,38 @@ This central hub aims to:
 - Serve as a blueprint for modernizing mosque management systems everywhere.
 
 ---
+
 ## USER GROWTH (ANALYTICS)
 
+<h3 align="center">Vercel Analytics</h3>
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="doc_images/imageX.PNG" alt="Vercel Analytics 1" width="100%" />
+    </td>
+    <td width="50%" align="center">
+      <img src="doc_images/imageY.PNG" alt="Vercel Analytics 2" width="100%" />
+    </td>
+  </tr>
+</table>
+
+<br>
+
+<h3 align="center">TikTok Analytics</h3>
+
+<div align="center">
+  <img src="doc_images/imageB.png" alt="TikTok Analytics" width="70%" />
+  <br><br>
+  <a href="https://vt.tiktok.com/ZSuPF47Jx/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Visit-TikTok-black?style=for-the-badge&logo=tiktok" alt="Visit TikTok" />
+  </a>
+</div>
 
 ---
 
-
-
-<table>
-<div style="width: 100%;">
-
-  <!-- Item 1 -->
-  <div style="margin-bottom: 30px; text-align: center;">
-    <img src="doc_images/imageA.png" alt="Feature 1" width="100%" />
-  </div>
-
-  <!-- Item 2 -->
-  <div style="text-align: center;">
-    <img src="doc_images/imageB.png" alt="Feature 2" width="100%" />
-  </div>
-    <h3>Vercel Analytics</h3>
-   <div style="display: flex; gap: 20px;">
-
-<div style="display: flex; gap: 20px; justify-content: center;">
-
-  <div style="width: 48%; text-align: center;">
-    <img src="doc_images/imageX.PNG" alt="Feature 3" width="100%" />
-  </div>
-
-  <div style="width: 48%; text-align: center;">
-    <img src="doc_images/imageY.PNG" alt="Feature 4" width="100%" />
-  </div>
-
-</div>
-
-</div>
-  <div style="text-align: center; margin-top: 15px;">
-  <a
-    href="https://vt.tiktok.com/ZSuPF47Jx/"
-    target="_blank"
-    rel="noopener noreferrer"
-    style="
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #000;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    "
-  >
-    Visit TikTok
-  </a>
-</div>
-     <h3>Tiktok Analytics</h3>
-</div>
-</table>
 ## ✨ Key Features
+
 <table>
   <tr>
     <td width="50%" valign="top">
@@ -137,7 +112,6 @@ This central hub aims to:
   </tr>
 </table>
 
-
 ---
 
 ## 🛠️ Technology Stack
@@ -162,29 +136,3 @@ This central hub aims to:
    ```bash
    git clone https://github.com/hzqfarhan/MSIUTHM.git
    cd MSIUTHM
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Setup environment variables:  
-   Copy `.env.local.example` to `.env.local` and add your Supabase credentials:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-
-4. Run the development server:
-   ```bash
-   npm run dev
-   ```
-
-5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
----
-
-## 📝 License
-
-This project is intended for the community use of Masjid Sultan Ibrahim UTHM. Reach out to the repository owner for licensing queries.
