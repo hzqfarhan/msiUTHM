@@ -13,23 +13,36 @@ This central hub aims to:
 - Serve as a blueprint for modernizing mosque management systems everywhere.
 
 ---
+## USER GROWTH (ANALYTICS)
+
+
+---
 
 ## ✨ Key Features
 
 <table>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>📅 Waktu Solat & Kompas Qiblat (Prayer Times & Qibla)</h3>
-      <ul>
-        <li>Real-time prayer timings based on JAKIM zones.</li>
-        <li>Dynamic Iqamah countdown timers.</li>
-        <li>Integrated Qibla compass utilizing device orientation sensors.</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <img src="doc_images/waktu-solat-placeholder.PNG" alt="Waktu Solat Screenshot" width="100%" />
-    </td>
-  </tr>
+<div style="width: 100%;">
+
+  <!-- Item 1 -->
+  <div style="margin-bottom: 30px; text-align: center;">
+    <img src="doc_images/imageA.png" alt="Feature 1" width="100%" />
+    <h3>Vercel Analytics</h3>
+    <p>
+
+    </p>
+  </div>
+
+  <!-- Item 2 -->
+  <div style="text-align: center;">
+    <img src="doc_images/imageB.png" alt="Feature 2" width="100%" />
+    <h3>Tiktok Analytics</h3>
+    <p>
+      View mosque announcements, prayer schedules, and important updates
+      directly within the application.
+    </p>
+  </div>
+
+</div>
 </table>
 
 <table>
@@ -99,26 +112,6 @@ This central hub aims to:
   </tr>
 </table>
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>⚙️ Panel Admin (Admin Dashboard)</h3>
-      <ul>
-        <li>A comprehensive, secure dashboard for mosque administrators.</li>
-        <li>Full CRUD capabilities for adding events, managing facilities, updating donation QR codes, and resolving user feedback.</li>
-        <li>Detailed analytics panels for tracking engagement, reports, donations, and event participation.</li>
-        <li>User growth insights to monitor new registrations and community adoption over time.</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <p><strong>📊 Analytics Overview</strong></p>
-      <img src="doc_images/admin-analytics-placeholder.PNG" alt="Analytics Overview Screenshot" width="100%" style="margin-bottom: 1rem;" />
-
-      <p><strong>📈 User Growth</strong></p>
-      <img src="doc_images/user-growth-placeholder.PNG" alt="User Growth Screenshot" width="100%" />
-    </td>
-  </tr>
-</table>
 
 ---
 
