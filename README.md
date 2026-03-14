@@ -18,7 +18,7 @@ This central hub aims to:
 
 ---
 
-## ✨ Key Features
+
 
 <table>
 <div style="width: 100%;">
@@ -26,25 +26,21 @@ This central hub aims to:
   <!-- Item 1 -->
   <div style="margin-bottom: 30px; text-align: center;">
     <img src="doc_images/imageA.png" alt="Feature 1" width="100%" />
-    <h3>Vercel Analytics</h3>
-    <p>
-
-    </p>
   </div>
 
   <!-- Item 2 -->
   <div style="text-align: center;">
     <img src="doc_images/imageB.png" alt="Feature 2" width="100%" />
-    <h3>Tiktok Analytics</h3>
-    <p>
-      View mosque announcements, prayer schedules, and important updates
-      directly within the application.
-    </p>
   </div>
-
+    <h3>Vercel Analytics</h3>
+      <div style="text-align: center;">
+    <img src="doc_images/imageC.png" alt="Feature 3" width="100%" />
+      
+  </div>
+     <h3>Tiktok Analytics</h3>
 </div>
 </table>
-
+## ✨ Key Features
 <table>
   <tr>
     <td width="50%" valign="top">
