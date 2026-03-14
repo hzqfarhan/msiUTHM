@@ -35,13 +35,17 @@ This central hub aims to:
     <h3>Vercel Analytics</h3>
    <div style="display: flex; gap: 20px;">
 
-  <div style="flex: 1; text-align: center;">
+<div style="display: flex; gap: 20px; justify-content: center;">
+
+  <div style="width: 48%; text-align: center;">
     <img src="doc_images/imageX.PNG" alt="Feature 3" width="100%" />
   </div>
 
-  <div style="flex: 1; text-align: center;">
+  <div style="width: 48%; text-align: center;">
     <img src="doc_images/imageY.PNG" alt="Feature 4" width="100%" />
   </div>
+
+</div>
 
 </div>
   <div style="text-align: center; margin-top: 15px;">
