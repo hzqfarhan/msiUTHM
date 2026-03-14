@@ -33,14 +33,17 @@ This central hub aims to:
     <img src="doc_images/imageB.png" alt="Feature 2" width="100%" />
   </div>
     <h3>Vercel Analytics</h3>
-      <div style="text-align: center;">
+   <div style="display: flex; gap: 20px;">
+
+  <div style="flex: 1; text-align: center;">
     <img src="doc_images/imageX.PNG" alt="Feature 3" width="100%" />
-      
   </div>
-    <div style="text-align: center;">
+
+  <div style="flex: 1; text-align: center;">
     <img src="doc_images/imageY.PNG" alt="Feature 4" width="100%" />
-      
   </div>
+
+</div>
   <div style="text-align: center; margin-top: 15px;">
   <a
     href="https://vt.tiktok.com/ZSuPF47Jx/"
